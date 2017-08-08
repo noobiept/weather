@@ -1,4 +1,6 @@
 import * as React from "react";
+import Message from "./message";
+
 
     // reference: http://openweathermap.org/current
 interface WeatherInfo {
@@ -32,6 +34,7 @@ interface WeatherProps {
 
 interface WeatherState {
     info?: WeatherInfo;
+    messageText: string;
 }
 
 
@@ -41,8 +44,12 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
         super();
 
         this.keyPress = this.keyPress.bind( this );
-        this.state = { info: undefined };
+        this.state = {
+            info: undefined,
+            messageText: ''
+        };
     }
+
 
     keyPress( event: React.KeyboardEvent <HTMLInputElement> ) {
 
@@ -54,20 +61,24 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
         }
     }
 
+
     async getCurrentWeather( cityName: string ) {
 
         var response = await fetch( `http://api.openweathermap.org/data/2.5/weather?q=${ cityName }&appid=8cffe81fbe82ac71521e0cf28f0f3496&units=metric` );
 
         if ( response.status !== 200 ) {
-            console.warn( 'Name:', cityName );
+            this.setState({
+                info: undefined,
+                messageText: "Couldn't find a city with that name."
+            });
             return;
         }
 
         var data = await response.json();
 
-        this.setState({ info: data });
-        console.log( data );
+        this.setState({ info: data, messageText: '' });
     }
+
 
     render() {
         let current = null;
@@ -108,6 +119,7 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
                 <div>Current Weather</div>
                 <div>Location: { info ? info.name : '---' }</div>
                 <input type="text" onKeyPress= { this.keyPress }></input>
+                <Message text= { this.state.messageText } />
                 { current }
             </div>
         );
