@@ -33,8 +33,9 @@ interface WeatherProps {
 }
 
 interface WeatherState {
-    info?: WeatherInfo;
-    messageText: string;
+    info?: WeatherInfo;     // the loaded weather information
+    messageText: string;    // warn/error message to show to the user
+    loading: boolean;       // if the weather information is being loaded
 }
 
 
@@ -46,7 +47,8 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
         this.keyPress = this.keyPress.bind( this );
         this.state = {
             info: undefined,
-            messageText: ''
+            messageText: '',
+            loading: false
         };
     }
 
@@ -64,19 +66,25 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
 
     async getCurrentWeather( cityName: string ) {
 
+        this.setState({ loading: true });
         var response = await fetch( `http://api.openweathermap.org/data/2.5/weather?q=${ cityName }&appid=8cffe81fbe82ac71521e0cf28f0f3496&units=metric` );
 
         if ( response.status !== 200 ) {
             this.setState({
                 info: undefined,
-                messageText: "Couldn't find a city with that name."
+                messageText: "Couldn't find a city with that name.",
+                loading: false
             });
             return;
         }
 
         var data = await response.json();
 
-        this.setState({ info: data, messageText: '' });
+        this.setState({
+            info: data,
+            messageText: '',
+            loading: false
+        });
     }
 
 
@@ -120,7 +128,7 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
             <div>
                 <div>Current Weather</div>
                 <CityInput onKeyPress= { this.keyPress } name= { name } message= { this.state.messageText } />
-                { current }
+                { this.state.loading ? 'loading..' : current }
             </div>
         );
     }
