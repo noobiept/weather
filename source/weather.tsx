@@ -1,5 +1,5 @@
 import * as React from "react";
-import Message from "./message";
+import CityInput from "./city_input";
 
 
     // reference: http://openweathermap.org/current
@@ -114,12 +114,12 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
             );
         }
 
+        let name = info && info.name;
+
         return (
             <div>
                 <div>Current Weather</div>
-                <div>Location: { info ? info.name : '---' }</div>
-                <input type="text" onKeyPress= { this.keyPress }></input>
-                <Message text= { this.state.messageText } />
+                <CityInput onKeyPress= { this.keyPress } name= { name } message= { this.state.messageText } />
                 { current }
             </div>
         );
