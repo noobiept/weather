@@ -127,8 +127,7 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
         return (
             <div>
                 <div>Current Weather</div>
-                <CityInput onKeyPress= { this.keyPress } name= { name } message= { this.state.messageText } />
-                { this.state.loading ? 'loading..' : current }
+                <CityInput onEnterPress= { this.changeCity } />
             </div>
         );
     }

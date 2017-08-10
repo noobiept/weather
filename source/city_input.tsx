@@ -1,11 +1,8 @@
 import * as React from "react";
-import Message from "./message";
 
 
 interface CityInputProps {
-    name?: string;
-    message?: string;
-    onKeyPress: (event: React.KeyboardEvent <HTMLInputElement>) => void;
+    onEnterPress: (cityName: string) => void;
 }
 
 interface CityInputState {
@@ -17,18 +14,26 @@ class CityInput extends React.Component <CityInputProps, CityInputState> {
 
     constructor() {
         super();
+        this.keyPress = this.keyPress.bind( this );
+    }
+
+
+    keyPress( event: React.KeyboardEvent <HTMLInputElement> ) {
+
+        switch( event.which ) {
+            case 13:    // enter
+                let input = event.target as HTMLInputElement;
+                let name = input.value;
+
+                this.props.onEnterPress( name );
+                break;
+        }
     }
 
 
     render() {
-        let name = this.props.name;
-
         return (
-            <div>
-                <div>Location: { name ? name : '---' }</div>
-                <input type="text" onKeyPress= { this.props.onKeyPress }></input>
-                <Message text= { this.props.message } />
-            </div>
+            <input type="text" onKeyPress= { this.keyPress }></input>
         );
     }
 }
