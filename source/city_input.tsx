@@ -39,4 +39,4 @@ class CityInput extends React.Component <CityInputProps, CityInputState> {
 }
 
 
-export default CityInput
+export default CityInput;
