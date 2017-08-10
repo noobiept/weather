@@ -9,38 +9,42 @@ interface WeatherProps {
 }
 
 interface WeatherState {
-    cityName: string;
+    all: React.ReactElement <CurrentWeather>[];
 }
 
 
 class Weather extends React.Component <WeatherProps, WeatherState> {
+
 
     constructor() {
         super();
 
         this.changeCity = this.changeCity.bind( this );
         this.state = {
-            cityName: ''
+            all: []
         };
     }
 
 
     changeCity( name: string ) {
 
-    this.setState({ cityName: name });
+        let updated = this.state.all.slice();
+        updated.push( <CurrentWeather key= { updated.length } cityName= { name } /> );
+
+        this.setState({ all: updated });
     }
 
 
     render() {
-
         return (
             <div>
                 <div>Current Weather</div>
                 <CityInput onEnterPress= { this.changeCity } />
-                <CurrentWeather cityName= { this.state.cityName } />
+
+                { this.state.all }
             </div>
         );
     }
 }
 
-export default Weather
+export default Weather;

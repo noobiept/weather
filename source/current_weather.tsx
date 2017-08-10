@@ -52,6 +52,11 @@ class CurrentWeather extends React.Component <CurrentWeatherProps, CurrentWeathe
     }
 
 
+    componentDidMount() {
+        this.getCurrentWeather( this.props.cityName );
+    }
+
+
     async getCurrentWeather( cityName: string ) {
 
         this.setState({ loading: true });
@@ -76,15 +81,9 @@ class CurrentWeather extends React.Component <CurrentWeatherProps, CurrentWeathe
     }
 
 
-    componentWillReceiveProps( nextProps: CurrentWeatherProps ) {
-        this.getCurrentWeather( nextProps.cityName );
-    }
-
-
     render() {
         let current = null;
         let info = this.state.info;
-        let name;
 
         if ( info ) {
 
@@ -100,9 +99,9 @@ class CurrentWeather extends React.Component <CurrentWeatherProps, CurrentWeathe
                 );
             }
 
-            name = info.name;
             current = (
                 <div>
+                    <div>Location: { info.name }</div>
                     <div>Latitude: { info.coord.lat } / Longitude: { info.coord.lon }</div>
                     <div>Humidity: { info.main.humidity } %</div>
                     <div>Pressure: { info.main.pressure } hPa</div>
@@ -120,11 +119,10 @@ class CurrentWeather extends React.Component <CurrentWeatherProps, CurrentWeathe
         return (
             <div>
                 <Message text= { this.state.messageText } />
-                <div>Location: { name ? name : '---' }</div>
                 { this.state.loading ? 'loading..' : current }
             </div>
         );
     }
 }
 
-export default CurrentWeather
+export default CurrentWeather;
