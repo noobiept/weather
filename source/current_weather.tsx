@@ -99,6 +99,17 @@ class CurrentWeather extends React.Component <CurrentWeatherProps, CurrentWeathe
                 );
             }
 
+            let seaLevel;
+            if ( info.main.sea_level ) {
+                seaLevel = <div>Atmospheric pressure on the sea level: { info.main.sea_level } hPa</div>;
+            }
+
+            let groundLevel;
+            if ( info.main.grnd_level ) {
+                groundLevel = <div>Atmospheric pressure on the ground level: { info.main.grnd_level } hPa</div>;
+            }
+
+
             current = (
                 <div>
                     <div>Location: { info.name }</div>
@@ -108,8 +119,8 @@ class CurrentWeather extends React.Component <CurrentWeatherProps, CurrentWeathe
                     <div>Temperature: { info.main.temp } °C</div>
                     <div>Min Temperature: { info.main.temp_min } °C</div>
                     <div>Max Temperature: { info.main.temp_max } °C</div>
-                    <div>Atmospheric pressure on the sea level: { info.main.sea_level } hPa</div>
-                    <div>Atmospheric pressure on the ground level: { info.main.grnd_level } hPa</div>
+                    { seaLevel }
+                    { groundLevel }
                     <div>Wind Speed: { info.wind.speed } meter/sec / Degree: { info.wind.deg } °</div>
                     <div>{ weatherInfo }</div>
                 </div>
