@@ -40,8 +40,9 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
             <div>
                 <div>Current Weather</div>
                 <CityInput onEnterPress= { this.changeCity } />
-
-                { this.state.all }
+                <div id="WeatherInfoContainer">
+                    { this.state.all }
+                </div>
             </div>
         );
     }
