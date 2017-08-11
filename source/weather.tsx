@@ -1,4 +1,6 @@
 import * as React from "react";
+import * as ReactDOM from "react-dom";
+
 import CityInput from "./city_input";
 import CurrentWeather from "./current_weather";
 
@@ -26,6 +28,15 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
     }
 
 
+    componentDidMount() {
+            // focus the city element element whenever a key is pressed
+        window.addEventListener( 'keypress', () => {
+            let input = ReactDOM.findDOMNode( this.refs.cityInput ) as HTMLInputElement;
+            input.focus();
+        });
+    }
+
+
     changeCity( name: string ) {
 
         let updated = this.state.all.slice();
@@ -39,7 +50,7 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
         return (
             <div>
                 <div>Current Weather</div>
-                <CityInput onEnterPress= { this.changeCity } />
+                <CityInput ref="cityInput" onEnterPress= { this.changeCity } />
                 <div id="WeatherInfoContainer">
                     { this.state.all }
                 </div>

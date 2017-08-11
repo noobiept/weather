@@ -25,6 +25,7 @@ class CityInput extends React.Component <CityInputProps, CityInputState> {
                 let input = event.target as HTMLInputElement;
                 let name = input.value;
 
+                input.value = '';   // clear after every query
                 this.props.onEnterPress( name );
                 break;
         }
