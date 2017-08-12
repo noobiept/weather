@@ -19,7 +19,7 @@ class Message extends React.Component <MessageProps, MessageState> {
 
     render() {
         return (
-            <div>{ this.props.text }</div>
+            <span>{ this.props.text }</span>
         );
     }
 }
