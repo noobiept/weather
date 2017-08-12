@@ -40,6 +40,7 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
 
     async changeCity( name: string ) {
 
+        this.setState({ messageText: 'Loading...' });
         let info = await CurrentWeather.getCurrentWeather( name );
 
         if ( info ) {
@@ -63,8 +64,8 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
             <div>
                 <div>Current Weather</div>
                 <div>
-                <CityInput ref="cityInput" onEnterPress= { this.changeCity } />
-                <Message text= { this.state.messageText } />
+                    <CityInput ref="cityInput" onEnterPress= { this.changeCity } />
+                    <Message text= { this.state.messageText } />
                 </div>
                 <div id="WeatherInfoContainer">
                     { this.state.all }
