@@ -2,8 +2,8 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 
 import CityInput from "./city_input";
+import Message from "./message";
 import CurrentWeather from "./current_weather";
-
 
 
 interface WeatherProps {
@@ -12,18 +12,19 @@ interface WeatherProps {
 
 interface WeatherState {
     all: React.ReactElement <CurrentWeather>[];
+    messageText: string;    // warn/error message to show to the user
 }
 
 
 class Weather extends React.Component <WeatherProps, WeatherState> {
-
 
     constructor() {
         super();
 
         this.changeCity = this.changeCity.bind( this );
         this.state = {
-            all: []
+            all: [],
+            messageText: ''
         };
     }
 
@@ -37,12 +38,23 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
     }
 
 
-    changeCity( name: string ) {
+    async changeCity( name: string ) {
 
-        let updated = this.state.all.slice();
-        updated.push( <CurrentWeather key= { updated.length } cityName= { name } /> );
+        let info = await CurrentWeather.getCurrentWeather( name );
 
-        this.setState({ all: updated });
+        if ( info ) {
+            let updated = this.state.all.slice();
+            updated.push( <CurrentWeather key= { updated.length } info= { info } /> );
+
+            this.setState({
+                all: updated,
+                messageText: ''
+            });
+        }
+
+        else {
+            this.setState({ messageText: `Couldn't find a city with that name (${ name })` });
+        }
     }
 
 
@@ -51,6 +63,7 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
             <div>
                 <div>Current Weather</div>
                 <CityInput ref="cityInput" onEnterPress= { this.changeCity } />
+                <Message text= { this.state.messageText } />
                 <div id="WeatherInfoContainer">
                     { this.state.all }
                 </div>
