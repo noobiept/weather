@@ -4,6 +4,7 @@ import * as ReactDOM from "react-dom";
 import CityInput from "./city_input";
 import Message from "./message";
 import CurrentWeather from "./current_weather";
+import Forecast from "./forecast";
 
 
 interface WeatherProps {
@@ -41,11 +42,13 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
     async changeCity( name: string ) {
 
         this.setState({ messageText: 'Loading...' });
-        let info = await CurrentWeather.getCurrentWeather( name );
+        //let info = await CurrentWeather.getCurrentWeather( name );
+        let info = await Forecast.getCurrentWeather( name );
 
         if ( info ) {
             let updated = this.state.all.slice();
-            updated.push( <CurrentWeather key= { updated.length } info= { info } /> );
+            //updated.push( <CurrentWeather key= { updated.length } info= { info } /> );
+            updated.push( <Forecast key= { updated.length } info= { info } /> );
 
             this.setState({
                 all: updated,
