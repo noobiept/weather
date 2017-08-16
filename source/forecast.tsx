@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import Chart from "./chart";
+
 
     // reference: http://openweathermap.org/forecast5
 interface ForecastInfo {
@@ -48,7 +50,7 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
 
     static async getCurrentWeather( cityName: string ) {
 
-        var response = await fetch( `http://api.openweathermap.org/data/2.5/forecast?q=${ cityName }&appid=8cffe81fbe82ac71521e0cf28f0f3496&units=metric&mode=json` )
+        var response = await fetch( `http://api.openweathermap.org/data/2.5/forecast?q=${ cityName }&appid=8cffe81fbe82ac71521e0cf28f0f3496&units=metric` )
 
         if ( response.status !== 200 ) {
             return undefined;
@@ -61,6 +63,7 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
     render() {
         let info = this.props.info;
         let weatherList = [];
+        let temperatures = [];
 
         for (let a = 0 ; a < info.list.length ; a++) {
             let item = info.list[ a ];
@@ -74,12 +77,14 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
                 )
             }
 
+            temperatures.push( item.main.temp );
+
             weatherList.push(
                 <div key={ a }>
                     <div>dt: { item.dt_txt } ({ item.dt })</div>
-                    <div>{ item.main.temp }</div>
-                    <div>{ item.main.temp_min }</div>
-                    <div>{ item.main.temp_max }</div>
+                    <div>{ item.main.temp } °C</div>
+                    <div>{ item.main.temp_min } °C</div>
+                    <div>{ item.main.temp_max } °C</div>
                     <div>{ item.main.pressure }</div>
                     <div>{ item.main.sea_level }</div>
                     <div>{ item.main.grnd_level }</div>
@@ -95,6 +100,7 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
             <div>
                 <div>City: { info.city.name }</div>
                 <div>Lat: { info.city.coord.lat } / Lon: { info.city.coord.lon }</div>
+                <Chart width= { 400 } height= { 400 } data= { temperatures } />
                 <div>{ weatherList }</div>
             </div>
         );
