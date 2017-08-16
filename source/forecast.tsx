@@ -64,6 +64,7 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
         let info = this.props.info;
         let weatherList = [];
         let temperatures = [];
+        let humidities = [];
 
         for (let a = 0 ; a < info.list.length ; a++) {
             let item = info.list[ a ];
@@ -78,17 +79,14 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
             }
 
             temperatures.push( item.main.temp );
+            humidities.push( item.main.humidity );
 
             weatherList.push(
                 <div key={ a }>
                     <div>dt: { item.dt_txt } ({ item.dt })</div>
-                    <div>{ item.main.temp } °C</div>
-                    <div>{ item.main.temp_min } °C</div>
-                    <div>{ item.main.temp_max } °C</div>
                     <div>{ item.main.pressure }</div>
                     <div>{ item.main.sea_level }</div>
                     <div>{ item.main.grnd_level }</div>
-                    <div>{ item.main.humidity }</div>
                     <div>{ item.main.temp_kf }</div>
                     <div>{ weatherDescription }</div>
                     <div>Wind speed: { item.wind.speed } / Degrees: { item.wind.deg }</div>
@@ -101,6 +99,7 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
                 <div>City: { info.city.name }</div>
                 <div>Lat: { info.city.coord.lat } / Lon: { info.city.coord.lon }</div>
                 <Chart width= { 400 } height= { 400 } data= { temperatures } />
+                <Chart width= { 400 } height= { 400 } data= { humidities } />
                 <div>{ weatherList }</div>
             </div>
         );
