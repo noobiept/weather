@@ -12,8 +12,10 @@ interface WeatherProps {
 }
 
 interface WeatherState {
-    all: React.ReactElement <CurrentWeather>[];
-    messageText: string;    // warn/error message to show to the user
+    cityNames: string[];        // list with all the city names that were searched for
+    current: React.ReactElement <CurrentWeather> | undefined;
+    forecast: React.ReactElement <Forecast> | undefined;
+    messageText: string;        // warn/error message to show to the user
 }
 
 
@@ -24,7 +26,9 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
 
         this.changeCity = this.changeCity.bind( this );
         this.state = {
-            all: [],
+            cityNames: [],
+            current: undefined,
+            forecast: undefined,
             messageText: ''
         };
     }
@@ -42,17 +46,22 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
     async changeCity( name: string ) {
 
         this.setState({ messageText: 'Loading...' });
-        //let info = await CurrentWeather.getCurrentWeather( name );
-        let info = await Forecast.getCurrentWeather( name );
 
-        if ( info ) {
-            let updated = this.state.all.slice();
-            //updated.push( <CurrentWeather key= { updated.length } info= { info } /> );
-            updated.push( <Forecast key= { updated.length } info= { info } /> );
+        let [ current, forecast ] = await Promise.all([
+            await CurrentWeather.getCurrentWeather( name ),
+            await Forecast.getCurrentWeather( name )
+        ]);
+
+        if ( current && forecast ) {
+
+            let updated = this.state.cityNames.slice();
+            updated.push( name );
 
             this.setState({
-                all: updated,
-                messageText: ''
+                current: <CurrentWeather info= { current } />,
+                forecast: <Forecast info= { forecast } />,
+                messageText: '',
+                cityNames: updated
             });
         }
 
@@ -70,8 +79,10 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
                     <CityInput ref="cityInput" onEnterPress= { this.changeCity } />
                     <Message text= { this.state.messageText } />
                 </div>
+                <div>Previous searches: { this.state.cityNames }</div>
                 <div id="WeatherInfoContainer">
-                    { this.state.all }
+                    { this.state.current }
+                    { this.state.forecast }
                 </div>
             </div>
         );
