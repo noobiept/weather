@@ -43,6 +43,7 @@ class Chart extends React.Component <ChartProps, ChartState> {
         let previousX;
         let previousY;
 
+        ctx.clearRect( 0, 0, canvas.width, canvas.height );     // clear the previous drawing
         ctx.save();
         ctx.font = '20px arial';
         ctx.textAlign = 'center';
