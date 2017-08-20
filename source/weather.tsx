@@ -81,8 +81,8 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
         return (
             <div>
                 <div>Current Weather</div>
+                <CityInput ref="cityInput" onEnterPress= { this.changeCity } />
                 <div>
-                    <CityInput ref="cityInput" onEnterPress= { this.changeCity } />
                     <Message text= { this.state.messageText } />
                 </div>
                 <div>Previous searches: { this.state.cityNames.length ? this.state.cityNames : '---' }</div>

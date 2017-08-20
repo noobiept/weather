@@ -1,3 +1,7 @@
+body {
+    text-align: center;
+}
+
 #WeatherInfoContainer > div {
     display: inline-block;
     margin: 10px;
@@ -8,4 +12,19 @@
     color: blue;
     text-decoration: underline;
     margin: 4px;
+}
+
+#WeatherList {
+    width: 95vw;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+#WeatherList > div {
+    display: inline-block;
+}
+
+.message {
+    display: inline-block;
 }

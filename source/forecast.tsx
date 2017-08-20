@@ -100,7 +100,7 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
                 <div>Lat: { info.city.coord.lat } / Lon: { info.city.coord.lon }</div>
                 <Chart width= { 800 } height= { 400 } data= { temperatures } unit= { '°C' } title= { 'Temperature' } />
                 <Chart width= { 800 } height= { 400 } data= { humidities } unit= { '%' } title= { 'Humidity' } />
-                <div>{ weatherList }</div>
+                <div id="WeatherList">{ weatherList }</div>
             </div>
         );
     }
