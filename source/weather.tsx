@@ -12,7 +12,7 @@ interface WeatherProps {
 }
 
 interface WeatherState {
-    cityNames: string[];        // list with all the city names that were searched for
+    cityNames: React.ReactElement <HTMLAnchorElement>[];    // list with all the city names that were searched for
     current: React.ReactElement <CurrentWeather> | undefined;
     forecast: React.ReactElement <Forecast> | undefined;
     messageText: string;        // warn/error message to show to the user
@@ -43,7 +43,7 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
     }
 
 
-    async changeCity( name: string ) {
+    async changeCity( name: string, addToCityList= true ) {
 
         this.setState({ messageText: 'Loading...' });
 
@@ -55,7 +55,13 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
         if ( current && forecast ) {
 
             let updated = this.state.cityNames.slice();
-            updated.push( name );
+
+            if ( addToCityList ) {
+                let properName = current.name;
+                let clickHandler = () => { this.changeCity( properName, false ); };
+
+                updated.push( <a key= { this.state.cityNames.length } className="cityLink" onClick= { clickHandler }>{ properName }</a> );
+            }
 
             this.setState({
                 current: <CurrentWeather info= { current } />,
@@ -79,7 +85,7 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
                     <CityInput ref="cityInput" onEnterPress= { this.changeCity } />
                     <Message text= { this.state.messageText } />
                 </div>
-                <div>Previous searches: { this.state.cityNames }</div>
+                <div>Previous searches: { this.state.cityNames.length ? this.state.cityNames : '---' }</div>
                 <div id="WeatherInfoContainer">
                     { this.state.current }
                     { this.state.forecast }

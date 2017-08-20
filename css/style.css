@@ -2,3 +2,10 @@
     display: inline-block;
     margin: 10px;
 }
+
+.cityLink {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+    margin: 4px;
+}
