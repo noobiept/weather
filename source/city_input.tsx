@@ -38,7 +38,7 @@ class CityInput extends React.Component <CityInputProps, CityInputState> {
 
     render() {
         return (
-            <input type="text" onKeyPress= { this.keyPress }></input>
+            <input type="text" placeholder="City name.." onKeyPress= { this.keyPress }></input>
         );
     }
 }

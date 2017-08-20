@@ -79,13 +79,12 @@ class CurrentWeather extends React.Component <CurrentWeatherProps, CurrentWeathe
 
         return (
             <div>
+                <h1>Current Weather</h1>
                 <div>Location: { info.name }</div>
                 <div>Latitude: { info.coord.lat } / Longitude: { info.coord.lon }</div>
                 <div>Humidity: { info.main.humidity } %</div>
                 <div>Pressure: { info.main.pressure } hPa</div>
                 <div>Temperature: { info.main.temp } °C</div>
-                <div>Min Temperature: { info.main.temp_min } °C</div>
-                <div>Max Temperature: { info.main.temp_max } °C</div>
                 { seaLevel }
                 { groundLevel }
                 <div>Wind Speed: { info.wind.speed } meter/sec / Degree: { info.wind.deg } °</div>

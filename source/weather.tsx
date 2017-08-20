@@ -80,7 +80,6 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
     render() {
         return (
             <div>
-                <div>Current Weather</div>
                 <CityInput ref="cityInput" onEnterPress= { this.changeCity } />
                 <div>
                     <Message text= { this.state.messageText } />
