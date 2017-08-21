@@ -84,7 +84,7 @@ class Chart extends React.Component <ChartProps, ChartState> {
 
     render() {
         return (
-            <canvas ref="canvasElement" width= { this.props.width } height= {this.props.height }></canvas>
+            <canvas ref="canvasElement" width= { this.props.width } height= { this.props.height }></canvas>
         );
     }
 }

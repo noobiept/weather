@@ -42,29 +42,36 @@ interface ForecastProps {
 }
 
 interface ForecastState {
+    canvas: {
+        width: number;
+        height: number;
+        data: number[];
+        unit: string;
+        title: string;
+    };
+}
 
+enum ForecastCanvasType {
+    temperature, humidity
 }
 
 
 class Forecast extends React.Component <ForecastProps, ForecastState> {
 
-    static async getCurrentWeather( cityName: string ): Promise <ForecastInfo | undefined> {
-
-        var response = await fetch( `http://api.openweathermap.org/data/2.5/forecast?q=${ cityName }&appid=8cffe81fbe82ac71521e0cf28f0f3496&units=metric` )
-
-        if ( response.status !== 200 ) {
-            return undefined;
-        }
-
-        return await response.json();
-    }
+    temperatures: number[];
+    humidities: number[];
+    weatherList: React.ReactElement <HTMLDivElement>[];
+    showTemperature: () => void;
+    showHumidity: () => void;
 
 
-    render() {
-        let info = this.props.info;
-        let weatherList = [];
-        let temperatures = [];
-        let humidities = [];
+    constructor( props: ForecastProps ) {
+        super( props );
+
+        let info = props.info;
+        this.weatherList = [];
+        this.temperatures = [];
+        this.humidities = [];
 
         for (let a = 0 ; a < info.list.length ; a++) {
             let item = info.list[ a ];
@@ -78,10 +85,10 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
                 )
             }
 
-            temperatures.push( item.main.temp );
-            humidities.push( item.main.humidity );
+            this.temperatures.push( item.main.temp );
+            this.humidities.push( item.main.humidity );
 
-            weatherList.push(
+            this.weatherList.push(
                 <div key={ a }>
                     <div>dt: { item.dt_txt } ({ item.dt })</div>
                     <div>{ item.main.pressure }</div>
@@ -94,14 +101,78 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
             )
         }
 
+        this.showTemperature = () => {
+            this.showInCanvas( ForecastCanvasType.temperature );
+        };
+        this.showHumidity = () => {
+            this.showInCanvas( ForecastCanvasType.humidity );
+        };
+
+        this.state = {
+            canvas: {
+                width: 800,
+                height: 400,
+                ...this.getCanvasInfo( ForecastCanvasType.temperature )
+            }
+        };
+    }
+
+
+    getCanvasInfo( type: ForecastCanvasType ) {
+        if ( type === ForecastCanvasType.temperature ) {
+            return {
+                data: this.temperatures,
+                unit: '°C',
+                title: 'Temperature'
+            };
+        }
+
+        else {
+            return {
+                data: this.humidities,
+                unit: '%',
+                title: 'Humidity'
+            };
+        }
+    }
+
+
+    showInCanvas( type: ForecastCanvasType ) {
+        this.setState({
+            canvas: {
+                width: this.state.canvas.width,
+                height: this.state.canvas.height,
+                ...this.getCanvasInfo( type )
+            }
+        });
+    }
+
+
+    render() {
+
         return (
             <div>
                 <h1>Forecast</h1>
-                <Chart width= { 800 } height= { 400 } data= { temperatures } unit= { '°C' } title= { 'Temperature' } />
-                <Chart width= { 800 } height= { 400 } data= { humidities } unit= { '%' } title= { 'Humidity' } />
-                <div id="WeatherList">{ weatherList }</div>
+                <ul>
+                    <li onClick= { this.showTemperature }>Temperature</li>
+                    <li onClick= { this.showHumidity }>Humidity</li>
+                </ul>
+                <Chart width= { this.state.canvas.width } height= { this.state.canvas.height } data= { this.state.canvas.data } unit= { this.state.canvas.unit } title= { this.state.canvas.title } />
+                <div id="WeatherList">{ this.weatherList }</div>
             </div>
         );
+    }
+
+
+    static async getCurrentWeather( cityName: string ): Promise <ForecastInfo | undefined> {
+
+        var response = await fetch( `http://api.openweathermap.org/data/2.5/forecast?q=${ cityName }&appid=8cffe81fbe82ac71521e0cf28f0f3496&units=metric` )
+
+        if ( response.status !== 200 ) {
+            return undefined;
+        }
+
+        return await response.json();
     }
 }
 
