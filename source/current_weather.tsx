@@ -25,6 +25,7 @@ interface CurrentWeatherInfo {
         speed: number;          // Wind speed. Unit Default: meter/sec, Metric: meter/sec, Imperial: miles/hour.
         deg: number;            // Wind direction, degrees (meteorological)
     };
+    dt: number;                 // Time of data calculation, unix, UTC
 }
 
 interface CurrentWeatherProps {
@@ -76,11 +77,14 @@ class CurrentWeather extends React.Component <CurrentWeatherProps, CurrentWeathe
             groundLevel = <div>Atmospheric pressure on the ground level: { info.main.grnd_level } hPa</div>;
         }
 
+        let lastUpdated = new Date( info.dt * 1000 );
+        let hourMinutes = `${ lastUpdated.getHours() }h ${ lastUpdated.getMinutes() }m`;
 
         return (
             <div>
                 <h1>Current Weather</h1>
                 <div>Location: { info.name }</div>
+                <div title={ lastUpdated.toString() }>Last updated: { hourMinutes }</div>
                 <div>Latitude: { info.coord.lat } / Longitude: { info.coord.lon }</div>
                 <div>Humidity: { info.main.humidity } %</div>
                 <div>Pressure: { info.main.pressure } hPa</div>
