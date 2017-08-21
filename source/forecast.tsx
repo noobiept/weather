@@ -63,6 +63,7 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
     weatherList: React.ReactElement <HTMLDivElement>[];
     showTemperature: () => void;
     showHumidity: () => void;
+    canvasType: ForecastCanvasType;
 
 
     constructor( props: ForecastProps ) {
@@ -108,11 +109,12 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
             this.showInCanvas( ForecastCanvasType.humidity );
         };
 
+        this.canvasType = ForecastCanvasType.temperature;
         this.state = {
             canvas: {
                 width: 800,
                 height: 400,
-                ...this.getCanvasInfo( ForecastCanvasType.temperature )
+                ...this.getCanvasInfo( this.canvasType )
             }
         };
     }
@@ -138,6 +140,12 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
 
 
     showInCanvas( type: ForecastCanvasType ) {
+
+        if ( type === this.canvasType ) {
+            return;
+        }
+
+        this.canvasType = type;
         this.setState({
             canvas: {
                 width: this.state.canvas.width,
