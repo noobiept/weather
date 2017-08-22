@@ -17,6 +17,10 @@ body {
     margin: 4px;
 }
 
+.selected {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
 /* specific elements */
 
 #WeatherInfoContainer > div {

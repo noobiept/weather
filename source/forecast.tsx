@@ -158,12 +158,23 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
 
     render() {
 
+        let temperatureClass = 'button';
+        let humidityClass = 'button';
+
+        if ( this.canvasType === ForecastCanvasType.temperature ) {
+            temperatureClass += ' selected';
+        }
+
+        else {
+            humidityClass += ' selected';
+        }
+
         return (
             <div>
                 <h1>Forecast</h1>
                 <ul id="ChartTypeList">
-                    <li onClick= { this.showTemperature } className="button">Temperature</li>
-                    <li onClick= { this.showHumidity } className="button">Humidity</li>
+                    <li onClick= { this.showTemperature } className= { temperatureClass }>Temperature</li>
+                    <li onClick= { this.showHumidity } className= { humidityClass }>Humidity</li>
                 </ul>
                 <Chart width= { this.state.canvas.width } height= { this.state.canvas.height } data= { this.state.canvas.data } unit= { this.state.canvas.unit } title= { this.state.canvas.title } />
                 <div id="WeatherList">{ this.weatherList }</div>
