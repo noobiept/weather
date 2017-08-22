@@ -60,7 +60,7 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
                 let properName = current.name;
                 let clickHandler = () => { this.changeCity( properName, false ); };
 
-                updated.push( <a key= { this.state.cityNames.length } className="cityLink" onClick= { clickHandler }>{ properName }</a> );
+                updated.push( <a key= { this.state.cityNames.length } className="button" onClick= { clickHandler }>{ properName }</a> );
             }
 
             this.setState({

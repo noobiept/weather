@@ -1,17 +1,27 @@
+/* basic elements */
+
 body {
     text-align: center;
 }
 
-#WeatherInfoContainer > div {
+/* classes */
+
+.message {
     display: inline-block;
-    margin: 10px;
 }
 
-.cityLink {
+.button {
     cursor: pointer;
     color: blue;
     text-decoration: underline;
     margin: 4px;
+}
+
+/* specific elements */
+
+#WeatherInfoContainer > div {
+    display: inline-block;
+    margin: 10px;
 }
 
 #WeatherList {
@@ -25,6 +35,12 @@ body {
     display: inline-block;
 }
 
-.message {
+#ChartTypeList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#ChartTypeList > li {
     display: inline-block;
 }

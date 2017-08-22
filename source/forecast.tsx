@@ -161,9 +161,9 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
         return (
             <div>
                 <h1>Forecast</h1>
-                <ul>
-                    <li onClick= { this.showTemperature }>Temperature</li>
-                    <li onClick= { this.showHumidity }>Humidity</li>
+                <ul id="ChartTypeList">
+                    <li onClick= { this.showTemperature } className="button">Temperature</li>
+                    <li onClick= { this.showHumidity } className="button">Humidity</li>
                 </ul>
                 <Chart width= { this.state.canvas.width } height= { this.state.canvas.height } data= { this.state.canvas.data } unit= { this.state.canvas.unit } title= { this.state.canvas.title } />
                 <div id="WeatherList">{ this.weatherList }</div>
