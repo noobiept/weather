@@ -12,7 +12,8 @@ interface WeatherProps {
 }
 
 interface WeatherState {
-    cityNames: React.ReactElement <HTMLAnchorElement>[];    // list with all the city names that were searched for
+    cityNames: string[];        // list with all the city names that were searched for
+    selectedPosition: number;   // position of the currently selected city name element
     current: React.ReactElement <CurrentWeather> | undefined;
     forecast: React.ReactElement <Forecast> | undefined;
     messageText: string;        // warn/error message to show to the user
@@ -29,7 +30,8 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
             cityNames: [],
             current: undefined,
             forecast: undefined,
-            messageText: ''
+            messageText: '',
+            selectedPosition: -1
         };
     }
 
@@ -43,7 +45,7 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
     }
 
 
-    async changeCity( name: string, addToCityList= true ) {
+    async changeCity( name: string, previousPosition?: number ) {
 
         this.setState({ messageText: 'Loading...' });
 
@@ -55,19 +57,24 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
         if ( current && forecast ) {
 
             let updated = this.state.cityNames.slice();
+            let position;
 
-            if ( addToCityList ) {
-                let properName = current.name;
-                let clickHandler = () => { this.changeCity( properName, false ); };
+                // add a new entry to the list
+            if ( typeof previousPosition === 'undefined' ) {
+                position = updated.length;
+                updated.push( current.name );
+            }
 
-                updated.push( <a key= { this.state.cityNames.length } className="button" onClick= { clickHandler }>{ properName }</a> );
+            else {
+                position = previousPosition;
             }
 
             this.setState({
                 current: <CurrentWeather info= { current } />,
                 forecast: <Forecast info= { forecast } />,
                 messageText: '',
-                cityNames: updated
+                cityNames: updated,
+                selectedPosition: position
             });
         }
 
@@ -78,13 +85,30 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
 
 
     render() {
+        let citySearches = [];
+
+        for (let a = 0 ; a < this.state.cityNames.length ; a++) {
+            let name = this.state.cityNames[ a ];
+            let position = a;
+            let clickHandler = () => { this.changeCity( name, position ); };
+            let cssClass = 'button';
+
+            if ( a === this.state.selectedPosition ) {
+                cssClass += ' selected';
+            }
+
+            citySearches.push(
+                <a key= { a } className= { cssClass } onClick= { clickHandler }>{ name }</a>
+            );
+        }
+
         return (
             <div>
                 <CityInput ref="cityInput" onEnterPress= { this.changeCity } />
                 <div>
                     <Message text= { this.state.messageText } />
                 </div>
-                <div>Previous searches: { this.state.cityNames.length ? this.state.cityNames : '---' }</div>
+                <div>Previous searches: { citySearches.length ? citySearches : '---' }</div>
                 <div id="WeatherInfoContainer">
                     { this.state.current }
                     { this.state.forecast }
