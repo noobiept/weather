@@ -1,10 +1,11 @@
 import * as React from "react";
 
-
     // reference: http://openweathermap.org/current
 interface CurrentWeatherInfo {
     name: string;               // City name
     weather: {
+        id: number;
+        icon: string;           // 'id' of the weather icon
         main: string;           // Group of weather parameters (Rain, Snow, Extreme etc.)
         description: string;    // Weather condition within the group
     }[];
@@ -26,6 +27,11 @@ interface CurrentWeatherInfo {
         deg: number;            // Wind direction, degrees (meteorological)
     };
     dt: number;                 // Time of data calculation, unix, UTC
+    sys: {
+        country: string;        // Country code (GB, JP etc.)
+        sunrise: number;        // Sunrise time, unix, UTC
+        sunset: number;         // Sunset time, unix, UTC
+    };
 }
 
 interface CurrentWeatherProps {
@@ -61,9 +67,7 @@ class CurrentWeather extends React.Component <CurrentWeatherProps, CurrentWeathe
             let weather = info.weather[ a ];
 
             weatherInfo.push(
-                <div key= { a }>
-                    Main: { weather.main } Description: { weather.description }
-                </div>
+                <img key= { a } title= { weather.description } src={ `http://openweathermap.org/img/w/${ weather.icon }.png` } />
             );
         }
 
@@ -82,17 +86,16 @@ class CurrentWeather extends React.Component <CurrentWeatherProps, CurrentWeathe
 
         return (
             <div>
-                <h1>Current Weather</h1>
-                <div>Location: { info.name }</div>
+                <h1>{ info.name }, { info.sys.country }</h1>
+                <div>Temperature: { info.main.temp } °C</div>
+                <div>{ weatherInfo }</div>
                 <div title={ lastUpdated.toString() }>Last updated: { hourMinutes }</div>
                 <div>Latitude: { info.coord.lat } / Longitude: { info.coord.lon }</div>
                 <div>Humidity: { info.main.humidity } %</div>
                 <div>Pressure: { info.main.pressure } hPa</div>
-                <div>Temperature: { info.main.temp } °C</div>
                 { seaLevel }
                 { groundLevel }
                 <div>Wind Speed: { info.wind.speed } meter/sec / Degree: { info.wind.deg } °</div>
-                <div>{ weatherInfo }</div>
             </div>
         );
     }
