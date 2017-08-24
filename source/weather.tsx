@@ -69,8 +69,6 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
                 position = previousPosition;
             }
 
-
-
             this.setState({
                 current: <CurrentWeather key= { 'current.' + current.name } info= { current } />,
                 forecast: <Forecast key= { 'forecast.' + forecast.city.name } info= { forecast } />,

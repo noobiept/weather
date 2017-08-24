@@ -67,7 +67,7 @@ class CurrentWeather extends React.Component <CurrentWeatherProps, CurrentWeathe
             let weather = info.weather[ a ];
 
             weatherInfo.push(
-                <img key= { a } title= { weather.description } src={ `http://openweathermap.org/img/w/${ weather.icon }.png` } />
+                <img className="weatherCondition" key= { a } title= { weather.description } src={ `http://openweathermap.org/img/w/${ weather.icon }.png` } />
             );
         }
 
@@ -87,8 +87,7 @@ class CurrentWeather extends React.Component <CurrentWeatherProps, CurrentWeathe
         return (
             <div>
                 <h1>{ info.name }, { info.sys.country }</h1>
-                <div>Temperature: { info.main.temp } °C</div>
-                <div>{ weatherInfo }</div>
+                <div>{ weatherInfo } Temperature: { info.main.temp } °C</div>
                 <div title={ lastUpdated.toString() }>Last updated: { hourMinutes }</div>
                 <div>Latitude: { info.coord.lat } / Longitude: { info.coord.lon }</div>
                 <div>Humidity: { info.main.humidity } %</div>
