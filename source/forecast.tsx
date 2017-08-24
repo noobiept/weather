@@ -1,6 +1,8 @@
 import * as React from "react";
 
 import Chart from "./chart";
+import { WeatherConditionInfo } from "./weather";
+import WeatherCondition from "./weather_condition";
 
 
     // reference: http://openweathermap.org/forecast5
@@ -18,10 +20,7 @@ interface ForecastInfo {
             humidity: number;
             temp_kf: number;
         };
-        weather: {
-            main: string;
-            description: string;
-        }[];
+        weather: WeatherConditionInfo[];
         wind: {
             speed: number;
             deg: number;
@@ -91,7 +90,8 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
 
             this.weatherList.push(
                 <div key={ a }>
-                    <div>dt: { item.dt_txt } ({ item.dt })</div>
+                    <WeatherCondition temperature= { item.main.temp } weather= { item.weather } />
+                    <div>Date: { item.dt_txt }</div>
                     <div>{ item.main.pressure }</div>
                     <div>{ item.main.sea_level }</div>
                     <div>{ item.main.grnd_level }</div>

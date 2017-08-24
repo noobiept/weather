@@ -1,14 +1,11 @@
 import * as React from "react";
+import { WeatherConditionInfo } from "./weather";
+import WeatherCondition from "./weather_condition";
 
     // reference: http://openweathermap.org/current
 interface CurrentWeatherInfo {
     name: string;               // City name
-    weather: {
-        id: number;
-        icon: string;           // 'id' of the weather icon
-        main: string;           // Group of weather parameters (Rain, Snow, Extreme etc.)
-        description: string;    // Weather condition within the group
-    }[];
+    weather: WeatherConditionInfo[];
     coord: {
         lat: number;            // City geo location, latitude
         lon: number;            // City geo location, longitude
@@ -61,16 +58,6 @@ class CurrentWeather extends React.Component <CurrentWeatherProps, CurrentWeathe
         let current = null;
         let info = this.props.info;
 
-        let weatherInfo = [];
-
-        for (var a = 0 ; a < info.weather.length ; a++) {
-            let weather = info.weather[ a ];
-
-            weatherInfo.push(
-                <img className="weatherCondition" key= { a } title= { weather.description } src={ `http://openweathermap.org/img/w/${ weather.icon }.png` } />
-            );
-        }
-
         let seaLevel;
         if ( info.main.sea_level ) {
             seaLevel = <div>Atmospheric pressure on the sea level: { info.main.sea_level } hPa</div>;
@@ -87,7 +74,7 @@ class CurrentWeather extends React.Component <CurrentWeatherProps, CurrentWeathe
         return (
             <div>
                 <h1>{ info.name }, { info.sys.country }</h1>
-                <div>{ weatherInfo } Temperature: { info.main.temp } °C</div>
+                <WeatherCondition temperature= { info.main.temp } weather= { info.weather } />
                 <div title={ lastUpdated.toString() }>Last updated: { hourMinutes }</div>
                 <div>Latitude: { info.coord.lat } / Longitude: { info.coord.lon }</div>
                 <div>Humidity: { info.main.humidity } %</div>
