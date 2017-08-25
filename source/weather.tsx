@@ -5,6 +5,7 @@ import CityInput from "./city_input";
 import Message from "./message";
 import CurrentWeather from "./current_weather";
 import Forecast from "./forecast";
+import SearchList from "./search_list";
 
 
 export interface WeatherConditionInfo {
@@ -19,8 +20,6 @@ interface WeatherProps {
 }
 
 interface WeatherState {
-    cityNames: string[];        // list with all the city names that were searched for
-    selectedPosition: number;   // position of the currently selected city name element
     current: React.ReactElement <CurrentWeather> | undefined;
     forecast: React.ReactElement <Forecast> | undefined;
     messageText: string;        // warn/error message to show to the user
@@ -29,16 +28,17 @@ interface WeatherState {
 
 class Weather extends React.Component <WeatherProps, WeatherState> {
 
+    searchList: SearchList | null;
+
+
     constructor() {
         super();
 
         this.changeCity = this.changeCity.bind( this );
         this.state = {
-            cityNames: [],
             current: undefined,
             forecast: undefined,
-            messageText: '',
-            selectedPosition: -1
+            messageText: ''
         };
     }
 
@@ -52,7 +52,7 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
     }
 
 
-    async changeCity( name: string, previousPosition?: number ) {
+    async changeCity( name: string, addToList= true ) {
 
         this.setState({ messageText: 'Loading...' });
 
@@ -63,25 +63,14 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
 
         if ( current && forecast ) {
 
-            let updated = this.state.cityNames.slice();
-            let position;
-
-                // add a new entry to the list
-            if ( typeof previousPosition === 'undefined' ) {
-                position = updated.length;
-                updated.push( current.name );
-            }
-
-            else {
-                position = previousPosition;
+            if ( addToList !== false ) {
+                this.searchList!.add( current.name );
             }
 
             this.setState({
                 current: <CurrentWeather key= { 'current.' + current.name } info= { current } />,
                 forecast: <Forecast key= { 'forecast.' + forecast.city.name } info= { forecast } />,
-                messageText: '',
-                cityNames: updated,
-                selectedPosition: position
+                messageText: ''
             });
         }
 
@@ -92,22 +81,7 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
 
 
     render() {
-        let citySearches = [];
 
-        for (let a = 0 ; a < this.state.cityNames.length ; a++) {
-            let name = this.state.cityNames[ a ];
-            let position = a;
-            let clickHandler = () => { this.changeCity( name, position ); };
-            let cssClass = 'button';
-
-            if ( a === this.state.selectedPosition ) {
-                cssClass += ' selected';
-            }
-
-            citySearches.push(
-                <a key= { a } className= { cssClass } onClick= { clickHandler }>{ name }</a>
-            );
-        }
 
         return (
             <div>
@@ -115,7 +89,7 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
                 <div>
                     <Message text= { this.state.messageText } />
                 </div>
-                <div>Previous searches: { citySearches.length ? citySearches : '---' }</div>
+                <SearchList ref= { (search) => { this.searchList = search; } } onItemClick= { this.changeCity } />
                 <div id="WeatherInfoContainer">
                     { this.state.current }
                     { this.state.forecast }
