@@ -3,6 +3,7 @@ import * as React from "react";
 
 interface SearchListProps {
     onItemClick: ( cityName: string, addToList: boolean ) => void;
+    limit: number;              // maximum number of elements in the list
 }
 
 interface SearchListState {
@@ -26,6 +27,11 @@ class SearchList extends React.Component <SearchListProps, SearchListState> {
     add( name: string ) {
         let updated = this.state.cityNames.slice();
         updated.push( name );
+
+            // if we get past the limit, remove the older entry (at the start of the array)
+        if ( updated.length > this.props.limit ) {
+            updated.splice( 0, 1 );
+        }
 
         this.setState({
             cityNames: updated,

@@ -89,7 +89,7 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
                 <div>
                     <Message text= { this.state.messageText } />
                 </div>
-                <SearchList ref= { (search) => { this.searchList = search; } } onItemClick= { this.changeCity } />
+                <SearchList ref= { (search) => { this.searchList = search; } } onItemClick= { this.changeCity } limit= { 5 } />
                 <div id="WeatherInfoContainer">
                     { this.state.current }
                     { this.state.forecast }
