@@ -51,7 +51,7 @@ interface ForecastState {
 }
 
 enum ForecastCanvasType {
-    temperature, humidity
+    temperature, humidity, pressure, windSpeed
 }
 
 
@@ -59,10 +59,14 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
 
     temperatures: number[];
     humidities: number[];
+    pressures: number[];
+    wind_speeds: number[];
     xAxis: string[];
     weatherList: React.ReactElement <HTMLDivElement>[];
     showTemperature: () => void;
     showHumidity: () => void;
+    showPressure: () => void;
+    showWindSpeed: () => void;
     canvasType: ForecastCanvasType;
 
 
@@ -73,6 +77,8 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
         this.weatherList = [];
         this.temperatures = [];
         this.humidities = [];
+        this.pressures = [];
+        this.wind_speeds = [];
         this.xAxis = [];
 
         for (let a = 0 ; a < info.list.length ; a++) {
@@ -84,6 +90,8 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
 
             this.temperatures.push( item.main.temp );
             this.humidities.push( item.main.humidity );
+            this.pressures.push( item.main.pressure );
+            this.wind_speeds.push( item.wind.speed );
             this.xAxis.push( hourMinute );
 
             this.weatherList.push(
@@ -103,6 +111,12 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
         this.showHumidity = () => {
             this.showInCanvas( ForecastCanvasType.humidity );
         };
+        this.showPressure = () => {
+            this.showInCanvas( ForecastCanvasType.pressure );
+        };
+        this.showWindSpeed = () => {
+            this.showInCanvas( ForecastCanvasType.windSpeed );
+        };
 
         this.canvasType = ForecastCanvasType.temperature;
         this.state = {
@@ -116,20 +130,35 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
 
 
     getCanvasInfo( type: ForecastCanvasType ) {
-        if ( type === ForecastCanvasType.temperature ) {
-            return {
-                data: this.temperatures,
-                unit: '°C',
-                title: 'Temperature'
-            };
-        }
 
-        else {
-            return {
-                data: this.humidities,
-                unit: '%',
-                title: 'Humidity'
-            };
+        switch( type ) {
+            case ForecastCanvasType.temperature:
+                return {
+                    data: this.temperatures,
+                    unit: '°C',
+                    title: 'Temperature'
+                };
+
+            case ForecastCanvasType.humidity:
+                return {
+                    data: this.humidities,
+                    unit: '%',
+                    title: 'Humidity'
+                };
+
+            case ForecastCanvasType.pressure:
+                return {
+                    data: this.pressures,
+                    unit: 'hPa',
+                    title: 'Pressure'
+                };
+
+            case ForecastCanvasType.windSpeed:
+                return {
+                    data: this.wind_speeds,
+                    unit: 'm/s',
+                    title: 'Wind speed'
+                };
         }
     }
 
@@ -153,23 +182,39 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
 
     render() {
 
-        let temperatureClass = 'button';
-        let humidityClass = 'button';
+        let cssClasses = {
+            temperature: 'button',
+            humidity: 'button',
+            pressure: 'button',
+            windSpeed: 'button'
+        };
 
-        if ( this.canvasType === ForecastCanvasType.temperature ) {
-            temperatureClass += ' selected';
-        }
+        switch( this.canvasType ) {
+            case ForecastCanvasType.temperature:
+                cssClasses.temperature += ' selected';
+                break;
 
-        else {
-            humidityClass += ' selected';
+            case ForecastCanvasType.humidity:
+                cssClasses.humidity += ' selected';
+                break;
+
+            case ForecastCanvasType.pressure:
+                cssClasses.pressure += ' selected';
+                break;
+
+            case ForecastCanvasType.windSpeed:
+                cssClasses.windSpeed += ' selected';
+                break;
         }
 
         return (
             <div>
                 <h1>Forecast</h1>
                 <ul id="ChartTypeList">
-                    <li onClick= { this.showTemperature } className= { temperatureClass }>Temperature</li>
-                    <li onClick= { this.showHumidity } className= { humidityClass }>Humidity</li>
+                    <li onClick= { this.showTemperature } className= { cssClasses.temperature }>Temperature</li>
+                    <li onClick= { this.showHumidity } className= { cssClasses.humidity }>Humidity</li>
+                    <li onClick= { this.showPressure } className= { cssClasses.pressure }>Pressure</li>
+                    <li onClick= { this.showWindSpeed } className= { cssClasses.windSpeed }>Wind speed</li>
                 </ul>
                 <Chart width= { this.state.canvas.width } height= { this.state.canvas.height } data= { this.state.canvas.data } unit= { this.state.canvas.unit } title= { this.state.canvas.title } xAxis= { this.xAxis } />
                 <div id="WeatherList">{ this.weatherList }</div>
