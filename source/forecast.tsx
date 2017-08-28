@@ -59,6 +59,7 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
 
     temperatures: number[];
     humidities: number[];
+    xAxis: string[];
     weatherList: React.ReactElement <HTMLDivElement>[];
     showTemperature: () => void;
     showHumidity: () => void;
@@ -72,6 +73,7 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
         this.weatherList = [];
         this.temperatures = [];
         this.humidities = [];
+        this.xAxis = [];
 
         for (let a = 0 ; a < info.list.length ; a++) {
             let item = info.list[ a ];
@@ -85,8 +87,13 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
                 )
             }
 
+                // get the hour/minute from each item, to be displayed on the chart later on
+            let date = new Date( item.dt );
+            let hourMinute = `${ date.getHours() }:${ date.getMinutes() }`;
+
             this.temperatures.push( item.main.temp );
             this.humidities.push( item.main.humidity );
+            this.xAxis.push( hourMinute );
 
             this.weatherList.push(
                 <div key={ a }>
@@ -176,7 +183,7 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
                     <li onClick= { this.showTemperature } className= { temperatureClass }>Temperature</li>
                     <li onClick= { this.showHumidity } className= { humidityClass }>Humidity</li>
                 </ul>
-                <Chart width= { this.state.canvas.width } height= { this.state.canvas.height } data= { this.state.canvas.data } unit= { this.state.canvas.unit } title= { this.state.canvas.title } />
+                <Chart width= { this.state.canvas.width } height= { this.state.canvas.height } data= { this.state.canvas.data } unit= { this.state.canvas.unit } title= { this.state.canvas.title } xAxis= { this.xAxis } />
                 <div id="WeatherList">{ this.weatherList }</div>
             </div>
         );

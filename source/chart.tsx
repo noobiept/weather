@@ -7,6 +7,7 @@ interface ChartProps {
     data: number[];
     unit: string;
     title: string;
+    xAxis: string[];
 }
 
 interface ChartState {
@@ -30,6 +31,7 @@ class Chart extends React.Component <ChartProps, ChartState> {
         var canvas = this.refs.canvasElement as HTMLCanvasElement;
         var ctx = canvas.getContext( '2d' )!;
 
+        var margin = 20;
         var width = this.props.width;
         var height = this.props.height;
         var data = this.props.data;
@@ -38,12 +40,15 @@ class Chart extends React.Component <ChartProps, ChartState> {
         var min = Math.min( ...data );
         var max = Math.max( ...data );
 
-        var horizontalGap = width / (data.length + 1);
-        var verticalGap = height / (max - min + 1);
+        var horizontalGap = (width - 2 * margin) / (data.length - 1);
+        var verticalGap = (height - 2 * margin) / (max - min);
         let previousX;
         let previousY;
 
-        ctx.clearRect( 0, 0, canvas.width, canvas.height );     // clear the previous drawing
+            // clear the previous drawing
+        ctx.clearRect( 0, 0, canvas.width, canvas.height );
+
+            // draw title
         ctx.save();
         ctx.font = '20px arial';
         ctx.textAlign = 'center';
@@ -52,10 +57,16 @@ class Chart extends React.Component <ChartProps, ChartState> {
         ctx.fillText( this.props.title, width / 2, 0 );
         ctx.restore();
 
+            // draw x-axis
+        ctx.moveTo( margin, height - margin );
+        ctx.lineTo( width - margin, height - margin );
+        ctx.stroke();
+
+            // draw chart lines
         for (var a = 0 ; a < data.length ; a++) {
             let value = data[ a ];
-            let x = horizontalGap + a * horizontalGap;
-            let y = height - verticalGap / 2 - (value - min) * verticalGap;
+            let x = margin + a * horizontalGap;
+            let y = height - margin - (value - min) * verticalGap;
 
             if ( previousX ) {
                 ctx.beginPath();
@@ -68,16 +79,25 @@ class Chart extends React.Component <ChartProps, ChartState> {
             previousX = x;
             previousY = y;
 
+                // chart point
             ctx.beginPath();
             ctx.arc( x, y, 2, 0, 2 * Math.PI );
             ctx.fillStyle = 'green';
             ctx.fill();
 
+                // value text
             ctx.beginPath();
             ctx.textAlign = 'center';
             ctx.textBaseline = 'bottom';
             ctx.fillStyle = 'blue';
             ctx.fillText( `${ value } ${ unit }`, x, y );
+
+                // x-axis point (not on every point)
+            if ( a % 2 === 0 ) {
+                ctx.beginPath();
+                ctx.fillText( this.props.xAxis[ a ], x, height - margin );
+            }
+
         }
     }
 
