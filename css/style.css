@@ -27,6 +27,10 @@ body {
     vertical-align: middle;
 }
 
+.date {
+    font-weight: bold;
+}
+
 /* specific elements */
 
 #WeatherInfoContainer > div {

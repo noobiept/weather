@@ -77,15 +77,6 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
 
         for (let a = 0 ; a < info.list.length ; a++) {
             let item = info.list[ a ];
-            let weatherDescription = [];
-
-            for (let b = 0 ; b < item.weather.length ; b++) {
-                let weather = item.weather[ b ];
-
-                weatherDescription.push(
-                    <div key= { b }>Main: { weather.main } / Description: { weather.description }</div>
-                )
-            }
 
                 // get the hour/minute from each item, to be displayed on the chart later on
             let date = new Date( item.dt );
@@ -97,14 +88,11 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
 
             this.weatherList.push(
                 <div key={ a }>
+                    <div className="date">{ item.dt_txt }</div>
                     <WeatherCondition temperature= { item.main.temp } weather= { item.weather } />
-                    <div>Date: { item.dt_txt }</div>
-                    <div>{ item.main.pressure }</div>
-                    <div>{ item.main.sea_level }</div>
-                    <div>{ item.main.grnd_level }</div>
-                    <div>{ item.main.temp_kf }</div>
-                    <div>{ weatherDescription }</div>
-                    <div>Wind speed: { item.wind.speed } / Degrees: { item.wind.deg }</div>
+                    <div>Humidity: { item.main.humidity } %</div>
+                    <div>Pressure: { item.main.pressure } hPa</div>
+                    <div>Wind speed: { item.wind.speed } meter/sec / Degrees: { item.wind.deg }</div>
                 </div>
             )
         }
