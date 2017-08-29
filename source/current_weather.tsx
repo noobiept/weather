@@ -55,34 +55,32 @@ class CurrentWeather extends React.Component <CurrentWeatherProps, CurrentWeathe
     }
 
 
+    toHourMinute( unixTime: number | Date ) {
+        let date = new Date( unixTime );
+
+        return `${ date.getHours() }h ${ date.getMinutes() }m`;
+    }
+
+
     render() {
         let current = null;
         let info = this.props.info;
 
-        let seaLevel;
-        if ( info.main.sea_level ) {
-            seaLevel = <div>Atmospheric pressure on the sea level: { info.main.sea_level } hPa</div>;
-        }
-
-        let groundLevel;
-        if ( info.main.grnd_level ) {
-            groundLevel = <div>Atmospheric pressure on the ground level: { info.main.grnd_level } hPa</div>;
-        }
-
         let lastUpdated = new Date( info.dt * 1000 );
-        let hourMinutes = `${ lastUpdated.getHours() }h ${ lastUpdated.getMinutes() }m`;
+        let hourMinutes = this.toHourMinute( lastUpdated );
+        let sunrise = this.toHourMinute( info.sys.sunrise * 1000 );
+        let sunset = this.toHourMinute( info.sys.sunset * 1000 );
 
         return (
             <div>
                 <h1>{ info.name }, { info.sys.country }</h1>
                 <WeatherCondition temperature= { info.main.temp } weather= { info.weather } />
-                <div title={ lastUpdated.toString() }>Last updated: { hourMinutes }</div>
                 <div>Latitude: { info.coord.lat } / Longitude: { info.coord.lon }</div>
                 <div>Humidity: { info.main.humidity } %</div>
                 <div>Pressure: { info.main.pressure } hPa</div>
-                { seaLevel }
-                { groundLevel }
                 <Wind speed= { info.wind.speed } degree= { info.wind.deg } canvasWidth= { 15 } canvasHeight= { 15 } />
+                <div>Sunrise: { sunrise } / Sunset: { sunset }</div>
+                <div title={ lastUpdated.toString() }>Last updated: { hourMinutes }</div>
             </div>
         );
     }
