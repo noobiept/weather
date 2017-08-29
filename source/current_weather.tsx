@@ -1,6 +1,7 @@
 import * as React from "react";
 import { WeatherConditionInfo } from "./weather";
 import WeatherCondition from "./weather_condition";
+import Wind from "./wind";
 
     // reference: http://openweathermap.org/current
 interface CurrentWeatherInfo {
@@ -81,7 +82,7 @@ class CurrentWeather extends React.Component <CurrentWeatherProps, CurrentWeathe
                 <div>Pressure: { info.main.pressure } hPa</div>
                 { seaLevel }
                 { groundLevel }
-                <div>Wind Speed: { info.wind.speed } meter/sec / Degree: { info.wind.deg } °</div>
+                <Wind speed= { info.wind.speed } degree= { info.wind.deg } canvasWidth= { 15 } canvasHeight= { 15 } />
             </div>
         );
     }

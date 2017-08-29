@@ -3,6 +3,7 @@ import * as React from "react";
 import Chart from "./chart";
 import { WeatherConditionInfo } from "./weather";
 import WeatherCondition from "./weather_condition";
+import Wind from "./wind";
 
 
     // reference: http://openweathermap.org/forecast5
@@ -113,7 +114,7 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
                     <WeatherCondition temperature= { item.main.temp } weather= { item.weather } />
                     <div>Humidity: { item.main.humidity } %</div>
                     <div>Pressure: { item.main.pressure } hPa</div>
-                    <div>Wind speed: { item.wind.speed } meter/sec / Degrees: { item.wind.deg }</div>
+                    <Wind speed= { item.wind.speed } degree= { item.wind.deg } canvasWidth= { 15 } canvasHeight= { 15 } />
                 </div>
             )
         }

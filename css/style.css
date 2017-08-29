@@ -31,6 +31,10 @@ body {
     font-weight: bold;
 }
 
+.degreeCanvas {
+    vertical-align: middle;
+}
+
 /* specific elements */
 
 #WeatherInfoContainer > div {
