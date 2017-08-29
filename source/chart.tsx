@@ -97,7 +97,6 @@ class Chart extends React.Component <ChartProps, ChartState> {
                 ctx.beginPath();
                 ctx.fillText( this.props.xAxis[ a ], x, height - margin );
             }
-
         }
     }
 
