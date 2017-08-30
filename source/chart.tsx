@@ -69,11 +69,14 @@ class Chart extends React.Component <ChartProps, ChartState> {
             let y = height - margin - (value - min) * verticalGap;
 
             if ( previousX ) {
+                ctx.save();
                 ctx.beginPath();
                 ctx.strokeStyle = 'black';
+                ctx.lineWidth = 2;
                 ctx.moveTo( previousX, previousY as number );
                 ctx.lineTo( x, y );
                 ctx.stroke();
+                ctx.restore();
             }
 
             previousX = x;
@@ -85,17 +88,30 @@ class Chart extends React.Component <ChartProps, ChartState> {
             ctx.fillStyle = 'green';
             ctx.fill();
 
-                // value text
-            ctx.beginPath();
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'bottom';
-            ctx.fillStyle = 'blue';
-            ctx.fillText( `${ value } ${ unit }`, x, y );
-
-                // x-axis point (not on every point)
+                // only draw the value and x-axis point every 2 points (so it doesn't become unreadable)
             if ( a % 2 === 0 ) {
+                    // value text
                 ctx.beginPath();
+                ctx.font = 'bold 14px arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'bottom';
+                ctx.fillStyle = 'blue';
+                ctx.fillText( `${ value } ${ unit }`, x, y );
+
+                    // x-axis point
+                ctx.beginPath();
+                ctx.textBaseline = 'top';
+                ctx.fillStyle = 'black';
                 ctx.fillText( this.props.xAxis[ a ], x, height - margin );
+
+                    // draw dashed line from x-axis point to the value point
+                ctx.save();
+                ctx.beginPath();
+                ctx.setLineDash( [5, 10] );
+                ctx.moveTo( x, height - margin );
+                ctx.lineTo( x, y );
+                ctx.stroke();
+                ctx.restore();
             }
         }
     }
