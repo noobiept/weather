@@ -40,6 +40,10 @@ body {
     color: blue;
 }
 
+.chartCanvas {
+    margin: 20px;
+}
+
 /* specific elements */
 
 #WeatherInfoContainer > div {
