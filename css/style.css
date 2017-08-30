@@ -33,6 +33,11 @@ body {
 
 .degreeCanvas {
     vertical-align: middle;
+    margin: 1px 5px;
+}
+
+.value {
+    color: blue;
 }
 
 /* specific elements */

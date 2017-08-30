@@ -45,7 +45,7 @@ class Wind extends React.Component <WindProps, WindState> {
 
     render() {
         return (
-            <div>Wind Speed: { this.props.speed } meter/sec
+            <div>Wind Speed: <span className="value">{ this.props.speed }</span> meter/sec
                 <canvas
                     width= { this.props.canvasWidth }
                     height= { this.props.canvasHeight }

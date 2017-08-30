@@ -75,12 +75,12 @@ class CurrentWeather extends React.Component <CurrentWeatherProps, CurrentWeathe
             <div>
                 <h1>{ info.name }, { info.sys.country }</h1>
                 <WeatherCondition temperature= { info.main.temp } weather= { info.weather } />
-                <div>Latitude: { info.coord.lat } / Longitude: { info.coord.lon }</div>
-                <div>Humidity: { info.main.humidity } %</div>
-                <div>Pressure: { info.main.pressure } hPa</div>
+                <div>Latitude: <span className="value">{ info.coord.lat }</span> / Longitude: <span className="value">{ info.coord.lon }</span></div>
+                <div>Humidity: <span className="value">{ info.main.humidity }</span> %</div>
+                <div>Pressure: <span className="value">{ info.main.pressure }</span> hPa</div>
                 <Wind speed= { info.wind.speed } degree= { info.wind.deg } canvasWidth= { 15 } canvasHeight= { 15 } />
-                <div>Sunrise: { sunrise } / Sunset: { sunset }</div>
-                <div title={ lastUpdated.toString() }>Last updated: { hourMinutes }</div>
+                <div>Sunrise: <span className="value">{ sunrise }</span> / Sunset: <span className="value">{ sunset }</span></div>
+                <div title={ lastUpdated.toString() }>Last updated: <span className="value">{ hourMinutes }</span></div>
             </div>
         );
     }

@@ -112,8 +112,8 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
                 <div key={ a }>
                     <div className="date">{ item.dt_txt }</div>
                     <WeatherCondition temperature= { item.main.temp } weather= { item.weather } />
-                    <div>Humidity: { item.main.humidity } %</div>
-                    <div>Pressure: { item.main.pressure } hPa</div>
+                    <div>Humidity: <span className="value">{ item.main.humidity }</span> %</div>
+                    <div>Pressure: <span className="value">{ item.main.pressure }</span> hPa</div>
                     <Wind speed= { item.wind.speed } degree= { item.wind.deg } canvasWidth= { 15 } canvasHeight= { 15 } />
                 </div>
             )

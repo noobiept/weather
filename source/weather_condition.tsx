@@ -30,7 +30,7 @@ class WeatherCondition extends React.Component <WeatherConditionProps, WeatherCo
         }
 
         return (
-            <div>{ weatherInfo } Temperature: { this.props.temperature } °C</div>
+            <div>{ weatherInfo } Temperature: <span className="value">{ this.props.temperature }</span> °C</div>
         );
     }
 }
