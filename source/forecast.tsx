@@ -4,6 +4,7 @@ import Chart from "./chart";
 import { WeatherConditionInfo } from "./weather";
 import WeatherCondition from "./weather_condition";
 import Wind from "./wind";
+import { padStart } from "./utilities";
 
 
     // reference: http://openweathermap.org/forecast5
@@ -99,8 +100,9 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
             let item = info.list[ a ];
 
                 // get the hour/minute from each item, to be displayed on the chart later on
-            let date = new Date( item.dt );
-            let hourMinute = `${ date.getHours() }:${ date.getMinutes() }`;
+            let date = new Date( item.dt_txt );
+            let minutes = padStart( date.getMinutes().toString(), 2, "0" );
+            let hourMinute = `${ date.getHours() }:${ minutes }`;
 
             temperatureData.push( item.main.temp );
             humidityData.push( item.main.humidity );
