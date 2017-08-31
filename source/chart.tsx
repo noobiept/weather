@@ -1,4 +1,5 @@
 import * as React from "react";
+import { padStart } from "./utilities";
 
 
 interface ChartProps {
@@ -7,7 +8,7 @@ interface ChartProps {
     data: number[];
     unit: string;
     title: string;
-    xAxis: string[];
+    xAxis: Date[];
 }
 
 interface ChartState {
@@ -100,10 +101,22 @@ class Chart extends React.Component <ChartProps, ChartState> {
                 ctx.fillText( `${ value } ${ unit }`, x, y );
 
                     // x-axis point
+                let date = this.props.xAxis[ a ];
+                let hours = date.getHours();
+                let minutes = padStart( date.getMinutes().toString(), 2, "0" );
+                let hourMinute = `${ date.getHours() }:${ minutes }`;
+
                 ctx.beginPath();
                 ctx.textBaseline = 'top';
                 ctx.fillStyle = 'black';
-                ctx.fillText( this.props.xAxis[ a ], x, height - xAxisMargin );
+                ctx.fillText( hourMinute, x, height - xAxisMargin );
+
+                    // show the weekday at midnight
+                if ( hours === 0 ) {
+                    let weekday = [ 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' ];
+                    ctx.textBaseline = 'bottom';
+                    ctx.fillText( weekday[ date.getDay() ], x, height - xAxisMargin );
+                }
 
                     // draw dashed line from x-axis point to the value point
                 ctx.save();
