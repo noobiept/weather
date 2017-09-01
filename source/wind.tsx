@@ -1,4 +1,5 @@
 import * as React from "react";
+import { toRadians } from "./utilities";
 
 
 interface WindProps {
@@ -33,7 +34,7 @@ class Wind extends React.Component <WindProps, WindState> {
         var halfHeight = this.props.canvasHeight / 2;
 
         ctx.translate( halfWidth, halfHeight );
-        ctx.rotate( this.props.degree * Math.PI / 180 );
+        ctx.rotate( toRadians( this.props.degree ) );
 
         ctx.moveTo( -halfWidth, -halfHeight );
         ctx.lineTo( halfWidth, 0 );

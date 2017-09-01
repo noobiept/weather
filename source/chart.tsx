@@ -1,5 +1,4 @@
 import * as React from "react";
-import { padStart } from "./utilities";
 
 
 interface ChartProps {
@@ -103,7 +102,7 @@ class Chart extends React.Component <ChartProps, ChartState> {
                     // x-axis point
                 let date = this.props.xAxis[ a ];
                 let hours = date.getHours();
-                let minutes = padStart( date.getMinutes().toString(), 2, "0" );
+                let minutes = date.getMinutes().toString().padStart( 2, "0" );
                 let hourMinute = `${ date.getHours() }:${ minutes }`;
 
                 ctx.beginPath();

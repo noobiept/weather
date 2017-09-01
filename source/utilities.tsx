@@ -1,9 +1,16 @@
-export function padStart( str: string, length: number, padString= ' ' ) {
-    let fillLength = length - str.length;
+/**
+ * Convert from degrees to radians.
+ */
+export function toRadians( degrees: number ) {
+    return degrees * Math.PI / 180;
+}
 
-    if ( fillLength < 1 ) {
-        return str;
-    }
 
-    return padString.repeat( fillLength ) + str;
+/**
+ * Receives a date and returns a string in the "--h:--m" format.
+ */
+export function toHourMinute( unixTime: number | Date ) {
+    let date = new Date( unixTime );
+
+    return `${ date.getHours() }h ${ date.getMinutes() }m`;
 }

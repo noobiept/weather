@@ -2,6 +2,7 @@ import * as React from "react";
 import { WeatherConditionInfo } from "./weather";
 import WeatherCondition from "./weather_condition";
 import Wind from "./wind";
+import { toHourMinute } from "./utilities";
 
     // reference: http://openweathermap.org/current
 interface CurrentWeatherInfo {
@@ -55,21 +56,14 @@ class CurrentWeather extends React.Component <CurrentWeatherProps, CurrentWeathe
     }
 
 
-    toHourMinute( unixTime: number | Date ) {
-        let date = new Date( unixTime );
-
-        return `${ date.getHours() }h ${ date.getMinutes() }m`;
-    }
-
-
     render() {
         let current = null;
         let info = this.props.info;
 
         let lastUpdated = new Date( info.dt * 1000 );
-        let hourMinutes = this.toHourMinute( lastUpdated );
-        let sunrise = this.toHourMinute( info.sys.sunrise * 1000 );
-        let sunset = this.toHourMinute( info.sys.sunset * 1000 );
+        let hourMinutes = toHourMinute( lastUpdated );
+        let sunrise = toHourMinute( info.sys.sunrise * 1000 );
+        let sunset = toHourMinute( info.sys.sunset * 1000 );
 
         return (
             <div>
