@@ -43,8 +43,6 @@ interface ForecastProps {
 
 interface ForecastState {
     canvas: {
-        width: number;
-        height: number;
         data: number[];
         unit: string;
         title: string;
@@ -165,11 +163,7 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
         };
         this.canvasType = ForecastCanvasType.temperature;
         this.state = {
-            canvas: {
-                width: 800,
-                height: 400,
-                ...this.getCanvasInfo( this.canvasType )
-            }
+            canvas: this.getCanvasInfo( this.canvasType )
         };
     }
 
@@ -182,11 +176,7 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
 
         this.canvasType = type;
         this.setState({
-            canvas: {
-                width: this.state.canvas.width,
-                height: this.state.canvas.height,
-                ...this.getCanvasInfo( type )
-            }
+            canvas: this.getCanvasInfo( type )
         });
     }
 
@@ -238,7 +228,7 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
                     <li onClick= { showPressure } className= { cssClasses.pressure }>Pressure</li>
                     <li onClick= { showWindSpeed } className= { cssClasses.windSpeed }>Wind speed</li>
                 </ul>
-                <Chart width= { this.state.canvas.width } height= { this.state.canvas.height } data= { this.state.canvas.data } unit= { this.state.canvas.unit } title= { this.state.canvas.title } xAxis= { this.chartData.xAxis } />
+                <Chart data= { this.state.canvas.data } unit= { this.state.canvas.unit } title= { this.state.canvas.title } xAxis= { this.chartData.xAxis } />
                 <div id="WeatherList">{ this.weatherList }</div>
             </div>
         );

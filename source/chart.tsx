@@ -2,8 +2,6 @@ import * as React from "react";
 
 
 interface ChartProps {
-    width: number;
-    height: number;
     data: number[];
     unit: string;
     title: string;
@@ -11,14 +9,42 @@ interface ChartProps {
 }
 
 interface ChartState {
-
+    width: number;
+    height: number;
 }
 
 
 class Chart extends React.Component <ChartProps, ChartState> {
 
+    constructor() {
+        super();
+
+        this.state = {
+            width: 800,
+            height: 400
+        };
+    }
+
+
+    /**
+     * Set the chart canvas with the same width as the window's width.
+     */
+    updateWidth() {
+        let canvas = this.refs.canvasElement as HTMLCanvasElement;
+        let parentWidth = document.body.clientWidth;
+
+        this.setState({
+            width: parentWidth
+        });
+    }
+
+
     componentDidMount() {
-        this.updateCanvas();
+            // automatically resize the chart's width as the window's width change
+        window.addEventListener( 'resize', () => {
+            this.updateWidth();
+        });
+        this.updateWidth();
     }
 
 
@@ -33,8 +59,8 @@ class Chart extends React.Component <ChartProps, ChartState> {
 
         var margin = 35;
         var xAxisMargin = 20;
-        var width = this.props.width;
-        var height = this.props.height;
+        var width = this.state.width;
+        var height = this.state.height;
         var data = this.props.data;
         var unit = this.props.unit;
 
@@ -132,7 +158,7 @@ class Chart extends React.Component <ChartProps, ChartState> {
 
     render() {
         return (
-            <canvas className="chartCanvas" ref="canvasElement" width= { this.props.width } height= { this.props.height }></canvas>
+            <canvas className="chartCanvas" ref="canvasElement" width= { this.state.width } height= { this.state.height }></canvas>
         );
     }
 }

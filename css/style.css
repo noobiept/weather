@@ -41,14 +41,14 @@ body {
 }
 
 .chartCanvas {
-    margin: 20px;
+    margin: 20px 0;
 }
 
 /* specific elements */
 
 #WeatherInfoContainer > div {
     display: inline-block;
-    margin: 10px;
+    margin: 10px 0;
 }
 
 #WeatherList {
