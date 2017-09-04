@@ -85,6 +85,7 @@ class Chart extends React.Component <ChartProps, ChartState> {
         ctx.restore();
 
             // draw x-axis
+        ctx.beginPath();
         ctx.moveTo( margin, height - xAxisMargin );
         ctx.lineTo( width - margin, height - xAxisMargin );
         ctx.stroke();
