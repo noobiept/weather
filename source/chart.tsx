@@ -53,11 +53,47 @@ class Chart extends React.Component <ChartProps, ChartState> {
     }
 
 
+    /**
+     * Try to determine the best side to draw the text, to try to avoid as much as possible to draw text on top of the chart lines.
+     */
+    determineTextSide( value: number, left?: number, right?: number ) {
+
+        let textAlign;
+        let textBaseline;
+        let leftValue = left ? left : value;
+        let rightValue = right ? right : value;
+
+        let leftDiff = leftValue - value;
+        let rightDiff = rightValue - value;
+
+        if ( leftDiff > 0 && rightDiff > 0 ) {
+            textBaseline = 'top';
+        }
+
+        else {
+            textBaseline = 'bottom';
+        }
+
+        if ( leftDiff > rightDiff ) {
+            textAlign = 'left';
+        }
+
+        else {
+            textAlign = 'right';
+        }
+
+        return {
+            textAlign: textAlign,
+            textBaseline: textBaseline
+        };
+    }
+
+
     updateCanvas() {
         var canvas = this.refs.canvasElement as HTMLCanvasElement;
         var ctx = canvas.getContext( '2d' )!;
 
-        var margin = 35;
+        var margin = 70;
         var xAxisMargin = 20;
         var width = this.state.width;
         var height = this.state.height;
@@ -118,11 +154,18 @@ class Chart extends React.Component <ChartProps, ChartState> {
 
                 // only draw the value and x-axis point every 2 points (so it doesn't become unreadable)
             if ( a % 2 === 0 ) {
+
                     // value text
+                let textPositioning = this.determineTextSide(
+                    value,
+                    data[ a - 1 ],
+                    data[ a + 1 ],
+                );
+
                 ctx.beginPath();
                 ctx.font = 'bold 14px arial';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'bottom';
+                ctx.textBaseline = textPositioning.textBaseline;
+                ctx.textAlign = textPositioning.textAlign;
                 ctx.fillStyle = 'blue';
                 ctx.fillText( `${ value } ${ unit }`, x, y );
 
