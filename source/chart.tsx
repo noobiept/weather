@@ -132,6 +132,7 @@ class Chart extends React.Component <ChartProps, ChartState> {
             let x = margin + a * horizontalGap;
             let y = height - margin - (value - min) * verticalGap;
 
+                // draw the line from the previous position to the current
             if ( previousX ) {
                 ctx.save();
                 ctx.beginPath();
@@ -152,9 +153,34 @@ class Chart extends React.Component <ChartProps, ChartState> {
             ctx.fillStyle = 'blue';
             ctx.fill();
 
+                // show the weekday at midnight
+            let date = this.props.xAxis[ a ];
+            let hours = date.getHours();
+
+            if ( hours === 0 ) {
+                let weekday = [ 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' ];
+                ctx.textBaseline = 'bottom';
+                ctx.textAlign = 'left';
+                ctx.fillStyle = 'black';
+                ctx.fillText( weekday[ date.getDay() ], x, height - xAxisMargin );
+            }
+
+                // draw dashed line from x-axis point to the value point
+            ctx.save();
+            ctx.beginPath();
+
+            if ( hours !== 0 ) {
+                ctx.setLineDash( [5, 10] );
+            }
+
+            ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)';
+            ctx.moveTo( x, height - xAxisMargin );
+            ctx.lineTo( x, y );
+            ctx.stroke();
+            ctx.restore();
+
                 // only draw the value and x-axis point every 2 points (so it doesn't become unreadable)
             if ( a % 2 === 0 ) {
-
                     // value text
                 let textPositioning = this.determineTextSide(
                     value,
@@ -170,31 +196,14 @@ class Chart extends React.Component <ChartProps, ChartState> {
                 ctx.fillText( `${ value } ${ unit }`, x, y );
 
                     // x-axis point
-                let date = this.props.xAxis[ a ];
-                let hours = date.getHours();
                 let minutes = date.getMinutes().toString().padStart( 2, "0" );
                 let hourMinute = `${ date.getHours() }:${ minutes }`;
 
                 ctx.beginPath();
                 ctx.textBaseline = 'top';
+                ctx.textAlign = 'center';
                 ctx.fillStyle = 'black';
                 ctx.fillText( hourMinute, x, height - xAxisMargin );
-
-                    // show the weekday at midnight
-                if ( hours === 0 ) {
-                    let weekday = [ 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' ];
-                    ctx.textBaseline = 'bottom';
-                    ctx.fillText( weekday[ date.getDay() ], x, height - xAxisMargin );
-                }
-
-                    // draw dashed line from x-axis point to the value point
-                ctx.save();
-                ctx.beginPath();
-                ctx.setLineDash( [5, 10] );
-                ctx.moveTo( x, height - xAxisMargin );
-                ctx.lineTo( x, y );
-                ctx.stroke();
-                ctx.restore();
             }
         }
     }
