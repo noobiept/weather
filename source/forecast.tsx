@@ -1,41 +1,10 @@
 import * as React from "react";
 
 import Chart from "./chart";
-import { WeatherConditionInfo } from "./weather";
+import { ForecastInfo } from "./weather_info";
 import WeatherCondition from "./weather_condition";
 import Wind from "./wind";
 
-
-    // reference: http://openweathermap.org/forecast5
-interface ForecastInfo {
-    list: {
-        dt: number;
-        dt_txt: string;
-        main: {
-            temp: number;
-            temp_min: number;
-            temp_max: number;
-            pressure: number;
-            sea_level: number;
-            grnd_level: number;
-            humidity: number;
-            temp_kf: number;
-        };
-        weather: WeatherConditionInfo[];
-        wind: {
-            speed: number;
-            deg: number;
-        };
-    }[];
-    city: {
-        name: string;
-        coord: {
-            lat: number;
-            lon: number;
-        };
-        country: string;
-    };
-}
 
 interface ForecastProps {
     info: ForecastInfo;

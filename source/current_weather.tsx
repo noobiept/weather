@@ -1,37 +1,9 @@
 import * as React from "react";
-import { WeatherConditionInfo } from "./weather";
+import { CurrentWeatherInfo } from "./weather_info";
 import WeatherCondition from "./weather_condition";
 import Wind from "./wind";
 import { toHourMinute } from "./utilities";
 
-    // reference: http://openweathermap.org/current
-interface CurrentWeatherInfo {
-    name: string;               // City name
-    weather: WeatherConditionInfo[];
-    coord: {
-        lat: number;            // City geo location, latitude
-        lon: number;            // City geo location, longitude
-    };
-    main: {
-        humidity: number;       // Humidity, %
-        pressure: number;       // Atmospheric pressure (on the sea level, if there is no sea_level or grnd_level data), hPa
-        temp: number;           // Temperature. Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
-        temp_min: number;       // Minimum temperature at the moment. This is deviation from current temp that is possible for large cities and megalopolises geographically expanded (use these parameter optionally). Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
-        temp_max: number;       // Maximum temperature at the moment. This is deviation from current temp that is possible for large cities and megalopolises geographically expanded (use these parameter optionally). Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
-        sea_level: number;      // Atmospheric pressure on the sea level, hPa
-        grnd_level: number;     // Atmospheric pressure on the ground level, hPa
-    };
-    wind: {
-        speed: number;          // Wind speed. Unit Default: meter/sec, Metric: meter/sec, Imperial: miles/hour.
-        deg: number;            // Wind direction, degrees (meteorological)
-    };
-    dt: number;                 // Time of data calculation, unix, UTC
-    sys: {
-        country: string;        // Country code (GB, JP etc.)
-        sunrise: number;        // Sunrise time, unix, UTC
-        sunset: number;         // Sunset time, unix, UTC
-    };
-}
 
 interface CurrentWeatherProps {
     info: CurrentWeatherInfo;

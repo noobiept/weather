@@ -8,13 +8,6 @@ import Forecast from "./forecast";
 import SearchList from "./search_list";
 
 
-export interface WeatherConditionInfo {
-    id: number;
-    icon: string;           // 'id' of the weather icon
-    main: string;           // Group of weather parameters (Rain, Snow, Extreme etc.)
-    description: string;    // Weather condition within the group
-}
-
 interface WeatherProps {
 
 }
