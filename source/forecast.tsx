@@ -75,7 +75,7 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
             xAxis.push( date );
 
             this.weatherList.push(
-                <div key={ a }>
+                <div key={ a } className="weatherItem">
                     <div className="date">{ item.dt_txt }</div>
                     <WeatherCondition temperature= { item.main.temp } weather= { item.weather } />
                     <div>Humidity: <span className="value">{ item.main.humidity }</span> %</div>

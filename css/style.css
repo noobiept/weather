@@ -44,6 +44,10 @@ body {
     margin: 20px 0;
 }
 
+.weatherItem:nth-child(odd) {
+    background-color: rgba(0, 0, 255, 0.1);
+}
+
 /* specific elements */
 
 #WeatherInfoContainer > div {
