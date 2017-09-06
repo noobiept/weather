@@ -49,10 +49,19 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
 
         this.setState({ messageText: 'Loading...' });
 
-        let [ current, forecast ] = await Promise.all([
-            await CurrentWeather.getCurrentWeather( name ),
-            await Forecast.getCurrentWeather( name )
-        ]);
+        try {
+            var [ current, forecast ] = await Promise.all([
+                await CurrentWeather.getCurrentWeather( name ),
+                await Forecast.getCurrentWeather( name )
+            ]);
+        }
+
+        catch {
+            this.setState({
+                messageText: <span className="error">Failed to connect to the weather API.</span>
+            });
+            return;
+        }
 
         if ( current && forecast ) {
 
@@ -68,7 +77,7 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
         }
 
         else {
-            this.setState({ messageText: <span>Couldn't find a city with that name (<span className="error">{ name }</span>)</span> });
+            this.setState({ messageText: <span className="error">Couldn't find a city with the name "{ name }"</span> });
         }
     }
 
