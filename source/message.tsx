@@ -2,7 +2,7 @@ import * as React from "react";
 
 
 interface MessageProps {
-    text?: string;
+    text?: React.ReactElement <HTMLSpanElement> | string;
 }
 
 interface MessageState {

@@ -15,7 +15,7 @@ interface WeatherProps {
 interface WeatherState {
     current: React.ReactElement <CurrentWeather> | undefined;
     forecast: React.ReactElement <Forecast> | undefined;
-    messageText: string;        // warn/error message to show to the user
+    messageText: React.ReactElement <HTMLSpanElement> | string;     // warn/error message to show to the user
 }
 
 
@@ -68,7 +68,7 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
         }
 
         else {
-            this.setState({ messageText: `Couldn't find a city with that name (${ name })` });
+            this.setState({ messageText: <span>Couldn't find a city with that name (<span className="error">{ name }</span>)</span> });
         }
     }
 
