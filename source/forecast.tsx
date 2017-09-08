@@ -191,7 +191,7 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
         return (
             <div>
                 <h1>Forecast</h1>
-                <ul id="ChartTypeList">
+                <ul className="horizontalList">
                     <li onClick= { showTemperature } className= { cssClasses.temperature }>Temperature</li>
                     <li onClick= { showHumidity } className= { cssClasses.humidity }>Humidity</li>
                     <li onClick= { showPressure } className= { cssClasses.pressure }>Pressure</li>

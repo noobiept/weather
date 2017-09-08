@@ -64,12 +64,12 @@ class SearchList extends React.Component <SearchListProps, SearchListState> {
             }
 
             citySearches.push(
-                <a key= { a } className= { cssClass } onClick= { clickHandler }>{ name }</a>
+                <li key= { a } className= { cssClass } onClick= { clickHandler }>{ name }</li>
             );
         }
 
         return (
-            <div>Previous searches: { citySearches.length ? citySearches : '---' }</div>
+            <div id="PreviousSearches">Previous searches: { citySearches.length ? <ul className="horizontalList">{ citySearches }</ul> : '---' }</div>
         );
     }
 }

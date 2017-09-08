@@ -15,10 +15,17 @@ body {
     color: blue;
     text-decoration: underline;
     margin: 4px;
+    padding: 4px;
+    text-decoration-line: none;
+    font-weight: bold;
+}
+
+.button:hover {
+    transform: scale(1.1);
 }
 
 .selected {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(70, 50, 150, 0.1);
 }
 
 .weatherCondition {
@@ -53,6 +60,17 @@ body {
     font-weight: bold;
 }
 
+.horizontalList {
+    display: inline-block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.horizontalList > li {
+    display: inline-block;
+}
+
 /* specific elements */
 
 #WeatherInfoContainer > div {
@@ -71,12 +89,6 @@ body {
     display: inline-block;
 }
 
-#ChartTypeList {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-#ChartTypeList > li {
-    display: inline-block;
+#PreviousSearches {
+    margin: 5px;
 }
