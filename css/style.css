@@ -71,6 +71,14 @@ body {
     display: inline-block;
 }
 
+.twoColumns {
+    column-count: 2;
+    column-gap: 20px;
+    column-fill: auto;
+    list-style-position: inside;
+    text-align: left;
+}
+
 /* specific elements */
 
 #WeatherInfoContainer > div {
@@ -91,4 +99,8 @@ body {
 
 #PreviousSearches {
     margin: 5px;
+}
+
+#CurrentWeatherCondition {
+    font-size: 150%;
 }

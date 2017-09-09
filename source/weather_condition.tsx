@@ -3,6 +3,7 @@ import { WeatherConditionInfo } from "./weather_info";
 
 
 interface WeatherConditionProps {
+    id?: string;
     weather: WeatherConditionInfo[];
     temperature: number;
 }
@@ -30,7 +31,7 @@ class WeatherCondition extends React.Component <WeatherConditionProps, WeatherCo
         }
 
         return (
-            <div>{ weatherInfo } Temperature: <span className="value">{ this.props.temperature }</span> °C</div>
+            <div id= { this.props.id }>{ weatherInfo } Temperature: <span className="value">{ this.props.temperature }</span> °C</div>
         );
     }
 }
