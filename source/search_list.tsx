@@ -1,4 +1,5 @@
 import * as React from "react";
+import { saveToStorage, getFromStorage } from "./utilities";
 
 
 interface SearchListProps {
@@ -14,12 +15,33 @@ interface SearchListState {
 
 class SearchList extends React.Component <SearchListProps, SearchListState> {
 
-    constructor() {
-        super();
+    constructor( props: SearchListProps ) {
+        super( props );
+
+            // load the data from local storage
+        let cities = getFromStorage( 'weather_search_list' );
+        let selected = getFromStorage( 'weather_selected_position' );
+
+        if ( !cities ) {
+            cities = [];
+        }
+
+        if ( typeof selected !== 'number' ) {
+            selected = -1;
+        }
 
         this.state = {
-            cityNames: [],
-            selectedPosition: -1
+            cityNames: cities,
+            selectedPosition: selected
+        };
+    }
+
+
+    componentWillMount() {
+            // load the city that was opened in the previous session
+        if ( this.state.selectedPosition >= 0 ) {
+            let name = this.state.cityNames[ this.state.selectedPosition ];
+            this.props.onItemClick( name, false );
         }
     }
 
@@ -33,10 +55,14 @@ class SearchList extends React.Component <SearchListProps, SearchListState> {
             updated.splice( 0, 1 );
         }
 
+        let position = updated.length - 1;
         this.setState({
             cityNames: updated,
-            selectedPosition: updated.length - 1
+            selectedPosition: position
         });
+
+        saveToStorage( 'weather_search_list', updated );
+        saveToStorage( 'weather_selected_position', position );
     }
 
 
@@ -46,6 +72,7 @@ class SearchList extends React.Component <SearchListProps, SearchListState> {
         });
 
         this.props.onItemClick( this.state.cityNames[ position ], false );
+        saveToStorage( 'weather_selected_position', position );
     }
 
 
