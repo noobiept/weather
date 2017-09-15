@@ -14,13 +14,14 @@
         "webpack": "~3.6.0",
         "uglifyjs-webpack-plugin": "~1.0.0-beta.2",
         "uglify-es": "~3.1.0",
+        "htmlprocessor": "~0.2.6",
         "http-server": "~0.10.0",
         "npm-run-all": "~4.1.1"
     },
     "scripts": {
-        "build": "webpack --watch",
-        "buildRelease": "webpack --env.release",
+        "watch": "webpack --watch",
         "server": "http-server -p 8000 --silent",
-        "start": "npm-run-all --parallel build server"
+        "build": "./build.sh",
+        "start": "npm-run-all --parallel watch server"
     }
 }
