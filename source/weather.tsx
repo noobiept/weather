@@ -24,9 +24,10 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
     searchList: SearchList | null;
 
 
-    constructor() {
-        super();
+    constructor( props: WeatherProps ) {
+        super( props );
 
+        this.searchList = null;
         this.changeCity = this.changeCity.bind( this );
         this.state = {
             current: undefined,

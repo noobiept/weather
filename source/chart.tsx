@@ -16,11 +16,11 @@ interface ChartState {
 
 class Chart extends React.Component <ChartProps, ChartState> {
 
-    onResize: () => void;
+    onResize?: () => void;
 
 
-    constructor() {
-        super();
+    constructor( props: ChartProps ) {
+        super( props );
 
         this.state = {
             width: 800,
@@ -33,7 +33,6 @@ class Chart extends React.Component <ChartProps, ChartState> {
      * Set the chart canvas with the same width as the window's width.
      */
     updateWidth() {
-        let canvas = this.refs.canvasElement as HTMLCanvasElement;
         let parentWidth = document.body.clientWidth;
 
         this.setState({
@@ -53,7 +52,9 @@ class Chart extends React.Component <ChartProps, ChartState> {
     }
 
     componentWillUnmount() {
-        window.removeEventListener( 'resize', this.onResize );
+        if ( this.onResize ) {
+            window.removeEventListener( 'resize', this.onResize );
+        }
     }
 
     componentDidUpdate() {

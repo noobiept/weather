@@ -12,8 +12,8 @@ interface CityInputState {
 
 class CityInput extends React.Component <CityInputProps, CityInputState> {
 
-    constructor() {
-        super();
+    constructor( props: CityInputProps ) {
+        super( props );
         this.keyPress = this.keyPress.bind( this );
     }
 

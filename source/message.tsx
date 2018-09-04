@@ -12,8 +12,8 @@ interface MessageState {
 
 class Message extends React.Component <MessageProps, MessageState> {
 
-    constructor() {
-        super();
+    constructor( props: MessageProps ) {
+        super( props );
     }
 
 
