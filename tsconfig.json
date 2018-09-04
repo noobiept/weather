@@ -4,6 +4,7 @@
         "sourceMap": true,
         "strict": true,
         "target": "es2017",
+        "moduleResolution": "node",
         "jsx": "react"
     },
     "include": [
