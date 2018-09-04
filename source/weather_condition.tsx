@@ -26,7 +26,7 @@ class WeatherCondition extends React.Component <WeatherConditionProps, WeatherCo
             let info = weather[ a ];
 
             weatherInfo.push(
-                <img className="weatherCondition" key= { a } title= { info.description } src={ `http://openweathermap.org/img/w/${ info.icon }.png` } />
+                <img className="weatherCondition" key= { a } title= { info.description } src={ `https://openweathermap.org/img/w/${ info.icon }.png` } />
             );
         }
 

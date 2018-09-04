@@ -2,7 +2,7 @@
  * Has the interfaces that represent the data that comes from the weather API.
  */
 
-    // reference: http://openweathermap.org/current
+    // reference: https://openweathermap.org/current
 export interface CurrentWeatherInfo {
     name: string;               // City name
     weather: WeatherConditionInfo[];
@@ -17,7 +17,7 @@ export interface CurrentWeatherInfo {
     };
 }
 
-    // reference: http://openweathermap.org/forecast5
+    // reference: https://openweathermap.org/forecast5
 export interface ForecastInfo {
     list: {
         dt: number;

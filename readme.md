@@ -3,9 +3,9 @@
 Search for a city to get some weather information on it. It shows the current weather information, and the forecast of the next 5 days.
 It keeps track of previous city name searches (so you can easily check it out again).
 
-Uses the data from [openweathermap.org/](http://openweathermap.org/), and is written with [typescript](https://www.typescriptlang.org/) and [react](https://facebook.github.io/react/).
+Uses the data from [openweathermap.org/](https://openweathermap.org/), and is written with [typescript](https://www.typescriptlang.org/) and [react](https://facebook.github.io/react/).
 
-## [Try it out here!](http://nbpt.eu/app/weather/) ##
+## [Try it out here!](https://nbpt.eu/app/weather) ##
 
 ![Image](images/screenshot.png)
 
