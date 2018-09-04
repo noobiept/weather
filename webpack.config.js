@@ -1,29 +1,47 @@
-const UglifyJSPlugin = require( 'uglifyjs-webpack-plugin' );
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
+module.exports = function( env, argv ) {
 
-module.exports = function( env ) {
+    const mode = argv.mode;
+    const plugins = [
+        new HtmlWebpackPlugin({
+            template: "./index.html",
+            productionMode: mode === 'production',
+        }),
+    ];
 
-    let plugins = [];
-
-    if ( env && env.release ) {
-        plugins.push( new UglifyJSPlugin() );
+    if ( mode === 'production' ) {
+        plugins.push(
+            new CleanWebpackPlugin([ "release" ])
+        );
+        plugins.push(
+            new CopyWebpackPlugin([
+                { from: "./node_modules/react/umd/react.production.min.js", to: "./libraries/react.production.min.js"},
+                { from: "./node_modules/react-dom/umd/react-dom.production.min.js", to: "./libraries/react-dom.production.min.js" },
+                { from: "./css/**/*", to: "./" }
+            ])
+        );
     }
 
     return {
         entry: "./source/index.tsx",
         output: {
             filename: "bundle.js",
-            path: __dirname + "/dist"
+            path: __dirname + "/release"
         },
 
-        plugins: plugins,
-
         // Enable sourcemaps for debugging webpack's output.
-        devtool: "source-map",
+        devtool: mode === "development" ? "source-map" : false,
 
         resolve: {
             // Add '.ts' and '.tsx' as resolvable extensions.
             extensions: [".ts", ".tsx", ".js", ".json"]
+        },
+
+        devServer: {
+            port: 8000
         },
 
         module: {
@@ -35,6 +53,8 @@ module.exports = function( env ) {
                 { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
             ]
         },
+
+        plugins: plugins,
 
         // When importing a module whose path matches one of the following, just
         // assume a corresponding global variable exists and use that instead.

@@ -8,15 +8,12 @@
     <body>
         <div id="Root"></div>
 
-        <!-- build:js libraries/react.production.min.js -->
-        <script src="./node_modules/react/umd/react.development.js"></script>
-        <!-- /build -->
-        <!-- build:js libraries/react-dom.production.min.js -->
-        <script src="./node_modules/react-dom/umd/react-dom.development.js"></script>
-        <!-- /build -->
-
-        <!-- build:[src] ./ -->
-        <script src="./dist/bundle.js"></script>
-        <!-- /build -->
+        <% if (htmlWebpackPlugin.options.productionMode) { %>
+            <script src="libraries/react.production.min.js"></script>
+            <script src="libraries/react-dom.production.min.js"></script>
+        <% } else { %>
+            <script src="./node_modules/react/umd/react.development.js"></script>
+            <script src="./node_modules/react-dom/umd/react-dom.development.js"></script>
+        <% } %>
     </body>
 </html>
