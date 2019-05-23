@@ -2,25 +2,29 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
-module.exports = function( env, argv ) {
-
+module.exports = function(env, argv) {
     const mode = argv.mode;
     const plugins = [
         new HtmlWebpackPlugin({
             template: "./index.html",
-            productionMode: mode === 'production',
+            productionMode: mode === "production",
         }),
     ];
 
-    if ( mode === 'production' ) {
-        plugins.push(
-            new CleanWebpackPlugin([ "release" ])
-        );
+    if (mode === "production") {
+        plugins.push(new CleanWebpackPlugin(["release"]));
         plugins.push(
             new CopyWebpackPlugin([
-                { from: "./node_modules/react/umd/react.production.min.js", to: "./libraries/react.production.min.js"},
-                { from: "./node_modules/react-dom/umd/react-dom.production.min.js", to: "./libraries/react-dom.production.min.js" },
-                { from: "./css/**/*", to: "./" }
+                {
+                    from: "./node_modules/react/umd/react.production.min.js",
+                    to: "./libraries/react.production.min.js",
+                },
+                {
+                    from:
+                        "./node_modules/react-dom/umd/react-dom.production.min.js",
+                    to: "./libraries/react-dom.production.min.js",
+                },
+                { from: "./css/**/*", to: "./" },
             ])
         );
     }
@@ -29,7 +33,7 @@ module.exports = function( env, argv ) {
         entry: "./source/index.tsx",
         output: {
             filename: "bundle.js",
-            path: __dirname + "/release"
+            path: __dirname + "/release",
         },
 
         // Enable sourcemaps for debugging webpack's output.
@@ -37,11 +41,11 @@ module.exports = function( env, argv ) {
 
         resolve: {
             // Add '.ts' and '.tsx' as resolvable extensions.
-            extensions: [".ts", ".tsx", ".js", ".json"]
+            extensions: [".ts", ".tsx", ".js", ".json"],
         },
 
         devServer: {
-            port: 8000
+            port: 8000,
         },
 
         module: {
@@ -50,8 +54,8 @@ module.exports = function( env, argv ) {
                 { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
 
                 // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
-                { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
-            ]
+                { enforce: "pre", test: /\.js$/, loader: "source-map-loader" },
+            ],
         },
 
         plugins: plugins,
@@ -61,8 +65,8 @@ module.exports = function( env, argv ) {
         // This is important because it allows us to avoid bundling all of our
         // dependencies, which allows browsers to cache those libraries between builds.
         externals: {
-            "react": "React",
-            "react-dom": "ReactDOM"
+            react: "React",
+            "react-dom": "ReactDOM",
         },
     };
 };
