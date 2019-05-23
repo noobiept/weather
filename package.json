@@ -12,14 +12,29 @@
         "clean-webpack-plugin": "^2.0.2",
         "copy-webpack-plugin": "^5.0.3",
         "html-webpack-plugin": "^3.2.0",
+        "prettier": "^1.17.1",
         "source-map-loader": "~0.2.4",
         "typescript": "~3.4.5",
         "webpack": "~4.32.2",
         "webpack-cli": "^3.3.2",
         "webpack-dev-server": "^3.4.1"
     },
+    "prettier": {
+        "printWidth": 80,
+        "tabWidth": 4,
+        "useTabs": false,
+        "semi": true,
+        "singleQuote": false,
+        "trailingComma": "es5",
+        "bracketSpacing": true,
+        "arrowParens": "always",
+        "htmlWhitespaceSensitivity": "strict",
+        "endOfLine": "lf"
+    },
     "scripts": {
         "start": "webpack-dev-server --mode development",
-        "build": "webpack --mode production"
+        "build": "webpack --mode production",
+        "formatting:check": "prettier --check \"**/*.{html,css,json,js,ts,tsx,md}\"",
+        "formatting:run": "prettier --write \"**/*.{html,css,json,js,ts,tsx,md}\""
     }
 }

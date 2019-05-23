@@ -1,0 +1,6 @@
+.git/
+images/
+node_modules/
+release/
+package-lock.json
+*.yml
