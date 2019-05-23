@@ -12,7 +12,7 @@ module.exports = function(env, argv) {
     ];
 
     if (mode === "production") {
-        plugins.push(new CleanWebpackPlugin(["release"]));
+        plugins.push(new CleanWebpackPlugin());
         plugins.push(
             new CopyWebpackPlugin([
                 {
