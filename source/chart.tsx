@@ -67,8 +67,8 @@ class Chart extends React.Component <ChartProps, ChartState> {
      */
     determineTextSide( value: number, left?: number, right?: number ) {
 
-        let textAlign;
-        let textBaseline;
+        let textAlign: CanvasTextAlign;
+        let textBaseline: CanvasTextBaseline;
         let leftValue = left ? left : value;
         let rightValue = right ? right : value;
 

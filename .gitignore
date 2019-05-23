@@ -3,3 +3,4 @@ dist/**
 .vscode/**
 info.txt
 release/**
+.DS_Store
