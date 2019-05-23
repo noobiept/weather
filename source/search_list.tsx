@@ -13,7 +13,7 @@ interface SearchListState {
 }
 
 
-class SearchList extends React.Component <SearchListProps, SearchListState> {
+export default class SearchList extends React.Component <SearchListProps, SearchListState> {
 
     constructor( props: SearchListProps ) {
         super( props );
@@ -100,5 +100,3 @@ class SearchList extends React.Component <SearchListProps, SearchListState> {
         );
     }
 }
-
-export default SearchList;

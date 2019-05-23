@@ -16,7 +16,7 @@ interface WeatherConditionState {
 /**
  * Shows the given temperature plus the associated weather condition (represented by an image).
  */
-class WeatherCondition extends React.Component <WeatherConditionProps, WeatherConditionState> {
+export default class WeatherCondition extends React.Component <WeatherConditionProps, WeatherConditionState> {
 
     render() {
         let weather = this.props.weather;
@@ -35,5 +35,3 @@ class WeatherCondition extends React.Component <WeatherConditionProps, WeatherCo
         );
     }
 }
-
-export default WeatherCondition;

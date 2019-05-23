@@ -14,7 +14,7 @@ interface CurrentWeatherState {
 }
 
 
-class CurrentWeather extends React.Component <CurrentWeatherProps, CurrentWeatherState> {
+export default class CurrentWeather extends React.Component <CurrentWeatherProps, CurrentWeatherState> {
 
     static async getCurrentWeather( cityName: string ): Promise <CurrentWeatherInfo | undefined> {
 
@@ -53,5 +53,3 @@ class CurrentWeather extends React.Component <CurrentWeatherProps, CurrentWeathe
         );
     }
 }
-
-export default CurrentWeather;

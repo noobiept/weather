@@ -43,7 +43,7 @@ interface ChartData {
 }
 
 
-class Forecast extends React.Component <ForecastProps, ForecastState> {
+export default class Forecast extends React.Component <ForecastProps, ForecastState> {
 
     chartData: ChartData;
     weatherList: React.ReactElement <HTMLDivElement>[];
@@ -216,5 +216,3 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
         return await response.json();
     }
 }
-
-export default Forecast;

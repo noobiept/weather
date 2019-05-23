@@ -10,7 +10,7 @@ interface MessageState {
 }
 
 
-class Message extends React.Component <MessageProps, MessageState> {
+export default class Message extends React.Component <MessageProps, MessageState> {
 
     constructor( props: MessageProps ) {
         super( props );
@@ -23,5 +23,3 @@ class Message extends React.Component <MessageProps, MessageState> {
         );
     }
 }
-
-export default Message;

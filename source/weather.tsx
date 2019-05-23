@@ -19,7 +19,7 @@ interface WeatherState {
 }
 
 
-class Weather extends React.Component <WeatherProps, WeatherState> {
+export default class Weather extends React.Component <WeatherProps, WeatherState> {
 
     searchList: SearchList | null;
 
@@ -99,5 +99,3 @@ class Weather extends React.Component <WeatherProps, WeatherState> {
         );
     }
 }
-
-export default Weather;

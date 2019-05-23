@@ -10,7 +10,7 @@ interface CityInputState {
 }
 
 
-class CityInput extends React.Component <CityInputProps, CityInputState> {
+export default class CityInput extends React.Component <CityInputProps, CityInputState> {
 
     constructor( props: CityInputProps ) {
         super( props );
@@ -42,6 +42,3 @@ class CityInput extends React.Component <CityInputProps, CityInputState> {
         );
     }
 }
-
-
-export default CityInput;

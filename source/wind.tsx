@@ -14,7 +14,7 @@ interface WindState {
 }
 
 
-class Wind extends React.Component <WindProps, WindState> {
+export default class Wind extends React.Component <WindProps, WindState> {
 
     componentDidMount() {
         this.updateCanvas();
@@ -58,5 +58,3 @@ class Wind extends React.Component <WindProps, WindState> {
         )
     }
 }
-
-export default Wind;
