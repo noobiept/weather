@@ -14,7 +14,7 @@ interface ChartState {
 }
 
 
-class Chart extends React.Component <ChartProps, ChartState> {
+export default class Chart extends React.Component <ChartProps, ChartState> {
 
     onResize?: () => void;
 
@@ -224,5 +224,3 @@ class Chart extends React.Component <ChartProps, ChartState> {
         );
     }
 }
-
-export default Chart;

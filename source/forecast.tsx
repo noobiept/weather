@@ -63,10 +63,11 @@ class Forecast extends React.Component <ForecastProps, ForecastState> {
         let xAxis = [];
 
         for (let a = 0 ; a < info.list.length ; a++) {
-            let item = info.list[ a ];
+            const item = info.list[ a ];
 
-                // get the hour/minute from each item, to be displayed on the chart later on
-            let date = new Date( item.dt_txt );
+            // get the hour/minute from each item, to be displayed on the chart later on
+            const timestamp = item.dt * 1000;   // comes in seconds, so we convert to milliseconds to be used by the 'Date' class
+            const date = new Date( timestamp );
 
             temperatureData.push( item.main.temp );
             humidityData.push( item.main.humidity );
