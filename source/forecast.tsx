@@ -71,9 +71,14 @@ export default class Forecast extends React.Component<
             const timestamp = item.dt * 1000; // comes in seconds, so we convert to milliseconds to be used by the 'Date' class
             const date = new Date(timestamp);
 
-            temperatureData.push(item.main.temp);
+            // round some of the values that are shown on the chart (so they occupy less space)
+            // the original value is still available on the list
+            const roundedTemperature = Math.round(item.main.temp);
+            const roundedPressure = Math.round(item.main.pressure);
+
+            temperatureData.push(roundedTemperature);
             humidityData.push(item.main.humidity);
-            pressureData.push(item.main.pressure);
+            pressureData.push(roundedPressure);
             windSpeedData.push(item.wind.speed);
             xAxis.push(date);
 
