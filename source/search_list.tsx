@@ -1,5 +1,5 @@
 import * as React from "react";
-import { saveToStorage, getFromStorage } from "./utilities";
+import { saveToStorage, getFromStorage } from "./data";
 
 interface SearchListProps {
     onItemClick: (cityName: string, addToList: boolean) => void;

@@ -13,19 +13,3 @@ export function toHourMinute(unixTime: number | Date) {
 
     return `${date.getHours()}h ${date.getMinutes()}m`;
 }
-
-/**
- * Returns an object that was obtained by parsing (with json) some data that was saved on `localStorage`.
- */
-export function getFromStorage(key: string) {
-    var value = localStorage.getItem(key);
-
-    return value && JSON.parse(value);
-}
-
-/**
- * Saves in the `localStorage` a json string representation of the `value`.
- */
-export function saveToStorage(key: string, value: any) {
-    localStorage.setItem(key, JSON.stringify(value));
-}
