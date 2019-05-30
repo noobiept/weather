@@ -96,7 +96,7 @@ export default class SearchList extends React.Component<
 
         return (
             <div id="PreviousSearches">
-                Previous searches:{" "}
+                <span>Previous searches: </span>
                 {citySearches.length ? (
                     <ul className="horizontalList">{citySearches}</ul>
                 ) : (

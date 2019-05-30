@@ -29,9 +29,7 @@ export default class CurrentWeather extends React.Component<
     }
 
     render() {
-        let current = null;
         let info = this.props.info;
-
         let lastUpdated = new Date(info.dt * 1000);
         let hourMinutes = toHourMinute(lastUpdated);
         let sunrise = toHourMinute(info.sys.sunrise * 1000);
@@ -49,17 +47,17 @@ export default class CurrentWeather extends React.Component<
                 />
                 <div className="twoColumns">
                     <div>
-                        Latitude:{" "}
-                        <span className="value">{info.coord.lat}</span> /
-                        Longitude:{" "}
+                        <span>Latitude: </span>
+                        <span className="value">{info.coord.lat}</span>
+                        <span> / Longitude: </span>
                         <span className="value">{info.coord.lon}</span>
                     </div>
                     <div>
-                        Humidity:{" "}
-                        <span className="value">{info.main.humidity}</span> %
+                        <span>Humidity: </span>
+                        <span className="value"> {info.main.humidity}</span> %
                     </div>
                     <div>
-                        Pressure:{" "}
+                        <span>Pressure: </span>
                         <span className="value">{info.main.pressure}</span> hPa
                     </div>
                     <Wind
@@ -73,7 +71,7 @@ export default class CurrentWeather extends React.Component<
                         Sunset: <span className="value">{sunset}</span>
                     </div>
                     <div title={lastUpdated.toString()}>
-                        Last updated:{" "}
+                        <span>Last updated: </span>
                         <span className="value">{hourMinutes}</span>
                     </div>
                 </div>

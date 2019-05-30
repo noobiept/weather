@@ -35,7 +35,8 @@ export default class WeatherCondition extends React.Component<
 
         return (
             <div id={this.props.id}>
-                {weatherInfo} Temperature:{" "}
+                {weatherInfo}
+                <span>Temperature: </span>
                 <span className="value">{this.props.temperature}</span> °C
             </div>
         );

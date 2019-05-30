@@ -85,11 +85,11 @@ export default class Forecast extends React.Component<
                         weather={item.weather}
                     />
                     <div>
-                        Humidity:{" "}
+                        <span>Humidity: </span>
                         <span className="value">{item.main.humidity}</span> %
                     </div>
                     <div>
-                        Pressure:{" "}
+                        <span>Pressure: </span>
                         <span className="value">{item.main.pressure}</span> hPa
                     </div>
                     <Wind
