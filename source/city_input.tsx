@@ -1,7 +1,7 @@
 import * as React from "react";
 
 interface CityInputProps {
-    onEnterPress: (cityName: string) => void;
+    onInput: (cityName: string) => void;
 }
 
 interface CityInputState {}
@@ -10,34 +10,56 @@ export default class CityInput extends React.Component<
     CityInputProps,
     CityInputState
 > {
+    inputRef: React.RefObject<HTMLInputElement>;
+
     constructor(props: CityInputProps) {
         super(props);
+
+        this.inputRef = React.createRef();
+        this.search = this.search.bind(this);
         this.keyPress = this.keyPress.bind(this);
     }
 
+    /**
+     * Perform a search when the `enter` key is pressed.
+     */
     keyPress(event: React.KeyboardEvent<HTMLInputElement>) {
         switch (event.which) {
             case 13: // enter
-                let input = event.target as HTMLInputElement;
-                let name = input.value;
-
-                if (name === "") {
-                    return;
-                }
-
-                input.value = ""; // clear after every query
-                this.props.onEnterPress(name);
+                this.search();
                 break;
         }
     }
 
+    /**
+     * Check if the input element has some value and if so, call the given `onInput` callback.
+     */
+    search() {
+        const input = this.inputRef.current;
+        if (!input) {
+            return;
+        }
+
+        const name = input.value;
+        if (name === "") {
+            return;
+        }
+
+        input.value = ""; // clear after every query
+        this.props.onInput(name);
+    }
+
     render() {
         return (
-            <input
-                type="text"
-                placeholder="City name.."
-                onKeyPress={this.keyPress}
-            />
+            <div>
+                <input
+                    type="text"
+                    placeholder="City name.."
+                    ref={this.inputRef}
+                    onKeyPress={this.keyPress}
+                />
+                <button onClick={this.search}>Search</button>
+            </div>
         );
     }
 }

@@ -96,7 +96,7 @@ export default class Weather extends React.Component<
     render() {
         return (
             <div>
-                <CityInput ref="cityInput" onEnterPress={this.changeCity} />
+                <CityInput ref="cityInput" onInput={this.changeCity} />
                 <div>
                     <Message text={this.state.messageText} />
                 </div>
