@@ -13,7 +13,7 @@ export default class Loading extends React.Component<
 > {
     render() {
         return (
-            <div className="sweet-loading">
+            <div className="loading">
                 <ClipLoader
                     sizeUnit={"px"}
                     size={20}

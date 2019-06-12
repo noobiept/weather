@@ -85,6 +85,11 @@ body {
     justify-content: center;
 }
 
+.loading {
+    width: 25px;
+    height: 25px;
+}
+
 /* specific elements */
 
 #WeatherInfoContainer > div {
