@@ -6,6 +6,7 @@ import Message from "./message";
 import CurrentWeather from "./current_weather";
 import Forecast from "./forecast";
 import SearchList from "./search_list";
+import Loading from "./loading";
 
 interface WeatherProps {}
 
@@ -13,6 +14,7 @@ interface WeatherState {
     current: React.ReactElement<CurrentWeather> | undefined;
     forecast: React.ReactElement<Forecast> | undefined;
     messageText: React.ReactElement<HTMLSpanElement> | string; // warn/error message to show to the user
+    loading: boolean;
 }
 
 export default class Weather extends React.Component<
@@ -30,6 +32,7 @@ export default class Weather extends React.Component<
             current: undefined,
             forecast: undefined,
             messageText: "",
+            loading: false,
         };
     }
 
@@ -43,8 +46,11 @@ export default class Weather extends React.Component<
         });
     }
 
+    /**
+     * Load a different city weather information.
+     */
     async changeCity(name: string, addToList = true) {
-        this.setState({ messageText: "Loading..." });
+        this.setState({ loading: true, messageText: "" });
 
         try {
             var [current, forecast] = await Promise.all([
@@ -60,6 +66,10 @@ export default class Weather extends React.Component<
                 ),
             });
             return;
+        } finally {
+            this.setState({
+                loading: false,
+            });
         }
 
         if (current && forecast) {
@@ -80,7 +90,6 @@ export default class Weather extends React.Component<
                         info={forecast}
                     />
                 ),
-                messageText: "",
             });
         } else {
             this.setState({
@@ -96,7 +105,10 @@ export default class Weather extends React.Component<
     render() {
         return (
             <div>
-                <CityInput ref="cityInput" onInput={this.changeCity} />
+                <div className="list">
+                    <CityInput ref="cityInput" onInput={this.changeCity} />
+                    <Loading active={this.state.loading} />
+                </div>
                 <div>
                     <Message text={this.state.messageText} />
                 </div>
