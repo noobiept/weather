@@ -7,6 +7,7 @@ import Forecast from "./forecast";
 import SearchList from "./search_list";
 import Loading from "./loading";
 import Help from "./help";
+import { getFromStorage, saveToStorage } from "./data";
 
 interface WeatherProps {}
 
@@ -15,19 +16,23 @@ interface WeatherState {
     forecast: React.ReactElement<Forecast> | undefined;
     messageText: React.ReactElement<HTMLSpanElement> | string; // warn/error message to show to the user
     loading: boolean;
+    searchedCities: string[]; // list with all the city names that were searched for
+    searchedPosition: number; // position of the currently selected city name element
 }
 
 export default class Weather extends React.Component<
     WeatherProps,
     WeatherState
 > {
-    searchListRef: React.RefObject<SearchList>;
     cityInputRef: React.RefObject<CityInput>;
+    searchLimit = 5; // maximum number of elements in the search list
 
     constructor(props: WeatherProps) {
         super(props);
 
-        this.searchListRef = React.createRef();
+        const cities = getFromStorage("weather_search_list");
+        const position = getFromStorage("weather_selected_position");
+
         this.cityInputRef = React.createRef();
         this.changeCity = this.changeCity.bind(this);
         this.state = {
@@ -35,6 +40,8 @@ export default class Weather extends React.Component<
             forecast: undefined,
             messageText: "",
             loading: false,
+            searchedCities: cities ? cities : [],
+            searchedPosition: typeof position === "number" ? position : -1,
         };
     }
 
@@ -46,12 +53,22 @@ export default class Weather extends React.Component<
                 cityInput.gainFocus();
             }
         });
+
+        // load the last city that was selected in the previous session
+        const cities = this.state.searchedCities;
+        const position = this.state.searchedPosition;
+
+        if (cities.length !== 0 && position >= 0) {
+            const name = cities[position];
+            this.changeCity(name, position);
+        }
     }
 
     /**
      * Load a different city weather information.
+     * If `existingPosition` is not given, then its a new city that we need to add to the cities list.
      */
-    async changeCity(name: string, addToList = true) {
+    async changeCity(name: string, existingPosition?: number) {
         this.setState({ loading: true, messageText: "" });
 
         try {
@@ -75,10 +92,13 @@ export default class Weather extends React.Component<
         }
 
         if (current && forecast) {
-            if (addToList !== false) {
-                this.searchListRef.current!.add(current.name);
+            // a new city that we need to add
+            if (typeof existingPosition === "undefined") {
+                existingPosition = this.state.searchedCities.length;
+                this.addCityName(current.name);
             }
 
+            this.updateCityPosition(existingPosition);
             this.setState({
                 current: (
                     <CurrentWeather
@@ -104,6 +124,35 @@ export default class Weather extends React.Component<
         }
     }
 
+    /**
+     * Set a new selected city position.
+     */
+    updateCityPosition(position: number) {
+        this.setState({
+            searchedPosition: position,
+        });
+        saveToStorage("weather_selected_position", position);
+    }
+
+    /**
+     * Add a new city to the search list.
+     */
+    addCityName(name: string) {
+        let updated = this.state.searchedCities.slice();
+        updated.push(name);
+
+        // if we get past the limit, remove the older entry (at the start of the array)
+        if (updated.length > this.searchLimit) {
+            updated.splice(0, 1);
+        }
+
+        this.setState({
+            searchedCities: updated,
+        });
+
+        saveToStorage("weather_search_list", updated);
+    }
+
     render() {
         return (
             <div>
@@ -118,12 +167,12 @@ export default class Weather extends React.Component<
                     <Message text={this.state.messageText} />
                 </div>
                 <SearchList
-                    ref={this.searchListRef}
+                    cityNames={this.state.searchedCities}
+                    selectedPosition={this.state.searchedPosition}
                     onItemClick={this.changeCity}
-                    limit={5}
                 />
 
-                {this.state.current ? (
+                {this.state.searchedCities.length !== 0 ? (
                     <div id="WeatherInfoContainer">
                         {this.state.current}
                         {this.state.forecast}
