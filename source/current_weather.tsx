@@ -45,34 +45,40 @@ export default class CurrentWeather extends React.Component<
                     temperature={info.main.temp}
                     weather={info.weather}
                 />
-                <div className="twoColumns">
+                <div className="infoList">
                     <div>
-                        <span>Latitude: </span>
-                        <span className="value">{info.coord.lat}</span>
-                        <span> / Longitude: </span>
-                        <span className="value">{info.coord.lon}</span>
+                        <div>
+                            <span>Latitude: </span>
+                            <span className="value">{info.coord.lat}</span>
+                            <span> / Longitude: </span>
+                            <span className="value">{info.coord.lon}</span>
+                        </div>
+                        <div>
+                            <span>Humidity: </span>
+                            <span className="value">{info.main.humidity}</span>
+                            <span> %</span>
+                        </div>
+                        <div>
+                            <span>Pressure: </span>
+                            <span className="value">{info.main.pressure}</span>
+                            <span> hPa</span>
+                        </div>
                     </div>
                     <div>
-                        <span>Humidity: </span>
-                        <span className="value"> {info.main.humidity}</span> %
-                    </div>
-                    <div>
-                        <span>Pressure: </span>
-                        <span className="value">{info.main.pressure}</span> hPa
-                    </div>
-                    <Wind
-                        speed={info.wind.speed}
-                        degree={info.wind.deg}
-                        canvasWidth={15}
-                        canvasHeight={15}
-                    />
-                    <div>
-                        Sunrise: <span className="value">{sunrise}</span> /
-                        Sunset: <span className="value">{sunset}</span>
-                    </div>
-                    <div title={lastUpdated.toString()}>
-                        <span>Last updated: </span>
-                        <span className="value">{hourMinutes}</span>
+                        <Wind
+                            speed={info.wind.speed}
+                            degree={info.wind.deg}
+                            canvasWidth={15}
+                            canvasHeight={15}
+                        />
+                        <div>
+                            Sunrise: <span className="value">{sunrise}</span> /
+                            Sunset: <span className="value">{sunset}</span>
+                        </div>
+                        <div title={lastUpdated.toString()}>
+                            <span>Last updated: </span>
+                            <span className="value">{hourMinutes}</span>
+                        </div>
                     </div>
                 </div>
             </div>

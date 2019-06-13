@@ -76,12 +76,16 @@ body {
     display: inline-block;
 }
 
-.twoColumns {
-    column-count: 2;
-    column-gap: 20px;
-    column-fill: auto;
-    list-style-position: inside;
+.infoList {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     text-align: left;
+    margin: 10px;
+}
+
+.infoList > div {
+    margin: 10px;
 }
 
 .list {
