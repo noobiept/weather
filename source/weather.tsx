@@ -22,11 +22,13 @@ export default class Weather extends React.Component<
     WeatherState
 > {
     searchList: SearchList | null;
+    cityInputRef: React.RefObject<CityInput>;
 
     constructor(props: WeatherProps) {
         super(props);
 
         this.searchList = null;
+        this.cityInputRef = React.createRef();
         this.changeCity = this.changeCity.bind(this);
         this.state = {
             current: undefined,
@@ -39,10 +41,10 @@ export default class Weather extends React.Component<
     componentDidMount() {
         // focus the city element element whenever a key is pressed
         window.addEventListener("keypress", () => {
-            let input = ReactDOM.findDOMNode(
-                this.refs.cityInput
-            ) as HTMLInputElement;
-            input.focus();
+            const cityInput = this.cityInputRef.current;
+            if (cityInput) {
+                cityInput.gainFocus();
+            }
         });
     }
 
@@ -106,7 +108,10 @@ export default class Weather extends React.Component<
         return (
             <div>
                 <div className="list">
-                    <CityInput ref="cityInput" onInput={this.changeCity} />
+                    <CityInput
+                        ref={this.cityInputRef}
+                        onInput={this.changeCity}
+                    />
                     <Loading active={this.state.loading} />
                 </div>
                 <div>

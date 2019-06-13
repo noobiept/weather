@@ -49,6 +49,17 @@ export default class CityInput extends React.Component<
         this.props.onInput(name);
     }
 
+    /**
+     * Put the focus on the `input` html element.
+     */
+    gainFocus() {
+        const input = this.inputRef.current;
+
+        if (input) {
+            input.focus();
+        }
+    }
+
     render() {
         return (
             <div>
