@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 
 import CityInput from "./city_input";
 import Message from "./message";
@@ -7,6 +6,7 @@ import CurrentWeather from "./current_weather";
 import Forecast from "./forecast";
 import SearchList from "./search_list";
 import Loading from "./loading";
+import Help from "./help";
 
 interface WeatherProps {}
 
@@ -122,10 +122,15 @@ export default class Weather extends React.Component<
                     onItemClick={this.changeCity}
                     limit={5}
                 />
-                <div id="WeatherInfoContainer">
-                    {this.state.current}
-                    {this.state.forecast}
-                </div>
+
+                {this.state.current ? (
+                    <div id="WeatherInfoContainer">
+                        {this.state.current}
+                        {this.state.forecast}
+                    </div>
+                ) : (
+                    <Help />
+                )}
             </div>
         );
     }

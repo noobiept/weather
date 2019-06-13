@@ -96,11 +96,11 @@ export default class SearchList extends React.Component<
 
         return (
             <div id="PreviousSearches">
-                <span>Previous searches: </span>
-                {citySearches.length ? (
-                    <ul className="horizontalList">{citySearches}</ul>
-                ) : (
-                    "---"
+                {citySearches.length !== 0 && (
+                    <>
+                        <span>Previous searches: </span>
+                        <ul className="horizontalList">{citySearches}</ul>
+                    </>
                 )}
             </div>
         );
