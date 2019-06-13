@@ -12,6 +12,11 @@ body {
     font-size: 18px;
 }
 
+/* make sure there's always some content on the element, so it keeps the same height even with an empty value */
+.message:empty::before {
+    content: "\200b"; /* unicode zero width space character */
+}
+
 .button {
     cursor: pointer;
     color: blue;
