@@ -21,13 +21,13 @@ export default class Weather extends React.Component<
     WeatherProps,
     WeatherState
 > {
-    searchList: SearchList | null;
+    searchListRef: React.RefObject<SearchList>;
     cityInputRef: React.RefObject<CityInput>;
 
     constructor(props: WeatherProps) {
         super(props);
 
-        this.searchList = null;
+        this.searchListRef = React.createRef();
         this.cityInputRef = React.createRef();
         this.changeCity = this.changeCity.bind(this);
         this.state = {
@@ -76,7 +76,7 @@ export default class Weather extends React.Component<
 
         if (current && forecast) {
             if (addToList !== false) {
-                this.searchList!.add(current.name);
+                this.searchListRef.current!.add(current.name);
             }
 
             this.setState({
@@ -118,9 +118,7 @@ export default class Weather extends React.Component<
                     <Message text={this.state.messageText} />
                 </div>
                 <SearchList
-                    ref={(search) => {
-                        this.searchList = search;
-                    }}
+                    ref={this.searchListRef}
                     onItemClick={this.changeCity}
                     limit={5}
                 />
