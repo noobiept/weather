@@ -62,7 +62,7 @@ export default class CityInput extends React.Component<
 
     render() {
         return (
-            <div>
+            <div id="CityInput">
                 <input
                     type="text"
                     placeholder="City name.."
