@@ -41,9 +41,6 @@ export default class CityInput extends React.Component<
         }
 
         const name = input.value;
-        if (name === "") {
-            return;
-        }
 
         input.value = ""; // clear after every query
         this.props.onInput(name);

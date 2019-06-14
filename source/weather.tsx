@@ -69,6 +69,13 @@ export default class Weather extends React.Component<
      * If `existingPosition` is not given, then its a new city that we need to add to the cities list.
      */
     async changeCity(name: string, existingPosition?: number) {
+        if (name.length <= 3) {
+            this.setState({
+                messageText: "The query needs to have more than 3 characters.",
+            });
+            return;
+        }
+
         this.setState({ loading: true, messageText: "" });
 
         try {
