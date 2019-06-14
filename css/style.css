@@ -10,6 +10,8 @@ body {
     display: inline-block;
     margin: 10px;
     font-size: 18px;
+    font-weight: bold;
+    color: darkred;
 }
 
 /* make sure there's always some content on the element, so it keeps the same height even with an empty value */
@@ -58,11 +60,6 @@ body {
 
 .weatherItem:nth-child(odd) {
     background-color: rgba(0, 0, 255, 0.1);
-}
-
-.error {
-    color: darkred;
-    font-weight: bold;
 }
 
 .horizontalList {

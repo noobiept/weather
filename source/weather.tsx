@@ -14,7 +14,7 @@ interface WeatherProps {}
 interface WeatherState {
     current: React.ReactElement<CurrentWeather> | undefined;
     forecast: React.ReactElement<Forecast> | undefined;
-    messageText: React.ReactElement<HTMLSpanElement> | string; // warn/error message to show to the user
+    messageText: string; // warn/error message to show to the user
     loading: boolean;
     searchedCities: string[]; // list with all the city names that were searched for
     searchedPosition: number; // position of the currently selected city name element
@@ -85,11 +85,7 @@ export default class Weather extends React.Component<
             ]);
         } catch {
             this.setState({
-                messageText: (
-                    <span className="error">
-                        Failed to connect to the weather API.
-                    </span>
-                ),
+                messageText: "Failed to connect to the weather API.",
             });
             return;
         } finally {
@@ -122,11 +118,7 @@ export default class Weather extends React.Component<
             });
         } else {
             this.setState({
-                messageText: (
-                    <span className="error">
-                        Couldn't find a city with the name "{name}"
-                    </span>
-                ),
+                messageText: `Couldn't find a city with the name "${name}"`,
             });
         }
     }
