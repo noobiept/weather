@@ -1,33 +1,37 @@
-import * as React from "react";
+import React, { useEffect, useRef } from "react";
 import { toRadians } from "./utilities";
 
-interface WindProps {
+export interface WindProps {
     speed: number;
     degree: number;
     canvasWidth: number;
     canvasHeight: number;
 }
 
-interface WindState {}
+export default function Wind({
+    canvasWidth,
+    canvasHeight,
+    degree,
+    speed,
+}: WindProps) {
+    const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-export default class Wind extends React.Component<WindProps, WindState> {
-    componentDidMount() {
-        this.updateCanvas();
-    }
+    function updateCanvas() {
+        const canvas = canvasRef.current;
+        if (!canvas) {
+            return;
+        }
 
-    componentDidUpdate() {
-        this.updateCanvas();
-    }
+        const ctx = canvas.getContext("2d")!;
 
-    updateCanvas() {
-        var canvas = this.refs.degreeCanvas as HTMLCanvasElement;
-        var ctx = canvas.getContext("2d")!;
+        // clear the previous drawing
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        var halfWidth = this.props.canvasWidth / 2;
-        var halfHeight = this.props.canvasHeight / 2;
+        const halfWidth = canvasWidth / 2;
+        const halfHeight = canvasHeight / 2;
 
         ctx.translate(halfWidth, halfHeight);
-        ctx.rotate(toRadians(this.props.degree));
+        ctx.rotate(toRadians(degree));
 
         ctx.moveTo(-halfWidth, -halfHeight);
         ctx.lineTo(halfWidth, 0);
@@ -36,20 +40,22 @@ export default class Wind extends React.Component<WindProps, WindState> {
         ctx.fill();
     }
 
-    render() {
-        return (
-            <div>
-                <span>Wind Speed: </span>
-                <span className="value">{this.props.speed}</span>
-                <span> meter/sec</span>
-                <canvas
-                    width={this.props.canvasWidth}
-                    height={this.props.canvasHeight}
-                    ref="degreeCanvas"
-                    className="degreeCanvas"
-                    title={this.props.degree + "°"}
-                />
-            </div>
-        );
-    }
+    useEffect(() => {
+        updateCanvas();
+    }, [canvasWidth, canvasHeight, degree]);
+
+    return (
+        <div>
+            <span>Wind Speed: </span>
+            <span className="value">{speed}</span>
+            <span> meter/sec</span>
+            <canvas
+                width={canvasWidth}
+                height={canvasHeight}
+                ref={canvasRef}
+                className="degreeCanvas"
+                title={degree + "°"}
+            />
+        </div>
+    );
 }
