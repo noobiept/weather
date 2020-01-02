@@ -15,7 +15,6 @@ export default class Loading extends React.Component<
         return (
             <div className="loading">
                 <ClipLoader
-                    sizeUnit={"px"}
                     size={20}
                     color={"#123abc"}
                     loading={this.props.active}
