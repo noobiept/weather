@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 
 interface SearchListProps {
     onItemClick: (cityName: string, existingPosition?: number) => void;
@@ -6,51 +6,37 @@ interface SearchListProps {
     selectedPosition: number;
 }
 
-interface SearchListState {}
-
-export default class SearchList extends React.Component<
-    SearchListProps,
-    SearchListState
-> {
-    open(position: number) {
-        this.setState({
-            selectedPosition: position,
-        });
-
-        this.props.onItemClick(this.props.cityNames[position], position);
+export default function SearchList({
+    onItemClick,
+    cityNames,
+    selectedPosition,
+}: SearchListProps) {
+    function open(position: number) {
+        onItemClick(cityNames[position], position);
     }
 
-    render() {
-        let citySearches = [];
-
-        for (let a = 0; a < this.props.cityNames.length; a++) {
-            let name = this.props.cityNames[a];
-            let position = a;
-            let clickHandler = () => {
-                this.open(position);
-            };
-            let cssClass = "button";
-
-            if (a === this.props.selectedPosition) {
-                cssClass += " selected";
-            }
-
-            citySearches.push(
-                <li key={a} className={cssClass} onClick={clickHandler}>
-                    {name}
-                </li>
-            );
-        }
+    const citySearches = cityNames.map((name, index) => {
+        const clickHandler = () => {
+            open(index);
+        };
+        const cssClass =
+            index === selectedPosition ? "button selected" : "button";
 
         return (
-            <div id="PreviousSearches">
-                {citySearches.length !== 0 && (
-                    <>
-                        <span>Previous searches: </span>
-                        <ul className="horizontalList">{citySearches}</ul>
-                    </>
-                )}
-            </div>
+            <li key={index} className={cssClass} onClick={clickHandler}>
+                {name}
+            </li>
         );
-    }
+    });
+
+    return (
+        <div id="PreviousSearches">
+            {citySearches.length !== 0 && (
+                <>
+                    <span>Previous searches: </span>
+                    <ul className="horizontalList">{citySearches}</ul>
+                </>
+            )}
+        </div>
+    );
 }
