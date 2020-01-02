@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { WeatherConditionInfo } from "./weather_info";
 
 interface WeatherConditionProps {
@@ -7,38 +7,30 @@ interface WeatherConditionProps {
     temperature: number;
 }
 
-interface WeatherConditionState {}
-
 /**
  * Shows the given temperature plus the associated weather condition (represented by an image).
  */
-export default class WeatherCondition extends React.Component<
-    WeatherConditionProps,
-    WeatherConditionState
-> {
-    render() {
-        let weather = this.props.weather;
-        let weatherInfo = [];
-
-        for (var a = 0; a < weather.length; a++) {
-            let info = weather[a];
-
-            weatherInfo.push(
-                <img
-                    className="weatherCondition"
-                    key={a}
-                    title={info.description}
-                    src={`https://openweathermap.org/img/w/${info.icon}.png`}
-                />
-            );
-        }
-
+export default function WeatherCondition({
+    id,
+    weather,
+    temperature,
+}: WeatherConditionProps) {
+    const weatherInfo = weather.map((info, index) => {
         return (
-            <div id={this.props.id}>
-                {weatherInfo}
-                <span>Temperature: </span>
-                <span className="value">{this.props.temperature}</span> °C
-            </div>
+            <img
+                className="weatherCondition"
+                key={index}
+                title={info.description}
+                src={`https://openweathermap.org/img/w/${info.icon}.png`}
+            />
         );
-    }
+    });
+
+    return (
+        <div id={id}>
+            {weatherInfo}
+            <span>Temperature: </span>
+            <span className="value">{temperature}</span> °C
+        </div>
+    );
 }
