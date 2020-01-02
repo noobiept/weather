@@ -1,32 +1,18 @@
-import * as React from "react";
+import React from "react";
 
 interface CityInputProps {
     onInput: (cityName: string) => void;
+    inputRef: React.RefObject<HTMLInputElement>;
 }
 
-interface CityInputState {}
-
-export default class CityInput extends React.Component<
-    CityInputProps,
-    CityInputState
-> {
-    inputRef: React.RefObject<HTMLInputElement>;
-
-    constructor(props: CityInputProps) {
-        super(props);
-
-        this.inputRef = React.createRef();
-        this.search = this.search.bind(this);
-        this.keyPress = this.keyPress.bind(this);
-    }
-
+export default function CityInput({ onInput, inputRef }: CityInputProps) {
     /**
      * Perform a search when the `enter` key is pressed.
      */
-    keyPress(event: React.KeyboardEvent<HTMLInputElement>) {
+    function keyPress(event: React.KeyboardEvent<HTMLInputElement>) {
         switch (event.which) {
             case 13: // enter
-                this.search();
+                search();
                 break;
         }
     }
@@ -34,8 +20,8 @@ export default class CityInput extends React.Component<
     /**
      * Check if the input element has some value and if so, call the given `onInput` callback.
      */
-    search() {
-        const input = this.inputRef.current;
+    function search() {
+        const input = inputRef.current;
         if (!input) {
             return;
         }
@@ -43,31 +29,18 @@ export default class CityInput extends React.Component<
         const name = input.value;
 
         input.value = ""; // clear after every query
-        this.props.onInput(name);
+        onInput(name);
     }
 
-    /**
-     * Put the focus on the `input` html element.
-     */
-    gainFocus() {
-        const input = this.inputRef.current;
-
-        if (input) {
-            input.focus();
-        }
-    }
-
-    render() {
-        return (
-            <div id="CityInput">
-                <input
-                    type="text"
-                    placeholder="City name.."
-                    ref={this.inputRef}
-                    onKeyPress={this.keyPress}
-                />
-                <button onClick={this.search}>Search</button>
-            </div>
-        );
-    }
+    return (
+        <div id="CityInput">
+            <input
+                type="text"
+                placeholder="City name.."
+                ref={inputRef}
+                onKeyPress={keyPress}
+            />
+            <button onClick={search}>Search</button>
+        </div>
+    );
 }

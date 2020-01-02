@@ -24,7 +24,7 @@ export default class Weather extends React.Component<
     WeatherProps,
     WeatherState
 > {
-    cityInputRef: React.RefObject<CityInput>;
+    cityInputRef: React.RefObject<HTMLInputElement>;
     searchLimit = 5; // maximum number of elements in the search list
 
     constructor(props: WeatherProps) {
@@ -48,10 +48,7 @@ export default class Weather extends React.Component<
     componentDidMount() {
         // focus the city element element whenever a key is pressed
         window.addEventListener("keypress", () => {
-            const cityInput = this.cityInputRef.current;
-            if (cityInput) {
-                cityInput.gainFocus();
-            }
+            this.gainFocus();
         });
 
         // load the last city that was selected in the previous session
@@ -61,6 +58,16 @@ export default class Weather extends React.Component<
         if (cities.length !== 0 && position >= 0) {
             const name = cities[position];
             this.changeCity(name, position);
+        }
+    }
+
+    /**
+     * Put the focus on the `input` html element.
+     */
+    gainFocus() {
+        const cityInput = this.cityInputRef.current;
+        if (cityInput) {
+            cityInput.focus();
         }
     }
 
@@ -157,7 +164,7 @@ export default class Weather extends React.Component<
             <div>
                 <div className="list">
                     <CityInput
-                        ref={this.cityInputRef}
+                        inputRef={this.cityInputRef}
                         onInput={this.changeCity}
                     />
                     <Loading active={this.state.loading} />
