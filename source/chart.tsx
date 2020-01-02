@@ -1,106 +1,66 @@
-import * as React from "react";
+import React, { useEffect, useRef } from "react";
+import { useWindowWidth } from "./hooks";
 
-interface ChartProps {
+export interface ChartProps {
     data: number[];
     unit: string;
     title: string;
     xAxis: Date[];
 }
 
-interface ChartState {
-    width: number;
-    height: number;
+/**
+ * Try to determine the best side to draw the text, to try to avoid as much as possible to draw text on top of the chart lines.
+ */
+function determineTextSide(value: number, left?: number, right?: number) {
+    let textAlign: CanvasTextAlign;
+    let textBaseline: CanvasTextBaseline;
+    const leftValue = left ? left : value;
+    const rightValue = right ? right : value;
+
+    const leftDiff = leftValue - value;
+    const rightDiff = rightValue - value;
+
+    if (leftDiff > 0 && rightDiff > 0) {
+        textBaseline = "top";
+    } else {
+        textBaseline = "bottom";
+    }
+
+    if (leftDiff > rightDiff) {
+        textAlign = "left";
+    } else {
+        textAlign = "right";
+    }
+
+    return {
+        textAlign: textAlign,
+        textBaseline: textBaseline,
+    };
 }
 
-export default class Chart extends React.Component<ChartProps, ChartState> {
-    onResize?: () => void;
+export default function Chart(props: ChartProps) {
+    const canvasRef = useRef<HTMLCanvasElement | null>(null);
+    const width = useWindowWidth();
+    const height = 400;
 
-    constructor(props: ChartProps) {
-        super(props);
-
-        this.state = {
-            width: 800,
-            height: 400,
-        };
-    }
-
-    /**
-     * Set the chart canvas with the same width as the window's width.
-     */
-    updateWidth() {
-        let parentWidth = document.body.clientWidth;
-
-        this.setState({
-            width: parentWidth,
-        });
-    }
-
-    componentDidMount() {
-        // automatically resize the chart's width as the window's width change
-        this.onResize = () => {
-            this.updateWidth();
-        };
-
-        window.addEventListener("resize", this.onResize);
-        this.updateWidth();
-    }
-
-    componentWillUnmount() {
-        if (this.onResize) {
-            window.removeEventListener("resize", this.onResize);
-        }
-    }
-
-    componentDidUpdate() {
-        this.updateCanvas();
-    }
-
-    /**
-     * Try to determine the best side to draw the text, to try to avoid as much as possible to draw text on top of the chart lines.
-     */
-    determineTextSide(value: number, left?: number, right?: number) {
-        let textAlign: CanvasTextAlign;
-        let textBaseline: CanvasTextBaseline;
-        let leftValue = left ? left : value;
-        let rightValue = right ? right : value;
-
-        let leftDiff = leftValue - value;
-        let rightDiff = rightValue - value;
-
-        if (leftDiff > 0 && rightDiff > 0) {
-            textBaseline = "top";
-        } else {
-            textBaseline = "bottom";
+    function updateCanvas() {
+        const canvas = canvasRef.current;
+        if (!canvas) {
+            return;
         }
 
-        if (leftDiff > rightDiff) {
-            textAlign = "left";
-        } else {
-            textAlign = "right";
-        }
+        const ctx = canvas.getContext("2d")!;
 
-        return {
-            textAlign: textAlign,
-            textBaseline: textBaseline,
-        };
-    }
+        const margin = 70;
+        const xAxisMargin = 20;
+        const data = props.data;
+        const unit = props.unit;
 
-    updateCanvas() {
-        var canvas = this.refs.canvasElement as HTMLCanvasElement;
-        var ctx = canvas.getContext("2d")!;
+        const min = Math.min(...data);
+        const max = Math.max(...data);
 
-        var margin = 70;
-        var xAxisMargin = 20;
-        var width = this.state.width;
-        var height = this.state.height;
-        var data = this.props.data;
-        var unit = this.props.unit;
-
-        var min = Math.min(...data);
-        var max = Math.max(...data);
-
-        var horizontalGap = (width - 2 * margin) / (data.length - 1);
-        var verticalGap = (height - 2 * margin) / (max - min);
+        const horizontalGap = (width - 2 * margin) / (data.length - 1);
+        const verticalGap = (height - 2 * margin) / (max - min);
         let previousX;
         let previousY;
 
@@ -113,7 +73,7 @@ export default class Chart extends React.Component<ChartProps, ChartState> {
         ctx.textAlign = "center";
         ctx.textBaseline = "top";
         ctx.fillStyle = "black";
-        ctx.fillText(this.props.title, width / 2, 0);
+        ctx.fillText(props.title, width / 2, 0);
         ctx.restore();
 
         // draw x-axis
@@ -123,10 +83,10 @@ export default class Chart extends React.Component<ChartProps, ChartState> {
         ctx.stroke();
 
         // draw chart lines
-        for (var a = 0; a < data.length; a++) {
-            let value = data[a];
-            let x = margin + a * horizontalGap;
-            let y = height - margin - (value - min) * verticalGap;
+        for (let a = 0; a < data.length; a++) {
+            const value = data[a];
+            const x = margin + a * horizontalGap;
+            const y = height - margin - (value - min) * verticalGap;
 
             // draw the line from the previous position to the current
             if (previousX) {
@@ -150,11 +110,11 @@ export default class Chart extends React.Component<ChartProps, ChartState> {
             ctx.fill();
 
             // show the weekday at midnight
-            let date = this.props.xAxis[a];
-            let hours = date.getHours();
+            const date = props.xAxis[a];
+            const hours = date.getHours();
 
             if (hours === 0) {
-                let weekday = [
+                const weekday = [
                     "Sunday",
                     "Monday",
                     "Tuesday",
@@ -186,7 +146,7 @@ export default class Chart extends React.Component<ChartProps, ChartState> {
             // only draw the value and x-axis point every 2 points (so it doesn't become unreadable)
             if (a % 2 === 0) {
                 // value text
-                let textPositioning = this.determineTextSide(
+                let textPositioning = determineTextSide(
                     value,
                     data[a - 1],
                     data[a + 1]
@@ -215,14 +175,16 @@ export default class Chart extends React.Component<ChartProps, ChartState> {
         }
     }
 
-    render() {
-        return (
-            <canvas
-                className="chartCanvas"
-                ref="canvasElement"
-                width={this.state.width}
-                height={this.state.height}
-            />
-        );
-    }
+    useEffect(() => {
+        updateCanvas();
+    }, [width, props]);
+
+    return (
+        <canvas
+            className="chartCanvas"
+            ref={canvasRef}
+            width={width}
+            height={height}
+        />
+    );
 }
