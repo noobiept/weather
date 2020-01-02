@@ -104,8 +104,7 @@ export default class Weather extends React.Component<
         if (current && forecast) {
             // a new city that we need to add
             if (typeof existingPosition === "undefined") {
-                existingPosition = this.state.searchedCities.length;
-                this.addCityName(current.name);
+                existingPosition = this.addCityName(current.name);
             }
 
             this.updateCityPosition(existingPosition);
@@ -142,14 +141,17 @@ export default class Weather extends React.Component<
 
     /**
      * Add a new city to the search list.
+     * Returns the position of the new entry in the search list.
      */
     addCityName(name: string) {
-        let updated = this.state.searchedCities.slice();
+        const updated = this.state.searchedCities.slice();
+        let position = updated.length;
         updated.push(name);
 
         // if we get past the limit, remove the older entry (at the start of the array)
         if (updated.length > this.searchLimit) {
             updated.splice(0, 1);
+            position--;
         }
 
         this.setState({
@@ -157,6 +159,8 @@ export default class Weather extends React.Component<
         });
 
         saveToStorage("weather_search_list", updated);
+
+        return position;
     }
 
     render() {
