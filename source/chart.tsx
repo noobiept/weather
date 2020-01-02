@@ -38,7 +38,7 @@ function determineTextSide(value: number, left?: number, right?: number) {
     };
 }
 
-export default function Chart(props: ChartProps) {
+export default function Chart({ data, title, unit, xAxis }: ChartProps) {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const width = useWindowWidth();
     const height = 400;
@@ -50,15 +50,10 @@ export default function Chart(props: ChartProps) {
         }
 
         const ctx = canvas.getContext("2d")!;
-
         const margin = 70;
         const xAxisMargin = 20;
-        const data = props.data;
-        const unit = props.unit;
-
         const min = Math.min(...data);
         const max = Math.max(...data);
-
         const horizontalGap = (width - 2 * margin) / (data.length - 1);
         const verticalGap = (height - 2 * margin) / (max - min);
         let previousX;
@@ -73,7 +68,7 @@ export default function Chart(props: ChartProps) {
         ctx.textAlign = "center";
         ctx.textBaseline = "top";
         ctx.fillStyle = "black";
-        ctx.fillText(props.title, width / 2, 0);
+        ctx.fillText(title, width / 2, 0);
         ctx.restore();
 
         // draw x-axis
@@ -110,7 +105,7 @@ export default function Chart(props: ChartProps) {
             ctx.fill();
 
             // show the weekday at midnight
-            const date = props.xAxis[a];
+            const date = xAxis[a];
             const hours = date.getHours();
 
             if (hours === 0) {
@@ -177,7 +172,7 @@ export default function Chart(props: ChartProps) {
 
     useEffect(() => {
         updateCanvas();
-    }, [width, props]);
+    }, [width, data, title, unit, xAxis]);
 
     return (
         <canvas

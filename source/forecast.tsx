@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 
 import Chart from "./chart";
 import { ForecastInfo } from "./weather_info";
