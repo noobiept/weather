@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 
 import CityInput from "./city_input";
 import Message from "./message";
@@ -8,12 +8,13 @@ import SearchList from "./search_list";
 import Loading from "./loading";
 import Help from "./help";
 import { getFromStorage, saveToStorage } from "./data";
+import { getCurrentWeather, getCurrentForecast } from "./requests";
 
 interface WeatherProps {}
 
 interface WeatherState {
-    current: React.ReactElement<CurrentWeather> | undefined;
-    forecast: React.ReactElement<Forecast> | undefined;
+    current: React.ReactNode | undefined;
+    forecast: React.ReactNode | undefined;
     messageText: string; // warn/error message to show to the user
     loading: boolean;
     searchedCities: string[]; // list with all the city names that were searched for
@@ -87,8 +88,8 @@ export default class Weather extends React.Component<
 
         try {
             var [current, forecast] = await Promise.all([
-                await CurrentWeather.getCurrentWeather(name),
-                await Forecast.getCurrentWeather(name),
+                await getCurrentWeather(name),
+                await getCurrentForecast(name),
             ]);
         } catch {
             this.setState({
