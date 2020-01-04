@@ -37,7 +37,7 @@ export default function Weather() {
             setPosition(loadedPosition);
 
             const name = loadedCities[loadedPosition];
-            changeCity(name, loadedPosition);
+            changeCity(name, loadedPosition, false);
         }
     }, []);
 
@@ -54,8 +54,13 @@ export default function Weather() {
     /**
      * Load a different city weather information.
      * If `existingPosition` is not given, then its a new city that we need to add to the cities list.
+     * We can optionally not save the changes to the state/storage (useful when loading at the beginning for example).
      */
-    async function changeCity(name: string, existingPosition?: number) {
+    async function changeCity(
+        name: string,
+        existingPosition?: number,
+        save = true
+    ) {
         if (name.length <= 3) {
             setMessageText("The query needs to have more than 3 characters.");
             return;
@@ -77,12 +82,15 @@ export default function Weather() {
         }
 
         if (current && forecast) {
-            // a new city that we need to add
-            if (typeof existingPosition === "undefined") {
-                existingPosition = addCityName(current.name);
+            if (save) {
+                // a new city that we need to add
+                if (typeof existingPosition === "undefined") {
+                    existingPosition = addCityName(current.name);
+                }
+
+                updateCityPosition(existingPosition);
             }
 
-            updateCityPosition(existingPosition);
             setCurrent(
                 <CurrentWeather
                     key={"current." + current.name}
