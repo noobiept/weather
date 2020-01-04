@@ -1,5 +1,5 @@
 import React from "react";
-import { WeatherConditionInfo } from "./weather_info";
+import { WeatherConditionInfo } from "../shared/weather_info";
 
 interface WeatherConditionProps {
     id?: string;

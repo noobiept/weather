@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { useWindowWidth } from "./hooks";
+import { useWindowWidth } from "../shared/hooks";
 
 export interface ChartProps {
     data: number[];

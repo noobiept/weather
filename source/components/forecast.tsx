@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 
 import Chart from "./chart";
-import { ForecastInfo } from "./weather_info";
+import { ForecastInfo } from "../shared/weather_info";
 import WeatherCondition from "./weather_condition";
 import Wind from "./wind";
 

@@ -1,8 +1,8 @@
 import React from "react";
-import { CurrentWeatherInfo } from "./weather_info";
+import { CurrentWeatherInfo } from "../shared/weather_info";
 import WeatherCondition from "./weather_condition";
 import Wind from "./wind";
-import { toHourMinute } from "./utilities";
+import { toHourMinute } from "../shared/utilities";
 
 interface CurrentWeatherProps {
     info: CurrentWeatherInfo;

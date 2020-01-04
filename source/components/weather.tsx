@@ -7,8 +7,8 @@ import Forecast from "./forecast";
 import SearchList from "./search_list";
 import Loading from "./loading";
 import Help from "./help";
-import { getFromStorage, saveToStorage } from "./data";
-import { getCurrentWeather, getCurrentForecast } from "./requests";
+import { getFromStorage, saveToStorage } from "../shared/data";
+import { getCurrentWeather, getCurrentForecast } from "../shared/requests";
 
 export default function Weather() {
     const searchLimit = 5; // maximum number of elements in the search list
