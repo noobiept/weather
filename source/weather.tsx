@@ -13,12 +13,9 @@ import { getCurrentWeather, getCurrentForecast } from "./requests";
 export default function Weather() {
     const searchLimit = 5; // maximum number of elements in the search list
     const cityInputRef = useRef<HTMLInputElement>(null);
-    const loadedCities = getFromStorage("weather_search_list");
-    const loadedPosition = getFromStorage("weather_selected_position");
-    const [cities, setCities] = useState(loadedCities ? loadedCities : []); // list with all the city names that were searched for
-    const [position, setPosition] = useState(
-        typeof loadedPosition === "number" ? loadedPosition : -1
-    ); // position of the currently selected city name element
+
+    const [cities, setCities] = useState<string[]>([]); // list with all the city names that were searched for
+    const [position, setPosition] = useState(-1); // position of the currently selected city name element
     const [current, setCurrent] = useState();
     const [forecast, setForecast] = useState();
     const [messageText, setMessageText] = useState(""); // warn/error message to show to the user
@@ -30,10 +27,17 @@ export default function Weather() {
             gainFocus();
         });
 
+        const loadedCities = getFromStorage("weather_search_list") ?? [];
+        const loadedPosition =
+            getFromStorage("weather_selected_position") ?? -1;
+
         // load the last city that was selected in the previous session
-        if (cities.length !== 0 && position >= 0) {
-            const name = cities[position];
-            changeCity(name, position);
+        if (loadedCities.length !== 0 && loadedPosition >= 0) {
+            setCities(loadedCities);
+            setPosition(loadedPosition);
+
+            const name = loadedCities[loadedPosition];
+            changeCity(name, loadedPosition);
         }
     }, []);
 
