@@ -1,7 +1,7 @@
 import React from "react";
 
 interface MessageProps {
-    text?: React.ReactElement<HTMLSpanElement> | string;
+    text: React.ReactNode | string;
 }
 
 export default function Message({ text }: MessageProps) {
