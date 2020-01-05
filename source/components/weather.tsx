@@ -138,7 +138,7 @@ export default function Weather() {
     }
 
     return (
-        <div>
+        <div id="Weather">
             <div className="list">
                 <CityInput inputRef={cityInputRef} onInput={changeCity} />
                 <Loading active={loading} />

@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Help() {
     return (
-        <div>
+        <div className="help">
             Start by searching for a city with the input entry above, to get
             some weather information.
         </div>
