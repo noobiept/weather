@@ -4,44 +4,11 @@ import "@testing-library/jest-dom/extend-expect";
 
 import CurrentWeather from "../../source/components/current_weather";
 import { toHourMinute } from "../../source/shared/utilities";
+import { getCurrentWeatherData } from "../fake_data";
 
 describe("CurrentWeather", () => {
     test("Should have the expected elements.", () => {
-        const info = {
-            coord: { lon: -8.61, lat: 41.15 },
-            weather: [
-                {
-                    id: 800,
-                    main: "Clear",
-                    description: "clear sky",
-                    icon: "01d",
-                },
-            ],
-            base: "stations",
-            main: {
-                temp: 12.5,
-                feels_like: 9.45,
-                temp_min: 10.56,
-                temp_max: 15.56,
-                pressure: 1029,
-                humidity: 58,
-            },
-            visibility: 10000,
-            wind: { speed: 2.6, deg: 100 },
-            clouds: { all: 0 },
-            dt: 1578233888,
-            sys: {
-                type: 1,
-                id: 6900,
-                country: "PT",
-                sunrise: 1578211193,
-                sunset: 1578244732,
-            },
-            timezone: 0,
-            id: 2735943,
-            name: "Porto",
-            cod: 200,
-        };
+        const info = getCurrentWeatherData();
         const { container } = render(<CurrentWeather info={info} />);
         const element = container.querySelector("div");
         const header = element.querySelector("h1");
