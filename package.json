@@ -48,6 +48,7 @@
         "start": "webpack-dev-server --mode development",
         "build": "webpack --mode production",
         "test": "jest",
+        "test:watch": "jest --watch",
         "formatting:check": "prettier --check \"**/*.{html,css,json,js,ts,tsx,md}\"",
         "formatting:run": "prettier --write \"**/*.{html,css,json,js,ts,tsx,md}\""
     }
