@@ -1,3 +1,5 @@
+import { getObject, saveObject } from "@drk4/utilities";
+
 /**
  * The data that is stored in the local storage.
  */
@@ -12,14 +14,12 @@ export interface Data {
 export function getFromStorage<T extends keyof Data>(
     key: T
 ): Data[T] | undefined {
-    var value = localStorage.getItem(key);
-
-    return value && JSON.parse(value);
+    return getObject(key);
 }
 
 /**
  * Saves in the `localStorage` a json string representation of the `value`.
  */
 export function saveToStorage<T extends keyof Data>(key: T, value: Data[T]) {
-    localStorage.setItem(key, JSON.stringify(value));
+    saveObject(key, value);
 }

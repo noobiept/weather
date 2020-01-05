@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { toRadians } from "../shared/utilities";
+import { toRadians } from "@drk4/utilities";
 
 export interface WindProps {
     speed: number;
