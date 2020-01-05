@@ -10,8 +10,8 @@ export default function CityInput({ onInput, inputRef }: CityInputProps) {
      * Perform a search when the `enter` key is pressed.
      */
     function keyPress(event: React.KeyboardEvent<HTMLInputElement>) {
-        switch (event.which) {
-            case 13: // enter
+        switch (event.key) {
+            case "Enter":
                 search();
                 break;
         }
