@@ -51,10 +51,16 @@ export default function CurrentWeather({ info }: CurrentWeatherProps) {
                         canvasHeight={15}
                     />
                     <div>
-                        Sunrise: <span className="value">{sunrise}</span> /
-                        Sunset: <span className="value">{sunset}</span>
+                        Sunrise:{" "}
+                        <span id="SunriseValue" className="value">
+                            {sunrise}
+                        </span>{" "}
+                        / Sunset:{" "}
+                        <span id="SunsetValue" className="value">
+                            {sunset}
+                        </span>
                     </div>
-                    <div title={lastUpdated.toString()}>
+                    <div id="LastUpdated" title={lastUpdated.toString()}>
                         <span>Last updated: </span>
                         <span className="value">{hourMinutes}</span>
                     </div>

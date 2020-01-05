@@ -45,7 +45,7 @@ export default function Wind({
     }, [canvasWidth, canvasHeight, degree]);
 
     return (
-        <div>
+        <div className="wind">
             <span>Wind Speed: </span>
             <span className="value">{speed}</span>
             <span> meter/sec</span>
