@@ -6,7 +6,7 @@ import Weather from "../../source/components/weather";
 import { mockRequests } from "../mocks";
 
 beforeAll(() => {
-    mockRequests();
+    window.fetch = mockRequests();
 });
 
 describe("Weather", () => {
@@ -46,5 +46,26 @@ describe("Weather", () => {
 
         const weatherInfo = container.querySelector("#WeatherInfoContainer");
         expect(weatherInfo).toBeInTheDocument();
+    });
+
+    test("Search with a query below the limit.", async () => {
+        const { container } = render(<Weather />);
+
+        const city = "123";
+        const input = container.querySelector("#CityInput input");
+        const button = container.querySelector("#CityInput button");
+
+        fireEvent.change(input, { target: { value: city } });
+        fireEvent.click(button);
+
+        await wait();
+
+        const weatherInfo = container.querySelector("#WeatherInfoContainer");
+        expect(weatherInfo).toBeInTheDocument();
+
+        const message = container.querySelector(".message");
+        expect(message).toHaveTextContent(
+            "The query needs to have more than 3 characters."
+        );
     });
 });

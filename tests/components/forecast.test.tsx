@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
 import Forecast from "../../source/components/forecast";
@@ -9,7 +9,7 @@ describe("Forecast", () => {
     test("Should have the expected elements.", () => {
         const info = getCurrentForecastData();
         const { container } = render(<Forecast info={info} />);
-        const element = container.querySelector("div");
+        const element = container.querySelector("#Forecast");
 
         const header = element.querySelector("h1");
         expect(header).toHaveTextContent("Forecast");
@@ -51,5 +51,28 @@ describe("Forecast", () => {
             const wind = child.querySelector(".wind");
             expect(wind).toBeInTheDocument();
         });
+    });
+
+    test("Should switch between the different charts.", () => {
+        const info = getCurrentForecastData();
+        const { container } = render(<Forecast info={info} />);
+        const forecast = container.querySelector("#Forecast");
+        const selectList = forecast.querySelector(".horizontalList");
+
+        const temperature = selectList.querySelector("#Forecast_temperature");
+        fireEvent.click(temperature);
+        expect(temperature.classList.contains("selected")).toBe(true);
+
+        const humidity = selectList.querySelector("#Forecast_humidity");
+        fireEvent.click(humidity);
+        expect(humidity.classList.contains("selected")).toBe(true);
+
+        const pressure = selectList.querySelector("#Forecast_pressure");
+        fireEvent.click(pressure);
+        expect(pressure.classList.contains("selected")).toBe(true);
+
+        const windSpeed = selectList.querySelector("#Forecast_windSpeed");
+        fireEvent.click(windSpeed);
+        expect(windSpeed.classList.contains("selected")).toBe(true);
     });
 });

@@ -192,22 +192,35 @@ export default function Forecast({ info }: ForecastProps) {
     };
 
     return (
-        <div>
+        <div id="Forecast">
             <h1>Forecast</h1>
             <ul className="horizontalList">
                 <li
+                    id="Forecast_temperature"
                     onClick={showTemperature}
                     className={cssClasses.temperature}
                 >
                     Temperature
                 </li>
-                <li onClick={showHumidity} className={cssClasses.humidity}>
+                <li
+                    id="Forecast_humidity"
+                    onClick={showHumidity}
+                    className={cssClasses.humidity}
+                >
                     Humidity
                 </li>
-                <li onClick={showPressure} className={cssClasses.pressure}>
+                <li
+                    id="Forecast_pressure"
+                    onClick={showPressure}
+                    className={cssClasses.pressure}
+                >
                     Pressure
                 </li>
-                <li onClick={showWindSpeed} className={cssClasses.windSpeed}>
+                <li
+                    id="Forecast_windSpeed"
+                    onClick={showWindSpeed}
+                    className={cssClasses.windSpeed}
+                >
                     Wind speed
                 </li>
             </ul>

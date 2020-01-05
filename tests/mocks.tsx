@@ -1,7 +1,7 @@
 import { getCurrentWeatherData, getCurrentForecastData } from "./fake_data";
 
 export function mockRequests() {
-    window.fetch = jest.fn().mockImplementation(async (url: string) => {
+    return jest.fn().mockImplementation((url: string) => {
         if (url.includes("weather?")) {
             return Promise.resolve({
                 status: 200,
@@ -16,6 +16,14 @@ export function mockRequests() {
             });
         }
 
+        return Promise.resolve({
+            status: 404,
+        });
+    });
+}
+
+export function mockFailedRequest() {
+    return jest.fn().mockImplementation(() => {
         return Promise.resolve({
             status: 404,
         });
