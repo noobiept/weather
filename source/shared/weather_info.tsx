@@ -58,5 +58,5 @@ export interface MainWeatherInfo {
 
 export interface WindInfo {
     speed: number; // Wind speed. Unit Default: meter/sec, Metric: meter/sec, Imperial: miles/hour.
-    deg: number; // Wind direction, degrees (meteorological)
+    deg?: number; // Wind direction, degrees (meteorological)
 }

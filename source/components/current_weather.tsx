@@ -46,7 +46,7 @@ export default function CurrentWeather({ info }: CurrentWeatherProps) {
                 <div>
                     <Wind
                         speed={info.wind.speed}
-                        degree={info.wind.deg}
+                        degree={info.wind.deg ?? 0}
                         canvasWidth={15}
                         canvasHeight={15}
                     />

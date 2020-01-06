@@ -102,7 +102,7 @@ export default function Forecast({ info }: ForecastProps) {
                         </div>
                         <Wind
                             speed={item.wind.speed}
-                            degree={item.wind.deg}
+                            degree={item.wind.deg ?? 0}
                             canvasWidth={15}
                             canvasHeight={15}
                         />
