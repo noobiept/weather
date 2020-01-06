@@ -85,7 +85,9 @@ export default function Weather() {
             if (save) {
                 // a new city that we need to add
                 if (typeof existingPosition === "undefined") {
-                    existingPosition = addCityName(current.name);
+                    existingPosition = addCityName(
+                        `${current.name}, ${current.sys.country}`
+                    );
                 }
 
                 updateCityPosition(existingPosition);
@@ -119,8 +121,15 @@ export default function Weather() {
     /**
      * Add a new city to the search list.
      * Returns the position of the new entry in the search list.
+     * If the city already exists in the list, then we just return its position.
      */
     function addCityName(name: string) {
+        // already in the list
+        const existingIndex = cities.indexOf(name);
+        if (existingIndex >= 0) {
+            return existingIndex;
+        }
+
         const updated = cities.slice();
         let position = updated.length;
         updated.push(name);
