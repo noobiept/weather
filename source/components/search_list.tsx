@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 interface SearchListProps {
     onItemClick: (cityName: string, existingPosition?: number) => void;
@@ -21,11 +21,15 @@ export default function SearchList({
         };
         const cssClass =
             index === selectedPosition ? "button selected" : "button";
+        const lastItem = cityNames.length - 1 === index;
 
         return (
-            <li key={index} className={cssClass} onClick={clickHandler}>
-                {name}
-            </li>
+            <Fragment key={index}>
+                <li className={cssClass} onClick={clickHandler}>
+                    {name}
+                </li>
+                {!lastItem && <li>/</li>}
+            </Fragment>
         );
     });
 
