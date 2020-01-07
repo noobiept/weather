@@ -2,6 +2,8 @@
 
 body {
     text-align: center;
+    margin: 10px 0;
+    padding: 0;
 }
 
 /* classes */
@@ -63,14 +65,11 @@ body {
 }
 
 .horizontalList {
-    display: inline-block;
+    display: flex;
+    justify-content: center;
     list-style: none;
     margin: 0;
     padding: 0;
-}
-
-.horizontalList > li {
-    display: inline-block;
 }
 
 .infoList {
@@ -94,27 +93,28 @@ body {
 .loading {
     width: 25px;
     height: 25px;
+    margin-left: 10px;
 }
 
 /* specific elements */
 
 #WeatherInfoContainer > div {
-    display: inline-block;
     margin: 10px 0;
 }
 
 #WeatherList {
+    display: flex;
     width: 95vw;
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
-}
-
-#WeatherList > div {
-    display: inline-block;
+    margin: auto;
 }
 
 #PreviousSearches {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 5px;
 }
 
