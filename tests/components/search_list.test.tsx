@@ -14,10 +14,11 @@ describe("SearchList", () => {
         const { container } = render(<SearchList {...props} />);
         const searches = container.querySelector("#PreviousSearches");
         const list = searches.querySelector(".horizontalList");
+        const cityButtons = list.querySelectorAll(".button");
 
         expect(searches).toHaveTextContent("Previous searches:");
         expect(list).toBeInTheDocument();
-        expect(list.childElementCount).toBe(props.cityNames.length);
+        expect(cityButtons).toHaveLength(props.cityNames.length);
     });
 
     test("Should be empty if there's no city names.", () => {
@@ -42,10 +43,10 @@ describe("SearchList", () => {
         };
         const { container } = render(<SearchList {...props} />);
         const searches = container.querySelector("#PreviousSearches");
-        const list = searches.querySelector(".horizontalList");
+        const list = searches.querySelectorAll(".horizontalList .button");
 
         props.cityNames.forEach((_, index) => {
-            const item = list.children[index];
+            const item = list[index];
 
             if (index === props.selectedPosition) {
                 expect(item.classList.contains("selected")).toBe(true);
