@@ -55,6 +55,7 @@ export default function Weather() {
      * Load a different city weather information.
      * If `existingPosition` is not given, then its a new city that we need to add to the cities list.
      * We can optionally not save the changes to the state/storage (useful when loading at the beginning for example).
+     * Returns a boolean that tells whether the operation was successful or not.
      */
     async function changeCity(
         name: string,
@@ -63,7 +64,7 @@ export default function Weather() {
     ) {
         if (name.length <= 3) {
             setMessageText("The query needs to have more than 3 characters.");
-            return;
+            return false;
         }
 
         setLoading(true);
@@ -76,7 +77,7 @@ export default function Weather() {
             ]);
         } catch {
             setMessageText("Failed to connect to the weather API.");
-            return;
+            return false;
         } finally {
             setLoading(false);
         }
@@ -107,7 +108,10 @@ export default function Weather() {
             );
         } else {
             setMessageText(`Couldn't find a city with the name "${name}"`);
+            return false;
         }
+
+        return true;
     }
 
     /**

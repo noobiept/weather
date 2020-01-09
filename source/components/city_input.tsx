@@ -1,7 +1,7 @@
 import React from "react";
 
 interface CityInputProps {
-    onInput: (cityName: string) => void;
+    onInput: (cityName: string) => Promise<boolean>;
     inputRef: React.RefObject<HTMLInputElement>;
 }
 
@@ -20,16 +20,19 @@ export default function CityInput({ onInput, inputRef }: CityInputProps) {
     /**
      * Check if the input element has some value and if so, call the given `onInput` callback.
      */
-    function search() {
+    async function search() {
         const input = inputRef.current;
         if (!input) {
             return;
         }
 
         const name = input.value;
+        const success = await onInput(name);
 
-        input.value = ""; // clear after every query
-        onInput(name);
+        // clear after every successful query
+        if (success) {
+            input.value = "";
+        }
     }
 
     return (
