@@ -1,4 +1,5 @@
 import React from "react";
+
 import { CurrentWeatherInfo } from "../shared/weather_info";
 import WeatherCondition from "./weather_condition";
 import Wind from "./wind";

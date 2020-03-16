@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
+import { createGlobalStyle } from "styled-components";
 
 import CityInput from "./city_input";
 import Message from "./message";
@@ -10,14 +11,22 @@ import Help from "./help";
 import { getFromStorage, saveToStorage } from "../shared/data";
 import { getCurrentWeather, getCurrentForecast } from "../shared/requests";
 
+const GlobalStyle = createGlobalStyle`
+    body {
+        text-align: center;
+        margin: 10px 0;
+        padding: 0;
+    }
+`;
+
 export default function Weather() {
     const searchLimit = 5; // maximum number of elements in the search list
     const cityInputRef = useRef<HTMLInputElement>(null);
 
     const [cities, setCities] = useState<string[]>([]); // list with all the city names that were searched for
     const [position, setPosition] = useState(-1); // position of the currently selected city name element
-    const [current, setCurrent] = useState();
-    const [forecast, setForecast] = useState();
+    const [current, setCurrent] = useState<JSX.Element>();
+    const [forecast, setForecast] = useState<JSX.Element>();
     const [messageText, setMessageText] = useState(""); // warn/error message to show to the user
     const [loading, setLoading] = useState(false);
 
@@ -152,13 +161,12 @@ export default function Weather() {
 
     return (
         <div id="Weather">
+            <GlobalStyle />
             <div className="list">
                 <CityInput inputRef={cityInputRef} onInput={changeCity} />
                 <Loading active={loading} />
             </div>
-            <div>
-                <Message text={messageText} />
-            </div>
+            <Message text={messageText} />
             <SearchList
                 cityNames={cities}
                 selectedPosition={position}

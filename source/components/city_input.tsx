@@ -1,4 +1,14 @@
 import React from "react";
+import styled from "styled-components";
+
+const Container = styled.div`
+    & > * {
+        vertical-align: middle;
+        box-sizing: content-box;
+        padding: 5px;
+        margin: 0;
+    }
+`;
 
 interface CityInputProps {
     onInput: (cityName: string) => Promise<boolean>;
@@ -36,7 +46,7 @@ export default function CityInput({ onInput, inputRef }: CityInputProps) {
     }
 
     return (
-        <div id="CityInput">
+        <Container id="CityInput">
             <input
                 type="text"
                 placeholder="City name.."
@@ -44,6 +54,6 @@ export default function CityInput({ onInput, inputRef }: CityInputProps) {
                 onKeyPress={keyPress}
             />
             <button onClick={search}>Search</button>
-        </div>
+        </Container>
     );
 }

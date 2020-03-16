@@ -1,9 +1,19 @@
 import React, { useRef, useState } from "react";
+import styled from "styled-components";
 
 import Chart from "./chart";
 import { ForecastInfo } from "../shared/weather_info";
 import WeatherCondition from "./weather_condition";
 import Wind from "./wind";
+
+const WeatherList = styled.div`
+    display: flex;
+    width: 95vw;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    margin: auto;
+`;
 
 interface ForecastProps {
     info: ForecastInfo;
@@ -230,7 +240,7 @@ export default function Forecast({ info }: ForecastProps) {
                 title={canvasInfo.canvas.title}
                 xAxis={chartData.current!.xAxis}
             />
-            <div id="WeatherList">{weatherList.current}</div>
+            <WeatherList id="WeatherList">{weatherList.current}</WeatherList>
         </div>
     );
 }

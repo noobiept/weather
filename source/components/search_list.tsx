@@ -1,4 +1,12 @@
 import React, { Fragment } from "react";
+import styled from "styled-components";
+
+const PreviousSearches = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+`;
 
 interface SearchListProps {
     onItemClick: (cityName: string, existingPosition?: number) => void;
@@ -34,13 +42,13 @@ export default function SearchList({
     });
 
     return (
-        <div id="PreviousSearches">
+        <PreviousSearches id="PreviousSearches">
             {citySearches.length !== 0 && (
                 <>
                     <span>Previous searches: </span>
                     <ul className="horizontalList">{citySearches}</ul>
                 </>
             )}
-        </div>
+        </PreviousSearches>
     );
 }
