@@ -5,6 +5,7 @@ import Chart from "./chart";
 import { ForecastInfo } from "../shared/weather_info";
 import WeatherCondition from "./weather_condition";
 import Wind from "./wind";
+import { ListItem } from "../shared/styles";
 
 const WeatherList = styled.div`
     display: flex;
@@ -163,31 +164,6 @@ export default function Forecast({ info }: ForecastProps) {
         return { canvas: chartData.current!.info[typeStr], type };
     }
 
-    const cssClasses = {
-        temperature: "button",
-        humidity: "button",
-        pressure: "button",
-        windSpeed: "button",
-    };
-
-    switch (canvasInfo.type) {
-        case ForecastCanvasType.temperature:
-            cssClasses.temperature += " selected";
-            break;
-
-        case ForecastCanvasType.humidity:
-            cssClasses.humidity += " selected";
-            break;
-
-        case ForecastCanvasType.pressure:
-            cssClasses.pressure += " selected";
-            break;
-
-        case ForecastCanvasType.windSpeed:
-            cssClasses.windSpeed += " selected";
-            break;
-    }
-
     const showTemperature = () => {
         showInCanvas(ForecastCanvasType.temperature);
     };
@@ -205,34 +181,36 @@ export default function Forecast({ info }: ForecastProps) {
         <div id="Forecast">
             <h1>Forecast</h1>
             <ul className="horizontalList">
-                <li
+                <ListItem
                     id="Forecast_temperature"
                     onClick={showTemperature}
-                    className={cssClasses.temperature}
+                    selected={
+                        canvasInfo.type === ForecastCanvasType.temperature
+                    }
                 >
                     Temperature
-                </li>
-                <li
+                </ListItem>
+                <ListItem
                     id="Forecast_humidity"
                     onClick={showHumidity}
-                    className={cssClasses.humidity}
+                    selected={canvasInfo.type === ForecastCanvasType.humidity}
                 >
                     Humidity
-                </li>
-                <li
+                </ListItem>
+                <ListItem
                     id="Forecast_pressure"
                     onClick={showPressure}
-                    className={cssClasses.pressure}
+                    selected={canvasInfo.type === ForecastCanvasType.pressure}
                 >
                     Pressure
-                </li>
-                <li
+                </ListItem>
+                <ListItem
                     id="Forecast_windSpeed"
                     onClick={showWindSpeed}
-                    className={cssClasses.windSpeed}
+                    selected={canvasInfo.type === ForecastCanvasType.windSpeed}
                 >
                     Wind speed
-                </li>
+                </ListItem>
             </ul>
             <Chart
                 data={canvasInfo.canvas.data}

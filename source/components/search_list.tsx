@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import styled from "styled-components";
+import { ListItem } from "../shared/styles";
 
 const PreviousSearches = styled.div`
     display: flex;
@@ -27,15 +28,14 @@ export default function SearchList({
         const clickHandler = () => {
             open(index);
         };
-        const cssClass =
-            index === selectedPosition ? "button selected" : "button";
+        const selected = index === selectedPosition;
         const lastItem = cityNames.length - 1 === index;
 
         return (
             <Fragment key={index}>
-                <li className={cssClass} onClick={clickHandler}>
+                <ListItem selected={selected} onClick={clickHandler}>
                     {name}
-                </li>
+                </ListItem>
                 {!lastItem && <li>/</li>}
             </Fragment>
         );
