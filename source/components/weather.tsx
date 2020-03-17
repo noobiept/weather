@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 import CityInput from "./city_input";
 import Message from "./message";
@@ -16,6 +16,18 @@ const GlobalStyle = createGlobalStyle`
         text-align: center;
         margin: 10px 0;
         padding: 0;
+    }
+`;
+
+const List = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+`;
+
+const WeatherInfoContainer = styled.div`
+    & > div {
+        margin: 10px 0;
     }
 `;
 
@@ -162,10 +174,10 @@ export default function Weather() {
     return (
         <div id="Weather">
             <GlobalStyle />
-            <div className="list">
+            <List className="list">
                 <CityInput inputRef={cityInputRef} onInput={changeCity} />
                 <Loading active={loading} />
-            </div>
+            </List>
             <Message text={messageText} />
             <SearchList
                 cityNames={cities}
@@ -174,10 +186,10 @@ export default function Weather() {
             />
 
             {cities.length !== 0 ? (
-                <div id="WeatherInfoContainer">
+                <WeatherInfoContainer id="WeatherInfoContainer">
                     {current}
                     {forecast}
-                </div>
+                </WeatherInfoContainer>
             ) : (
                 <Help />
             )}

@@ -5,7 +5,7 @@ import Chart from "./chart";
 import { ForecastInfo } from "../shared/weather_info";
 import WeatherCondition from "./weather_condition";
 import Wind from "./wind";
-import { ListItem } from "../shared/styles";
+import { ListItem, Value, HorizontalList } from "../shared/styles";
 
 const WeatherList = styled.div`
     display: flex;
@@ -14,6 +14,16 @@ const WeatherList = styled.div`
     overflow-y: hidden;
     white-space: nowrap;
     margin: auto;
+`;
+
+const DateDisplay = styled.div`
+    font-weight: bold;
+`;
+
+const ForecastItem = styled.div`
+    &:nth-child(odd) {
+        background-color: rgba(0, 0, 255, 0.1);
+    }
 `;
 
 interface ForecastProps {
@@ -91,24 +101,26 @@ export default function Forecast({ info }: ForecastProps) {
                 xAxis.push(date);
 
                 list.push(
-                    <div key={a} className="weatherItem">
-                        <div className="date">{item.dt_txt}</div>
+                    <ForecastItem key={a} className="weatherItem">
+                        <DateDisplay className="date">
+                            {item.dt_txt}
+                        </DateDisplay>
                         <WeatherCondition
                             temperature={item.main.temp}
                             weather={item.weather}
                         />
                         <div>
                             <span>Humidity: </span>
-                            <span className="value">
+                            <Value className="value">
                                 {item.main.humidity}
-                            </span>{" "}
+                            </Value>{" "}
                             %
                         </div>
                         <div>
                             <span>Pressure: </span>
-                            <span className="value">
+                            <Value className="value">
                                 {item.main.pressure}
-                            </span>{" "}
+                            </Value>{" "}
                             hPa
                         </div>
                         <Wind
@@ -117,7 +129,7 @@ export default function Forecast({ info }: ForecastProps) {
                             canvasWidth={15}
                             canvasHeight={15}
                         />
-                    </div>
+                    </ForecastItem>
                 );
             }
 
@@ -180,7 +192,7 @@ export default function Forecast({ info }: ForecastProps) {
     return (
         <div id="Forecast">
             <h1>Forecast</h1>
-            <ul className="horizontalList">
+            <HorizontalList className="horizontalList">
                 <ListItem
                     id="Forecast_temperature"
                     onClick={showTemperature}
@@ -211,7 +223,7 @@ export default function Forecast({ info }: ForecastProps) {
                 >
                     Wind speed
                 </ListItem>
-            </ul>
+            </HorizontalList>
             <Chart
                 data={canvasInfo.canvas.data}
                 unit={canvasInfo.canvas.unit}

@@ -1,5 +1,12 @@
 import React, { useEffect, useRef } from "react";
+import styled from "styled-components";
 import { toRadians } from "@drk4/utilities";
+import { Value } from "../shared/styles";
+
+const DegreeCanvas = styled.canvas`
+    vertical-align: middle;
+    margin: 1px 5px;
+`;
 
 export interface WindProps {
     speed: number;
@@ -47,9 +54,9 @@ export default function Wind({
     return (
         <div className="wind">
             <span>Wind Speed: </span>
-            <span className="value">{speed}</span>
+            <Value className="value">{speed}</Value>
             <span> meter/sec</span>
-            <canvas
+            <DegreeCanvas
                 width={canvasWidth}
                 height={canvasHeight}
                 ref={canvasRef}

@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import styled from "styled-components";
-import { ListItem } from "../shared/styles";
+import { ListItem, HorizontalList } from "../shared/styles";
 
 const PreviousSearches = styled.div`
     display: flex;
@@ -46,7 +46,9 @@ export default function SearchList({
             {citySearches.length !== 0 && (
                 <>
                     <span>Previous searches: </span>
-                    <ul className="horizontalList">{citySearches}</ul>
+                    <HorizontalList className="horizontalList">
+                        {citySearches}
+                    </HorizontalList>
                 </>
             )}
         </PreviousSearches>

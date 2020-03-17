@@ -26,10 +26,6 @@ module.exports = function(env, argv) {
                     to: "./libraries/react-dom.production.min.js",
                 },
                 {
-                    from: "./css/**/*",
-                    to: "./",
-                },
-                {
                     from: "./package.json",
                     to: "./",
                 },

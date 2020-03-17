@@ -1,9 +1,27 @@
 import React from "react";
+import styled from "styled-components";
 
 import { CurrentWeatherInfo } from "../shared/weather_info";
 import WeatherCondition from "./weather_condition";
 import Wind from "./wind";
 import { toHourMinute } from "../shared/utilities";
+import { Value } from "../shared/styles";
+
+const InfoList = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: left;
+    margin: 10px;
+
+    & > div {
+        margin: 10px;
+    }
+`;
+
+const StyledWeatherCondition = styled(WeatherCondition)`
+    font-size: 150%;
+`;
 
 interface CurrentWeatherProps {
     info: CurrentWeatherInfo;
@@ -20,27 +38,27 @@ export default function CurrentWeather({ info }: CurrentWeatherProps) {
             <h1>
                 {info.name}, {info.sys.country}
             </h1>
-            <WeatherCondition
+            <StyledWeatherCondition
                 id="CurrentWeatherCondition"
                 temperature={info.main.temp}
                 weather={info.weather}
             />
-            <div className="infoList">
+            <InfoList className="infoList">
                 <div>
                     <div>
                         <span>Latitude: </span>
-                        <span className="value">{info.coord.lat}</span>
+                        <Value className="value">{info.coord.lat}</Value>
                         <span> / Longitude: </span>
-                        <span className="value">{info.coord.lon}</span>
+                        <Value className="value">{info.coord.lon}</Value>
                     </div>
                     <div>
                         <span>Humidity: </span>
-                        <span className="value">{info.main.humidity}</span>
+                        <Value className="value">{info.main.humidity}</Value>
                         <span> %</span>
                     </div>
                     <div>
                         <span>Pressure: </span>
-                        <span className="value">{info.main.pressure}</span>
+                        <Value className="value">{info.main.pressure}</Value>
                         <span> hPa</span>
                     </div>
                 </div>
@@ -53,20 +71,20 @@ export default function CurrentWeather({ info }: CurrentWeatherProps) {
                     />
                     <div>
                         Sunrise:{" "}
-                        <span id="SunriseValue" className="value">
+                        <Value id="SunriseValue" className="value">
                             {sunrise}
-                        </span>{" "}
+                        </Value>{" "}
                         / Sunset:{" "}
-                        <span id="SunsetValue" className="value">
+                        <Value id="SunsetValue" className="value">
                             {sunset}
-                        </span>
+                        </Value>
                     </div>
                     <div id="LastUpdated" title={lastUpdated.toString()}>
                         <span>Last updated: </span>
-                        <span className="value">{hourMinutes}</span>
+                        <Value className="value">{hourMinutes}</Value>
                     </div>
                 </div>
-            </div>
+            </InfoList>
         </div>
     );
 }

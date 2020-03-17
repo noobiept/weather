@@ -1,8 +1,18 @@
 import React from "react";
+import styled from "styled-components";
+
 import { WeatherConditionInfo } from "../shared/weather_info";
+import { Value } from "../shared/styles";
+
+const ConditionImage = styled.img`
+    width: 50px;
+    height: 50px;
+    vertical-align: middle;
+`;
 
 interface WeatherConditionProps {
     id?: string;
+    className?: string;
     weather: WeatherConditionInfo[];
     temperature: number;
 }
@@ -12,12 +22,13 @@ interface WeatherConditionProps {
  */
 export default function WeatherCondition({
     id,
+    className,
     weather,
     temperature,
 }: WeatherConditionProps) {
     const weatherInfo = weather.map((info, index) => {
         return (
-            <img
+            <ConditionImage
                 className="weatherCondition"
                 key={index}
                 title={info.description}
@@ -27,10 +38,10 @@ export default function WeatherCondition({
     });
 
     return (
-        <div id={id}>
+        <div id={id} className={className}>
             {weatherInfo}
             <span>Temperature: </span>
-            <span className="value">{temperature}</span> °C
+            <Value className="value">{temperature}</Value> °C
         </div>
     );
 }
