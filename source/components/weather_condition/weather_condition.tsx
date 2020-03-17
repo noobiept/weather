@@ -28,7 +28,7 @@ export default function WeatherCondition({
         <div id={id} className={className}>
             {weatherInfo}
             <span>Temperature: </span>
-            <Value className="value">{temperature}</Value> °C
+            <Value className="temperatureValue">{temperature}</Value> °C
         </div>
     );
 }

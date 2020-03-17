@@ -22,7 +22,11 @@ export default function SearchList({
 
         return (
             <Fragment key={index}>
-                <ListItem selected={selected} onClick={clickHandler}>
+                <ListItem
+                    selected={selected}
+                    onClick={clickHandler}
+                    className="searchItem"
+                >
                     {name}
                 </ListItem>
                 {!lastItem && <li>/</li>}

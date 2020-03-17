@@ -4,6 +4,7 @@ import "@testing-library/jest-dom/extend-expect";
 
 import Forecast from "./forecast";
 import { getCurrentForecastData } from "../../tests/fake_data";
+import { expectToBeSelected, expectToNotBeSelected } from "../../tests/utils";
 
 describe("Forecast", () => {
     test("Should have the expected elements.", () => {
@@ -61,18 +62,24 @@ describe("Forecast", () => {
 
         const temperature = selectList.querySelector("#Forecast_temperature")!;
         fireEvent.click(temperature);
-        expect(temperature.classList.contains("selected")).toBe(true);
+        expectToBeSelected(temperature);
 
         const humidity = selectList.querySelector("#Forecast_humidity")!;
         fireEvent.click(humidity);
-        expect(humidity.classList.contains("selected")).toBe(true);
+
+        expectToBeSelected(humidity);
+        expectToNotBeSelected(temperature);
 
         const pressure = selectList.querySelector("#Forecast_pressure")!;
         fireEvent.click(pressure);
-        expect(pressure.classList.contains("selected")).toBe(true);
+
+        expectToBeSelected(pressure);
+        expectToNotBeSelected(humidity);
 
         const windSpeed = selectList.querySelector("#Forecast_windSpeed")!;
         fireEvent.click(windSpeed);
-        expect(windSpeed.classList.contains("selected")).toBe(true);
+
+        expectToBeSelected(windSpeed);
+        expectToNotBeSelected(pressure);
     });
 });
