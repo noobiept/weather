@@ -6,3 +6,12 @@ export function toHourMinute(unixTime: number | Date) {
 
     return `${date.getHours()}h ${date.getMinutes()}m`;
 }
+
+/**
+ * Put the focus on an html element.
+ */
+export function gainFocus(element: HTMLElement | null) {
+    if (element) {
+        element.focus();
+    }
+}

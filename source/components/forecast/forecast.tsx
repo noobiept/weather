@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, ReactElement, useMemo } from "react";
 
 import Chart from "../chart/chart";
 import WeatherCondition from "../weather_condition/weather_condition";
@@ -11,105 +11,101 @@ import {
     ForecastCanvasType,
 } from "./forecast.types";
 import { ForecastItem, DateDisplay, WeatherList } from "./forecast.styles";
+import { ForecastInfo } from "../../shared/weather_info";
+
+function buildData(info: ForecastInfo) {
+    const list = [];
+    const temperatureData = [];
+    const humidityData = [];
+    const pressureData = [];
+    const windSpeedData = [];
+    const xAxis = [];
+
+    for (let a = 0; a < info.list.length; a++) {
+        const item = info.list[a];
+
+        // get the hour/minute from each item, to be displayed on the chart later on
+        const timestamp = item.dt * 1000; // comes in seconds, so we convert to milliseconds to be used by the 'Date' class
+        const date = new Date(timestamp);
+
+        // round some of the values that are shown on the chart (so they occupy less space)
+        // the original value is still available on the list
+        const roundedTemperature = Math.round(item.main.temp);
+        const roundedPressure = Math.round(item.main.pressure);
+
+        temperatureData.push(roundedTemperature);
+        humidityData.push(item.main.humidity);
+        pressureData.push(roundedPressure);
+        windSpeedData.push(item.wind.speed);
+        xAxis.push(date);
+
+        list.push(
+            <ForecastItem key={a} className="weatherItem">
+                <DateDisplay className="date">{item.dt_txt}</DateDisplay>
+                <WeatherCondition
+                    temperature={item.main.temp}
+                    weather={item.weather}
+                />
+                <div>
+                    <span>Humidity: </span>
+                    <Value className="value">{item.main.humidity}</Value> %
+                </div>
+                <div>
+                    <span>Pressure: </span>
+                    <Value className="value">{item.main.pressure}</Value> hPa
+                </div>
+                <Wind
+                    speed={item.wind.speed}
+                    degree={item.wind.deg ?? 0}
+                    canvasWidth={15}
+                    canvasHeight={15}
+                />
+            </ForecastItem>
+        );
+    }
+
+    return {
+        list,
+        chart: {
+            xAxis: xAxis,
+            info: {
+                temperature: {
+                    data: temperatureData,
+                    unit: "°C",
+                    title: "Temperature",
+                },
+                humidity: {
+                    data: humidityData,
+                    unit: "%",
+                    title: "Humidity",
+                },
+                pressure: {
+                    data: pressureData,
+                    unit: "hPa",
+                    title: "Pressure",
+                },
+                windSpeed: {
+                    data: windSpeedData,
+                    unit: "m/s",
+                    title: "Wind speed",
+                },
+            },
+        },
+    };
+}
 
 export default function Forecast({ info }: ForecastProps) {
-    const chartData = useRef<ChartData>();
-    const weatherList = useRef<React.ReactElement<HTMLElement>[]>();
+    const built = useMemo(() => buildData(info), [
+        info.city.name,
+        info.city.country,
+    ]);
 
-    buildData();
+    const chartData = useRef<ChartData>(built.chart);
+    const weatherList = useRef<ReactElement<HTMLElement>[]>(built.list);
 
     const [canvasInfo, setCanvasInfo] = useState<CanvasInfo>(
         getInfoFrom(ForecastCanvasType.temperature)
     );
-
-    function buildData() {
-        if (!chartData.current) {
-            const list = [];
-            const temperatureData = [];
-            const humidityData = [];
-            const pressureData = [];
-            const windSpeedData = [];
-            const xAxis = [];
-
-            for (let a = 0; a < info.list.length; a++) {
-                const item = info.list[a];
-
-                // get the hour/minute from each item, to be displayed on the chart later on
-                const timestamp = item.dt * 1000; // comes in seconds, so we convert to milliseconds to be used by the 'Date' class
-                const date = new Date(timestamp);
-
-                // round some of the values that are shown on the chart (so they occupy less space)
-                // the original value is still available on the list
-                const roundedTemperature = Math.round(item.main.temp);
-                const roundedPressure = Math.round(item.main.pressure);
-
-                temperatureData.push(roundedTemperature);
-                humidityData.push(item.main.humidity);
-                pressureData.push(roundedPressure);
-                windSpeedData.push(item.wind.speed);
-                xAxis.push(date);
-
-                list.push(
-                    <ForecastItem key={a} className="weatherItem">
-                        <DateDisplay className="date">
-                            {item.dt_txt}
-                        </DateDisplay>
-                        <WeatherCondition
-                            temperature={item.main.temp}
-                            weather={item.weather}
-                        />
-                        <div>
-                            <span>Humidity: </span>
-                            <Value className="value">
-                                {item.main.humidity}
-                            </Value>{" "}
-                            %
-                        </div>
-                        <div>
-                            <span>Pressure: </span>
-                            <Value className="value">
-                                {item.main.pressure}
-                            </Value>{" "}
-                            hPa
-                        </div>
-                        <Wind
-                            speed={item.wind.speed}
-                            degree={item.wind.deg ?? 0}
-                            canvasWidth={15}
-                            canvasHeight={15}
-                        />
-                    </ForecastItem>
-                );
-            }
-
-            weatherList.current = list;
-            chartData.current = {
-                xAxis: xAxis,
-                info: {
-                    temperature: {
-                        data: temperatureData,
-                        unit: "°C",
-                        title: "Temperature",
-                    },
-                    humidity: {
-                        data: humidityData,
-                        unit: "%",
-                        title: "Humidity",
-                    },
-                    pressure: {
-                        data: pressureData,
-                        unit: "hPa",
-                        title: "Pressure",
-                    },
-                    windSpeed: {
-                        data: windSpeedData,
-                        unit: "m/s",
-                        title: "Wind speed",
-                    },
-                },
-            };
-        }
-    }
 
     function showInCanvas(type: ForecastCanvasType) {
         if (type === canvasInfo.type) {

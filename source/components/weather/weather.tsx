@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 
 import CityInput from "../city_input/city_input";
 import Message from "../message/message";
@@ -10,6 +10,7 @@ import Help from "../help/help";
 import { getFromStorage, saveToStorage } from "../../shared/data";
 import { getCurrentWeather, getCurrentForecast } from "../../shared/requests";
 import { WeatherInfoContainer, List, GlobalStyle } from "./weather.styles";
+import { gainFocus } from "../../shared/utilities";
 
 export default function Weather() {
     const searchLimit = 5; // maximum number of elements in the search list
@@ -25,7 +26,7 @@ export default function Weather() {
     useEffect(() => {
         // focus the city element element whenever a key is pressed
         window.addEventListener("keypress", () => {
-            gainFocus();
+            gainFocus(cityInputRef.current);
         });
 
         const loadedCities = getFromStorage("weather_search_list") ?? [];
@@ -43,77 +44,68 @@ export default function Weather() {
     }, []);
 
     /**
-     * Put the focus on the `input` html element.
-     */
-    function gainFocus() {
-        const cityInput = cityInputRef.current;
-        if (cityInput) {
-            cityInput.focus();
-        }
-    }
-
-    /**
      * Load a different city weather information.
      * If `existingPosition` is not given, then its a new city that we need to add to the cities list.
      * We can optionally not save the changes to the state/storage (useful when loading at the beginning for example).
      * Returns a boolean that tells whether the operation was successful or not.
      */
-    async function changeCity(
-        name: string,
-        existingPosition?: number,
-        save = true
-    ) {
-        if (name.length <= 3) {
-            setMessageText("The query needs to have more than 3 characters.");
-            return false;
-        }
-
-        setLoading(true);
-        setMessageText("");
-
-        try {
-            var [current, forecast] = await Promise.all([
-                await getCurrentWeather(name),
-                await getCurrentForecast(name),
-            ]);
-        } catch {
-            setMessageText("Failed to connect to the weather API.");
-            return false;
-        } finally {
-            setLoading(false);
-        }
-
-        if (current && forecast) {
-            if (save) {
-                // a new city that we need to add
-                if (typeof existingPosition === "undefined") {
-                    existingPosition = addCityName(
-                        `${current.name}, ${current.sys.country}`
-                    );
-                }
-
-                updateCityPosition(existingPosition);
+    const changeCity = useCallback(
+        async (name: string, existingPosition?: number, save = true) => {
+            if (name.length <= 3) {
+                setMessageText(
+                    "The query needs to have more than 3 characters."
+                );
+                return false;
             }
 
-            setCurrent(
-                <CurrentWeather
-                    key={"current." + current.name}
-                    info={current}
-                />
-            );
-            setForecast(
-                <Forecast
-                    key={"forecast." + forecast.city.name}
-                    info={forecast}
-                />
-            );
-        } else {
-            setMessageText(`Couldn't find a city with the name "${name}"`);
-            return false;
-        }
+            setLoading(true);
+            setMessageText("");
 
-        return true;
-    }
+            try {
+                var [current, forecast] = await Promise.all([
+                    await getCurrentWeather(name),
+                    await getCurrentForecast(name),
+                ]);
+            } catch {
+                setMessageText("Failed to connect to the weather API.");
+                return false;
+            } finally {
+                setLoading(false);
+            }
+
+            if (current && forecast) {
+                if (save) {
+                    // a new city that we need to add
+                    if (typeof existingPosition === "undefined") {
+                        existingPosition = addCityName(
+                            `${current.name}, ${current.sys.country}`
+                        );
+                    }
+
+                    updateCityPosition(existingPosition);
+                }
+
+                setCurrent(
+                    <CurrentWeather
+                        key={"current." + current.name}
+                        info={current}
+                    />
+                );
+                setForecast(
+                    <Forecast
+                        key={"forecast." + forecast.city.name}
+                        info={forecast}
+                    />
+                );
+            } else {
+                setMessageText(`Couldn't find a city with the name "${name}"`);
+                return false;
+            }
+
+            return true;
+        },
+        [cities]
+    );
 
     /**
      * Set a new selected city position.
