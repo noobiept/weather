@@ -9,19 +9,25 @@ import Loading from "../loading/loading";
 import Help from "../help/help";
 import { getFromStorage, saveToStorage } from "../../shared/data";
 import { getCurrentWeather, getCurrentForecast } from "../../shared/requests";
-import { WeatherInfoContainer, List, GlobalStyle } from "./weather.styles";
+import {
+    WeatherInfoContainer,
+    List,
+    GlobalStyle,
+    InitialLoading,
+} from "./weather.styles";
 import { gainFocus } from "../../shared/utilities";
 
 export default function Weather() {
     const searchLimit = 5; // maximum number of elements in the search list
     const cityInputRef = useRef<HTMLInputElement>(null);
 
+    const [loading, setLoading] = useState(true);
     const [cities, setCities] = useState<string[]>([]); // list with all the city names that were searched for
     const [position, setPosition] = useState(-1); // position of the currently selected city name element
     const [current, setCurrent] = useState<JSX.Element>();
     const [forecast, setForecast] = useState<JSX.Element>();
     const [messageText, setMessageText] = useState(""); // warn/error message to show to the user
-    const [loading, setLoading] = useState(false);
+    const [querying, setQuerying] = useState(false);
 
     useEffect(() => {
         // focus the city element element whenever a key is pressed
@@ -41,6 +47,7 @@ export default function Weather() {
             const name = loadedCities[loadedPosition];
             changeCity(name, loadedPosition, false);
         }
+        setLoading(false);
     }, []);
 
     /**
@@ -58,7 +65,7 @@ export default function Weather() {
                 return false;
             }
 
-            setLoading(true);
+            setQuerying(true);
             setMessageText("");
 
             try {
@@ -70,7 +77,7 @@ export default function Weather() {
                 setMessageText("Failed to connect to the weather API.");
                 return false;
             } finally {
-                setLoading(false);
+                setQuerying(false);
             }
 
             if (current && forecast) {
@@ -146,24 +153,33 @@ export default function Weather() {
     return (
         <div id="Weather">
             <GlobalStyle />
-            <List className="list">
-                <CityInput inputRef={cityInputRef} onInput={changeCity} />
-                <Loading active={loading} />
-            </List>
-            <Message text={messageText} />
-            <SearchList
-                cityNames={cities}
-                selectedPosition={position}
-                onItemClick={changeCity}
-            />
-
-            {cities.length !== 0 ? (
-                <WeatherInfoContainer id="WeatherInfoContainer">
-                    {current}
-                    {forecast}
-                </WeatherInfoContainer>
+            {loading ? (
+                <InitialLoading active />
             ) : (
-                <Help />
+                <>
+                    <List className="list">
+                        <CityInput
+                            inputRef={cityInputRef}
+                            onInput={changeCity}
+                        />
+                        <Loading active={querying} />
+                    </List>
+                    <Message text={messageText} />
+                    <SearchList
+                        cityNames={cities}
+                        selectedPosition={position}
+                        onItemClick={changeCity}
+                    />
+
+                    {cities.length !== 0 ? (
+                        <WeatherInfoContainer id="WeatherInfoContainer">
+                            {current}
+                            {forecast}
+                        </WeatherInfoContainer>
+                    ) : (
+                        <Help />
+                    )}
+                </>
             )}
         </div>
     );

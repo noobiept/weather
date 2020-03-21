@@ -1,4 +1,5 @@
 import styled, { createGlobalStyle } from "styled-components";
+import Loading from "../loading/loading";
 
 export const GlobalStyle = createGlobalStyle`
     body {
@@ -18,4 +19,10 @@ export const WeatherInfoContainer = styled.div`
     & > div {
         margin: 10px 0;
     }
+`;
+
+export const InitialLoading = styled(Loading)`
+    position: fixed;
+    top: 0;
+    right: 0;
 `;
