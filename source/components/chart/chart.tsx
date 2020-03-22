@@ -136,7 +136,7 @@ function updateCanvas(
         // only draw the value and x-axis point every 2 points (so it doesn't become unreadable)
         if (a % 2 === 0) {
             // value text
-            let textPositioning = determineTextSide(
+            const textPositioning = determineTextSide(
                 value,
                 data[a - 1],
                 data[a + 1]
@@ -150,8 +150,8 @@ function updateCanvas(
             ctx.fillText(`${value} ${unit}`, x, y);
 
             // x-axis point
-            let minutes = date.getMinutes().toString().padStart(2, "0");
-            let hourMinute = `${date.getHours()}:${minutes}`;
+            const minutes = date.getMinutes().toString().padStart(2, "0");
+            const hourMinute = `${date.getHours()}:${minutes}`;
 
             ctx.beginPath();
             ctx.textBaseline = "top";

@@ -8,7 +8,7 @@ import SearchList from "../search_list/search_list";
 import Loading from "../loading/loading";
 import Help from "../help/help";
 import { getFromStorage, saveToStorage } from "../../shared/data";
-import { getCurrentWeather, getCurrentForecast } from "../../shared/requests";
+import { getWeatherData } from "../../shared/requests";
 import {
     WeatherInfoContainer,
     List,
@@ -68,24 +68,21 @@ export default function Weather() {
             setQuerying(true);
             setMessageText("");
 
-            try {
-                var [current, forecast] = await Promise.all([
-                    await getCurrentWeather(name),
-                    await getCurrentForecast(name),
-                ]);
-            } catch {
+            const data = await getWeatherData(name);
+            if (!data) {
                 setMessageText("Failed to connect to the weather API.");
                 return false;
-            } finally {
-                setQuerying(false);
             }
+            setQuerying(false);
 
-            if (current && forecast) {
+            const { currentData, forecastData } = data;
+
+            if (currentData && forecastData) {
                 if (save) {
                     // a new city that we need to add
                     if (typeof existingPosition === "undefined") {
                         existingPosition = addCityName(
-                            `${current.name}, ${current.sys.country}`
+                            `${currentData.name}, ${currentData.sys.country}`
                         );
                     }
 
@@ -94,14 +91,14 @@ export default function Weather() {
 
                 setCurrent(
                     <CurrentWeather
-                        key={"current." + current.name}
-                        info={current}
+                        key={"current." + currentData.name}
+                        info={currentData}
                     />
                 );
                 setForecast(
                     <Forecast
-                        key={"forecast." + forecast.city.name}
-                        info={forecast}
+                        key={"forecast." + forecastData.city.name}
+                        info={forecastData}
                     />
                 );
             } else {
