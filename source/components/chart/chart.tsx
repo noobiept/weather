@@ -150,10 +150,7 @@ function updateCanvas(
             ctx.fillText(`${value} ${unit}`, x, y);
 
             // x-axis point
-            let minutes = date
-                .getMinutes()
-                .toString()
-                .padStart(2, "0");
+            let minutes = date.getMinutes().toString().padStart(2, "0");
             let hourMinute = `${date.getHours()}:${minutes}`;
 
             ctx.beginPath();
