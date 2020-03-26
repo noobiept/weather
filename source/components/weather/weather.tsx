@@ -30,10 +30,12 @@ export default function Weather() {
     const [querying, setQuerying] = useState(false);
 
     useEffect(() => {
-        // focus the city element element whenever a key is pressed
-        window.addEventListener("keypress", () => {
+        const keyPressListener = () => {
             gainFocus(cityInputRef.current);
-        });
+        };
+
+        // focus the city element element whenever a key is pressed
+        window.addEventListener("keypress", keyPressListener);
 
         const loadedCities = getFromStorage("weather_search_list") ?? [];
         const loadedPosition =
@@ -48,6 +50,10 @@ export default function Weather() {
             changeCity(name, loadedPosition, false);
         }
         setLoading(false);
+
+        return () => {
+            window.removeEventListener("keypress", keyPressListener);
+        };
     }, []);
 
     /**
