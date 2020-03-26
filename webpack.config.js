@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
-module.exports = function(env, argv) {
+module.exports = function (env, argv) {
     const mode = argv.mode;
     const plugins = [
         new HtmlWebpackPlugin({
@@ -24,10 +24,6 @@ module.exports = function(env, argv) {
                     from:
                         "./node_modules/react-dom/umd/react-dom.production.min.js",
                     to: "./libraries/react-dom.production.min.js",
-                },
-                {
-                    from: "./css/**/*",
-                    to: "./",
                 },
                 {
                     from: "./package.json",
