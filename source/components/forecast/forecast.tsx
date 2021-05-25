@@ -95,10 +95,10 @@ function buildData(info: ForecastInfo) {
 }
 
 export default function Forecast({ info }: ForecastProps) {
-    const built = useMemo(() => buildData(info), [
-        info.city.name,
-        info.city.country,
-    ]);
+    const built = useMemo(
+        () => buildData(info),
+        [info.city.name, info.city.country]
+    );
 
     const chartData = useRef<ChartData>(built.chart);
     const weatherList = useRef<ReactElement<HTMLElement>[]>(built.list);

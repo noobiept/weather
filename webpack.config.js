@@ -15,21 +15,22 @@ module.exports = function (env, argv) {
     if (mode === "production") {
         plugins.push(new CleanWebpackPlugin());
         plugins.push(
-            new CopyWebpackPlugin([
-                {
-                    from: "./node_modules/react/umd/react.production.min.js",
-                    to: "./libraries/react.production.min.js",
-                },
-                {
-                    from:
-                        "./node_modules/react-dom/umd/react-dom.production.min.js",
-                    to: "./libraries/react-dom.production.min.js",
-                },
-                {
-                    from: "./package.json",
-                    to: "./",
-                },
-            ])
+            new CopyWebpackPlugin({
+                patterns: [
+                    {
+                        from: "./node_modules/react/umd/react.production.min.js",
+                        to: "./libraries/react.production.min.js",
+                    },
+                    {
+                        from: "./node_modules/react-dom/umd/react-dom.production.min.js",
+                        to: "./libraries/react-dom.production.min.js",
+                    },
+                    {
+                        from: "./package.json",
+                        to: "./",
+                    },
+                ],
+            })
         );
     }
 
