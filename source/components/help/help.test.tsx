@@ -9,6 +9,6 @@ describe("Help", () => {
         const { container } = render(<Help />);
 
         const help = container.querySelector("div");
-        expect(help).not.toBeEmpty();
+        expect(help).not.toBeEmptyDOMElement();
     });
 });
