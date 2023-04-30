@@ -1,5 +1,5 @@
 import React from "react";
-import { render, fireEvent, wait } from "@testing-library/react";
+import { render, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
 import Weather from "./weather";
@@ -42,10 +42,9 @@ describe("Weather", () => {
         fireEvent.change(input, { target: { value: city } });
         fireEvent.click(button);
 
-        await wait();
-
-        const weatherInfo = container.querySelector("#WeatherInfoContainer");
-        expect(weatherInfo).toBeInTheDocument();
+        await waitFor(() =>
+            expect(container.querySelector("#WeatherInfoContainer")).toBeInTheDocument()
+        );
     });
 
     test("Search with a query below the limit.", async () => {
@@ -58,9 +57,8 @@ describe("Weather", () => {
         fireEvent.change(input, { target: { value: city } });
         fireEvent.click(button);
 
-        await wait();
+        const weatherInfo = await waitFor(() => container.querySelector("#WeatherInfoContainer"));
 
-        const weatherInfo = container.querySelector("#WeatherInfoContainer");
         expect(weatherInfo).toBeInTheDocument();
 
         const message = container.querySelector(".message");

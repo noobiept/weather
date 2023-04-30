@@ -10,29 +10,8 @@ module.exports = function (env, argv) {
             template: "./index.html",
             productionMode: mode === "production",
         }),
+        new CleanWebpackPlugin()
     ];
-
-    if (mode === "production") {
-        plugins.push(new CleanWebpackPlugin());
-        plugins.push(
-            new CopyWebpackPlugin({
-                patterns: [
-                    {
-                        from: "./node_modules/react/umd/react.production.min.js",
-                        to: "./libraries/react.production.min.js",
-                    },
-                    {
-                        from: "./node_modules/react-dom/umd/react-dom.production.min.js",
-                        to: "./libraries/react-dom.production.min.js",
-                    },
-                    {
-                        from: "./package.json",
-                        to: "./",
-                    },
-                ],
-            })
-        );
-    }
 
     return {
         entry: "./source/index.tsx",
@@ -61,14 +40,5 @@ module.exports = function (env, argv) {
         },
 
         plugins: plugins,
-
-        // When importing a module whose path matches one of the following, just
-        // assume a corresponding global variable exists and use that instead.
-        // This is important because it allows us to avoid bundling all of our
-        // dependencies, which allows browsers to cache those libraries between builds.
-        externals: {
-            react: "React",
-            "react-dom": "ReactDOM",
-        },
     };
 };
