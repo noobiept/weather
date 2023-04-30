@@ -43,7 +43,9 @@ describe("Weather", () => {
         fireEvent.click(button);
 
         await waitFor(() =>
-            expect(container.querySelector("#WeatherInfoContainer")).toBeInTheDocument()
+            expect(
+                container.querySelector("#WeatherInfoContainer")
+            ).toBeInTheDocument()
         );
     });
 
@@ -57,7 +59,9 @@ describe("Weather", () => {
         fireEvent.change(input, { target: { value: city } });
         fireEvent.click(button);
 
-        const weatherInfo = await waitFor(() => container.querySelector("#WeatherInfoContainer"));
+        const weatherInfo = await waitFor(() =>
+            container.querySelector("#WeatherInfoContainer")
+        );
 
         expect(weatherInfo).toBeInTheDocument();
 

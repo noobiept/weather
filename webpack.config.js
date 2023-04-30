@@ -1,16 +1,13 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-// @ts-ignore
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = function (env, argv) {
     const mode = argv.mode;
     const plugins = [
         new HtmlWebpackPlugin({
             template: "./index.html",
-            productionMode: mode === "production",
         }),
-        new CleanWebpackPlugin()
+        new CleanWebpackPlugin(),
     ];
 
     return {

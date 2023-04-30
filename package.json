@@ -24,7 +24,6 @@
         "@types/styled-components": "^5.1.9",
         "babel-jest": "^29",
         "clean-webpack-plugin": "^4",
-        "copy-webpack-plugin": "^11",
         "html-webpack-plugin": "^5.3.1",
         "jest": "^29",
         "jest-canvas-mock": "^2.3.1",
