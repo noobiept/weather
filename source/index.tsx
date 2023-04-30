@@ -1,6 +1,12 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React, { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
 
 import Weather from "./components/weather/weather";
 
-ReactDOM.render(<Weather />, document.getElementById("Root"));
+const container = document.getElementById("Root")!;
+const root = createRoot(container);
+root.render(
+    <StrictMode>
+        <Weather />
+    </StrictMode>
+);
