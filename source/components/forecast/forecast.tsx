@@ -3,7 +3,7 @@ import React, { useRef, useState, ReactElement, useMemo } from "react";
 import Chart from "../chart/chart";
 import WeatherCondition from "../weather_condition/weather_condition";
 import Wind from "../wind/wind";
-import { ListItem, Value, HorizontalList } from "../../shared/styles";
+import { Value, HorizontalList } from "../../shared/styles";
 import {
     ForecastProps,
     ChartData,
@@ -12,6 +12,7 @@ import {
 } from "./forecast.types";
 import { ForecastItem, DateDisplay, WeatherList } from "./forecast.styles";
 import { ForecastInfo } from "../../shared/weather_info";
+import { ListItem } from "../list_item/list_item";
 
 function buildData(info: ForecastInfo) {
     const list = [];
@@ -139,7 +140,7 @@ export default function Forecast({ info }: ForecastProps) {
             <h1>Forecast</h1>
             <HorizontalList className="horizontalList">
                 <ListItem
-                    id="Forecast_temperature"
+                    testId="Forecast_temperature"
                     onClick={showTemperature}
                     selected={
                         canvasInfo.type === ForecastCanvasType.temperature
@@ -148,21 +149,21 @@ export default function Forecast({ info }: ForecastProps) {
                     Temperature
                 </ListItem>
                 <ListItem
-                    id="Forecast_humidity"
+                    testId="Forecast_humidity"
                     onClick={showHumidity}
                     selected={canvasInfo.type === ForecastCanvasType.humidity}
                 >
                     Humidity
                 </ListItem>
                 <ListItem
-                    id="Forecast_pressure"
+                    testId="Forecast_pressure"
                     onClick={showPressure}
                     selected={canvasInfo.type === ForecastCanvasType.pressure}
                 >
                     Pressure
                 </ListItem>
                 <ListItem
-                    id="Forecast_windSpeed"
+                    testId="Forecast_windSpeed"
                     onClick={showWindSpeed}
                     selected={canvasInfo.type === ForecastCanvasType.windSpeed}
                 >

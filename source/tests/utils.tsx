@@ -1,11 +1,7 @@
 export function expectToBeSelected(element: Element) {
-    expect(element).toHaveStyle(`
-    background-color: rgba(70, 50, 150, 0.1);
-`);
+    expect(element).toHaveAttribute("data-selected");
 }
 
 export function expectToNotBeSelected(element: Element) {
-    expect(element).toHaveStyle(`
-    background-color: none;
-`);
+    expect(element).not.toHaveAttribute("data-selected");
 }

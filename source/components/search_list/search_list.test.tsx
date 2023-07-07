@@ -1,5 +1,4 @@
-import React from "react";
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
 import { expectToBeSelected, expectToNotBeSelected } from "../../tests/utils";
@@ -15,7 +14,7 @@ describe("SearchList", () => {
         const { container } = render(<SearchList {...props} />);
         const searches = container.querySelector("#PreviousSearches")!;
         const list = searches.querySelector(".horizontalList")!;
-        const cityButtons = list.querySelectorAll(".searchItem");
+        const cityButtons = screen.getAllByTestId("searchItem");
 
         expect(searches).toHaveTextContent("Previous searches:");
         expect(list).toBeInTheDocument();
@@ -36,15 +35,15 @@ describe("SearchList", () => {
         expect(list).not.toBeInTheDocument();
     });
 
-    test("The selected city should have an extra css class.", () => {
+    test("The selected city should have a data-selected attribute.", () => {
         const props = {
             cityNames: ["one", "two"],
             selectedPosition: 1,
             onItemClick: jest.fn(),
         };
-        const { container } = render(<SearchList {...props} />);
-        const searches = container.querySelector("#PreviousSearches")!;
-        const list = searches.querySelectorAll(".horizontalList .searchItem");
+        render(<SearchList {...props} />);
+
+        const list = screen.getAllByTestId("searchItem");
 
         props.cityNames.forEach((_, index) => {
             const item = list[index];

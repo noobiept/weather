@@ -1,5 +1,4 @@
-import React from "react";
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
 import Forecast from "./forecast";
@@ -56,27 +55,25 @@ describe("Forecast", () => {
 
     test("Should switch between the different charts.", () => {
         const info = getCurrentForecastData();
-        const { container } = render(<Forecast info={info} />);
-        const forecast = container.querySelector("#Forecast")!;
-        const selectList = forecast.querySelector(".horizontalList")!;
+        render(<Forecast info={info} />);
 
-        const temperature = selectList.querySelector("#Forecast_temperature")!;
+        const temperature = screen.getByTestId("Forecast_temperature");
         fireEvent.click(temperature);
         expectToBeSelected(temperature);
 
-        const humidity = selectList.querySelector("#Forecast_humidity")!;
+        const humidity = screen.getByTestId("Forecast_humidity")!;
         fireEvent.click(humidity);
 
         expectToBeSelected(humidity);
         expectToNotBeSelected(temperature);
 
-        const pressure = selectList.querySelector("#Forecast_pressure")!;
+        const pressure = screen.getByTestId("Forecast_pressure")!;
         fireEvent.click(pressure);
 
         expectToBeSelected(pressure);
         expectToNotBeSelected(humidity);
 
-        const windSpeed = selectList.querySelector("#Forecast_windSpeed")!;
+        const windSpeed = screen.getByTestId("Forecast_windSpeed")!;
         fireEvent.click(windSpeed);
 
         expectToBeSelected(windSpeed);

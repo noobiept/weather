@@ -1,8 +1,9 @@
 import React, { Fragment } from "react";
 
-import { ListItem, HorizontalList } from "../../shared/styles";
+import { HorizontalList } from "../../shared/styles";
 import { SearchListProps } from "./search_list.types";
 import { PreviousSearches } from "./search_list.styles";
+import { ListItem } from "../list_item/list_item";
 
 export default function SearchList({
     onItemClick,
@@ -25,7 +26,7 @@ export default function SearchList({
                 <ListItem
                     selected={selected}
                     onClick={clickHandler}
-                    className="searchItem"
+                    testId="searchItem"
                 >
                     {name}
                 </ListItem>
