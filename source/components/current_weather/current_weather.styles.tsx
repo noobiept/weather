@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 import WeatherCondition from "../weather_condition/weather_condition";
 

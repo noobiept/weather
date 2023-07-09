@@ -3,11 +3,12 @@
     "version": "2.2.0",
     "dependencies": {
         "@drk4/utilities": "^6",
+        "@emotion/react": "^11.11.1",
+        "@emotion/styled": "^11.11.0",
         "classnames": "^2",
         "react": "^18",
         "react-dom": "^18",
-        "react-spinners": "^0.13",
-        "styled-components": "^6"
+        "react-spinners": "^0.13"
     },
     "devDependencies": {
         "@babel/core": "^7.14.3",

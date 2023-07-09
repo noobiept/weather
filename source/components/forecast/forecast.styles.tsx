@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 export const WeatherList = styled.div`
     display: flex;
@@ -14,7 +14,7 @@ export const DateDisplay = styled.div`
 `;
 
 export const ForecastItem = styled.div`
-    &:nth-child(odd) {
+    &:nth-of-type(odd) {
         background-color: rgba(0, 0, 255, 0.1);
     }
 `;

@@ -1,7 +1,8 @@
-import styled, { createGlobalStyle } from "styled-components";
+import styled from "@emotion/styled";
 import Loading from "../loading/loading";
+import { css } from "@emotion/react";
 
-export const GlobalStyle = createGlobalStyle`
+export const globalStyle = css`
     body {
         text-align: center;
         margin: 10px 0;

@@ -12,10 +12,11 @@ import { getWeatherData } from "../../shared/requests";
 import {
     WeatherInfoContainer,
     List,
-    GlobalStyle,
     InitialLoading,
+    globalStyle,
 } from "./weather.styles";
 import { gainFocus } from "../../shared/utilities";
+import { Global } from "@emotion/react";
 
 export default function Weather() {
     const searchLimit = 5; // maximum number of elements in the search list
@@ -155,7 +156,7 @@ export default function Weather() {
 
     return (
         <div id="Weather">
-            <GlobalStyle />
+            <Global styles={globalStyle} />
             {loading ? (
                 <InitialLoading active />
             ) : (
