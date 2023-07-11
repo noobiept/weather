@@ -14,7 +14,3 @@ Uses the data from [openweathermap.org/](https://openweathermap.org/), and is wr
 -   `npm install` : Install the necessary dependencies.
 -   `npm run start` : Start the compiler in watch mode, and run a local server at `http://localhost:8000`.
 -   `npm run build` : Run the release build (the final result will be located in the `./release/` directory).
-
-# Commit types
-
--   `UPDATE` / `CHANGE` / `FIX` / `FEATURE`
