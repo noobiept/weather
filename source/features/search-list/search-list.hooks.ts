@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getFromStorage, saveToStorage } from "../../shared/data";
 import { SEARCH_LIMIT } from "./search-list.const";
 
@@ -23,49 +23,63 @@ export function useSearchList() {
         }
 
         setLoading(false);
-    }, []);
+    }, [setCities, setPosition]);
 
     /**
      * Add a new city to the search list.
      * Returns the position of the new entry in the search list.
      * If the city already exists in the list, then we just return its position.
      */
-    function addCityName(name: string) {
-        // already in the list
-        const existingIndex = cities.indexOf(name);
-        if (existingIndex >= 0) {
-            return existingIndex;
-        }
+    const addCityName = useCallback(
+        (name: string) => {
+            setCities((state) => {
+                // already in the list
+                const existingIndex = state.indexOf(name);
 
-        const updated = cities.slice();
-        let position = updated.length;
-        updated.push(name);
+                if (existingIndex >= 0) {
+                    setPosition(existingIndex);
+                    return state;
+                }
 
-        // if we get past the limit, remove the older entry (at the start of the array)
-        if (updated.length > SEARCH_LIMIT) {
-            updated.splice(0, 1);
-            position--;
-        }
+                const updated = state.slice();
+                let position = updated.length;
+                updated.push(name);
 
-        setCities(updated);
-        saveToStorage("weather_search_list", updated);
+                // if we get past the limit, remove the older entry (at the start of the array)
+                if (updated.length > SEARCH_LIMIT) {
+                    updated.splice(0, 1);
+                    position--;
+                }
 
-        return position;
-    }
+                setPosition(position);
+                saveToStorage("weather_search_list", updated);
 
-    /**
-     * Set a new selected city position.
-     */
-    function updateCityPosition(position: number) {
-        setPosition(position);
+                return updated;
+            });
+        },
+        [cities.length, setCities]
+    );
+
+    const updateList = useCallback(
+        (cityName: string, existingPosition?: number) => {
+            // a new city that we need to add
+            if (typeof existingPosition === "undefined") {
+                addCityName(cityName);
+            } else {
+                setPosition(existingPosition);
+            }
+        },
+        []
+    );
+
+    useEffect(() => {
         saveToStorage("weather_selected_position", position);
-    }
+    }, [position]);
 
     return {
         loading,
         cities,
         position,
-        updateCityPosition,
-        addCityName,
+        updateList,
     };
 }
