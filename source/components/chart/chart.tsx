@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 import { useWindowWidth } from "../../shared/hooks";
 import { Canvas } from "./chart.styles";
@@ -170,6 +170,7 @@ export default function Chart(props: ChartProps) {
 
     useEffect(() => {
         updateCanvas(canvasRef.current, width, height, props);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [width, data, title, unit, xAxis]);
 
     return (

@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 
 import { HorizontalList } from "../../shared/styles";
 import { SearchListProps } from "./search-list.types";

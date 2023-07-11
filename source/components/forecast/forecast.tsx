@@ -1,4 +1,4 @@
-import React, { useRef, useState, ReactElement, useMemo } from "react";
+import { useRef, useState, ReactElement, useMemo } from "react";
 
 import Chart from "../chart/chart";
 import WeatherCondition from "../weather_condition/weather_condition";
@@ -98,6 +98,7 @@ function buildData(info: ForecastInfo) {
 export default function Forecast({ info }: ForecastProps) {
     const built = useMemo(
         () => buildData(info),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [info.city.name, info.city.country]
     );
 

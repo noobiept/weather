@@ -1,4 +1,3 @@
-import React from "react";
 import { MessageProps } from "./message.types";
 import { Span } from "./message.styles";
 

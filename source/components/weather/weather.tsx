@@ -27,7 +27,8 @@ export default function Weather() {
             const name = cities[position];
             search(name, position, false);
         }
-    }, [cities, loading]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [loading]);
 
     useEffect(() => {
         const keyPressListener = () => {

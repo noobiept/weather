@@ -57,7 +57,7 @@ export function useSearchList() {
                 return updated;
             });
         },
-        [cities.length, setCities]
+        [setCities]
     );
 
     const updateList = useCallback(
@@ -69,7 +69,7 @@ export function useSearchList() {
                 setPosition(existingPosition);
             }
         },
-        []
+        [addCityName]
     );
 
     useEffect(() => {

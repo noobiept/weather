@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Value } from "../../shared/styles";
 import { WeatherConditionProps } from "./weather_condition.types";
 import { ConditionImage } from "./weather_condition.styles";

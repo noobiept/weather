@@ -52,7 +52,7 @@ export function useSearch(
 
             return true;
         },
-        []
+        [onSearch]
     );
 
     return {

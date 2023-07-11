@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 import { toRadians } from "@drk4/utilities";
 import { Value } from "../../shared/styles";
@@ -37,6 +37,7 @@ export default function Wind(props: WindProps) {
 
     useEffect(() => {
         updateCanvas(canvasRef.current, props);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [canvasWidth, canvasHeight, degree]);
 
     return (

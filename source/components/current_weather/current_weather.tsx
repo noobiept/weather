@@ -1,5 +1,3 @@
-import React from "react";
-
 import Wind from "../wind/wind";
 import { toHourMinute } from "../../shared/utilities";
 import { Value } from "../../shared/styles";

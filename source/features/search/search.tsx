@@ -5,7 +5,7 @@ import { List } from "./search.styles";
 export type SearchProps = {
     querying: boolean;
     onInput: (city: string) => Promise<boolean>;
-    cityInputRef: React.RefObject<HTMLInputElement>;
+    cityInputRef: React.RefObject<HTMLInputElement>; // TODO shouldn't need this?
 };
 
 export function Search({ onInput, querying, cityInputRef }: SearchProps) {
