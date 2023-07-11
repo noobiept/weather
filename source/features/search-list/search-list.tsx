@@ -1,11 +1,11 @@
 import React, { Fragment } from "react";
 
 import { HorizontalList } from "../../shared/styles";
-import { SearchListProps } from "./search_list.types";
-import { PreviousSearches } from "./search_list.styles";
-import { ListItem } from "../list_item/list_item";
+import { SearchListProps } from "./search-list.types";
+import { PreviousSearches } from "./search-list.styles";
+import { ListItem } from "../../components/list_item/list_item";
 
-export default function SearchList({
+export function SearchList({
     onItemClick,
     cityNames,
     selectedPosition,

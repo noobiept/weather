@@ -10,12 +10,6 @@ export const globalStyle = css`
     }
 `;
 
-export const List = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-`;
-
 export const WeatherInfoContainer = styled.div`
     & > div {
         margin: 10px 0;

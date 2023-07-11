@@ -2,7 +2,7 @@ import { render, fireEvent, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
 import { expectToBeSelected, expectToNotBeSelected } from "../../tests/utils";
-import SearchList from "./search_list";
+import { SearchList } from "./search-list";
 
 describe("SearchList", () => {
     test("Should have all the expected elements.", () => {
