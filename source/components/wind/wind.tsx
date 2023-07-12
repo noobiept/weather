@@ -15,6 +15,7 @@ function updateCanvas(
 
     const ctx = canvas.getContext("2d")!;
 
+    ctx.save();
     // clear the previous drawing
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -24,11 +25,14 @@ function updateCanvas(
     ctx.translate(halfWidth, halfHeight);
     ctx.rotate(toRadians(degree));
 
+    ctx.beginPath();
     ctx.moveTo(-halfWidth, -halfHeight);
     ctx.lineTo(halfWidth, 0);
     ctx.lineTo(-halfWidth, halfHeight);
     ctx.lineTo(0, 0);
     ctx.fill();
+    ctx.closePath();
+    ctx.restore();
 }
 
 export default function Wind(props: WindProps) {
