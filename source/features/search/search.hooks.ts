@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { getWeatherData } from "../../shared/requests";
-import { CurrentWeatherInfo, ForecastInfo } from "../../shared/weather_info"; //TODO should be located in the feature folder
+import { CurrentWeatherInfo, ForecastInfo } from "../../shared/weather_info";
 
 export function useSearch(
     onSearch: (cityName: string, existingPosition?: number) => void
@@ -26,7 +26,7 @@ export function useSearch(
             setQuerying(true);
             setError("");
 
-            const data = await getWeatherData(name); //TODO should be located in the feature folder
+            const data = await getWeatherData(name);
             if (!data) {
                 setError("Failed to connect to the weather API.");
                 return false;
