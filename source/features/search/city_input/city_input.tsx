@@ -1,8 +1,11 @@
 import React from "react";
 import { Container } from "./city_input.styles";
 import { CityInputProps } from "./city_input.types";
+import { useFocusOnKeyPress } from "./city_input.hooks";
 
-export default function CityInput({ onInput, inputRef }: CityInputProps) {
+export function CityInput({ onInput }: CityInputProps) {
+    const ref = useFocusOnKeyPress();
+
     /**
      * Perform a search when the `enter` key is pressed.
      */
@@ -18,7 +21,7 @@ export default function CityInput({ onInput, inputRef }: CityInputProps) {
      * Check if the input element has some value and if so, call the given `onInput` callback.
      */
     async function search() {
-        const input = inputRef.current;
+        const input = ref.current;
         if (!input) {
             return;
         }
@@ -37,7 +40,7 @@ export default function CityInput({ onInput, inputRef }: CityInputProps) {
             <input
                 type="text"
                 placeholder="City name.."
-                ref={inputRef}
+                ref={ref}
                 onKeyPress={keyPress}
             />
             <button onClick={search}>Search</button>

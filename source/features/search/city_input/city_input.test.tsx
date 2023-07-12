@@ -2,13 +2,12 @@ import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
-import CityInput from "./city_input";
+import { CityInput } from "./city_input";
 
 describe("CityInput", () => {
     test("Should have the expected elements.", () => {
         const props = {
             onInput: jest.fn(),
-            inputRef: React.createRef<HTMLInputElement>(),
         };
         const { container } = render(<CityInput {...props} />);
         const main = container.querySelector("#CityInput")!;
@@ -18,7 +17,6 @@ describe("CityInput", () => {
         expect(main).toBeInTheDocument();
         expect(input).toBeInTheDocument();
         expect(button).toBeInTheDocument();
-        expect(props.inputRef.current).toBe(input);
 
         expect(input.placeholder).toBe("City name..");
         expect(input.type).toBe("text");
