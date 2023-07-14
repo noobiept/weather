@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
-import Loading from "./loading";
+import { Loading } from "./loading";
 
 describe("Loading", () => {
     test("Make sure it has all the elements.", () => {

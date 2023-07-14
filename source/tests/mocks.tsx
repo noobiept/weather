@@ -1,4 +1,4 @@
-import { getCurrentWeatherData, getCurrentForecastData } from "./fake_data";
+import { getCurrentWeatherData, getCurrentForecastData } from "./fake-data";
 
 export function mockRequests() {
     return jest.fn().mockImplementation((url: string) => {

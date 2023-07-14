@@ -1,4 +1,4 @@
-export default function Help() {
+export function Help() {
     return (
         <div className="help">
             Start by searching for a city with the input entry above, to get

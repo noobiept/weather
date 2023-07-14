@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
-
 import { toRadians } from "@drk4/utilities";
-import { Value } from "../../shared/styles";
+
+import { Value } from "../styles";
 import { WindProps } from "./wind.types";
 import { DegreeCanvas } from "./wind.styles";
 
@@ -35,7 +35,7 @@ function updateCanvas(
     ctx.restore();
 }
 
-export default function Wind(props: WindProps) {
+export function Wind(props: WindProps) {
     const { canvasWidth, canvasHeight, degree, speed } = props;
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
 

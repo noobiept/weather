@@ -1,5 +1,5 @@
-import { CityInput } from "./city_input/city_input";
-import Loading from "../../components/loading/loading";
+import { CityInput } from "./city-input/city-input";
+import { Loading } from "../../components/loading";
 import { List } from "./search.styles";
 
 export type SearchProps = {

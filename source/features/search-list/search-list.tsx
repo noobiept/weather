@@ -1,9 +1,9 @@
 import { Fragment } from "react";
 
-import { HorizontalList } from "../../shared/styles";
+import { HorizontalList } from "../../components/styles";
 import { SearchListProps } from "./search-list.types";
 import { PreviousSearches } from "./search-list.styles";
-import { ListItem } from "../../components/list_item/list_item";
+import { ListItem } from "../../components/list-item";
 
 export function SearchList({
     onItemClick,

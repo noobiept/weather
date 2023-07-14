@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { getFromStorage, saveToStorage } from "../../shared/data";
+import { getFromStorage, saveToStorage } from "../../core/data";
 import { SEARCH_LIMIT } from "./search-list.const";
 
 /**

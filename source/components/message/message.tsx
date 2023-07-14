@@ -1,7 +1,7 @@
 import { MessageProps } from "./message.types";
 import { Span } from "./message.styles";
 
-export default function Message({ text }: MessageProps) {
+export function Message({ text }: MessageProps) {
     if (!text) {
         text = <br />;
     }

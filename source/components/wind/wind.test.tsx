@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
-import Wind from "./wind";
+import { Wind } from "./wind";
 
 describe("Wind", () => {
     test("That it has the right elements.", async () => {

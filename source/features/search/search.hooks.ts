@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
-import { getWeatherData } from "../../shared/requests";
-import { CurrentWeatherInfo, ForecastInfo } from "../../shared/weather_info";
+import { getWeatherData } from "../../core/requests";
+import { CurrentWeatherInfo, ForecastInfo } from "../../core/weather-info";
 
 export function useSearch(
     onSearch: (cityName: string, existingPosition?: number) => void

@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
-import Message from "./message";
+import { Message } from "./message";
 
 describe("Message", () => {
     test("Should show the right message.", () => {
