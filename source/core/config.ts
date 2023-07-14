@@ -2,6 +2,7 @@ const hosts = {
     openWeather: "https://api.openweathermap.org",
 };
 
+// TODO open weather api calls should be done through a server to not expose the key
 const keys = {
     openWeather: "8cffe81fbe82ac71521e0cf28f0f3496",
 };
