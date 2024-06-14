@@ -8,5 +8,6 @@
         "allowSyntheticDefaultImports": true,
         "jsx": "react-jsx"
     },
-    "include": ["./source/**/*"]
+    "include": ["./source/**/*"],
+    "exclude": ["**/*.test.tsx", "**/*.test.ts", "**/tests/**"]
 }

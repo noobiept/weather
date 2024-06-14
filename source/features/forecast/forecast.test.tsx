@@ -1,5 +1,4 @@
 import { render, fireEvent, screen } from "@testing-library/react";
-import "@testing-library/jest-dom/extend-expect";
 
 import { Forecast } from "./forecast";
 import { getCurrentForecastData } from "../../tests/fake-data";

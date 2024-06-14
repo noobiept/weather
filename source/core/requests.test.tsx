@@ -1,5 +1,3 @@
-import "@testing-library/jest-dom/extend-expect";
-
 import { getCurrentWeather, getCurrentForecast } from "./requests";
 import { mockRequests, mockFailedRequest } from "../tests/mocks";
 

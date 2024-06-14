@@ -1,6 +1,7 @@
 {
     "name": "weather",
-    "version": "2.3.0",
+    "version": "2.3.1",
+    "packageManager": "npm@10.7.0",
     "dependencies": {
         "@drk4/utilities": "^6",
         "@emotion/react": "^11.11.1",
@@ -16,8 +17,8 @@
         "@babel/preset-env": "^7.14.4",
         "@babel/preset-react": "^7.13.13",
         "@babel/preset-typescript": "^7.13.0",
-        "@testing-library/jest-dom": "^5.12.0",
-        "@testing-library/react": "^14",
+        "@testing-library/jest-dom": "^6.4.6",
+        "@testing-library/react": "^16.0.0",
         "@types/classnames": "^2.3.1",
         "@types/jest": "^29",
         "@types/react": "^18",
@@ -41,7 +42,7 @@
         "typescript": "^5.1.6",
         "webpack": "^5.38.1",
         "webpack-cli": "^5",
-        "webpack-dev-server": "^4"
+        "webpack-dev-server": "^5.0.4"
     },
     "prettier": {
         "printWidth": 80,
