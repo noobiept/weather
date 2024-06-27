@@ -1,6 +1,6 @@
 {
     "name": "weather",
-    "version": "2.3.1",
+    "version": "2.3.2",
     "packageManager": "npm@10.7.0",
     "dependencies": {
         "@drk4/utilities": "^6",
